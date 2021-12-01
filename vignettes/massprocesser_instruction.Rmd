@@ -1,0 +1,72 @@
+---
+title: "Brief instruoduction of massprocesser"
+author:
+- name: Xiaotao Shen PhD (https://www.shenxt.info/)
+- affiliation: School of Medicine, Stanford University
+  url: https://www.shenxt.info/
+date: "Created on 2020-03-28 and updated on `r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    toc: no
+  pdf_document:
+    toc: no
+vignette: >
+  %\VignetteIndexEntry{massprocesser_instruction}
+  %\VignettePackage{massprocesser}
+  % \VignetteEngine{knitr::rmarkdown}
+  % \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE, echo=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = TRUE
+)
+```
+
+***
+
+## **Introduction**
+
+
+*massprocesser* is a R package which is used to process raw metabolomics data.
+
+Please install it via [github](https://github.com/tidymass/massprocesser).
+
+```{r,eval=FALSE,warning=FALSE, message=FALSE,R.options="", cache=TRUE}
+if(!require(devtools)){
+  install.packages("devtools")
+}
+devtools::install_github("tidymass/massprocesser")
+```
+
+We use the demo data in `demoData` package to show how to use `massprocesser`. Please install it first.
+
+```{r,eval=FALSE,warning=FALSE, message=FALSE, R.options=""}
+devtools::install_github("tidymass/demoData")
+```
+
+***
+
+## **Usage**
+
+Please see the Help document page to get the instruction of `massprocesser`.
+
+***
+
+## **Need help?**
+
+
+If you have any questions about `massprocesser`, please don’t hesitate to email me (shenxt@stanford.edu).
+
+<i class="fa fa-weixin"></i> [shenzutao1990](https://www.shenxt.info/files/wechat_QR.jpg)
+
+<i class="fa fa-envelope"></i> shenxt@stanford.edu
+
+<i class="fa fa-twitter"></i> [Twitter](https://twitter.com/JasperShen1990)
+
+<i class="fa fa-map-marker-alt"></i> [M339, Alway building, Cooper Lane, Palo Alto, CA 94304](https://www.google.com/maps/place/Alway+Building/@37.4322345,-122.1770883,17z/data=!3m1!4b1!4m5!3m4!1s0x808fa4d335c3be37:0x9057931f3b312c29!8m2!3d37.4322345!4d-122.1748996)

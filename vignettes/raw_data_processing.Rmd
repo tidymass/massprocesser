@@ -1,0 +1,138 @@
+---
+title: "Raw MS data processing using massprocesser"
+author:
+- name: Xiaotao Shen (https://www.shenxt.info/)
+- affiliation: School of Medicine, Stanford University
+  url: http://shenxt.info/
+date: "Created on 2020-04-01 and updated on `r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    toc: no
+  pdf_document:
+    toc: no
+vignette: >
+  %\VignetteIndexEntry{raw_data_processing}
+  %\VignettePackage{massprocesser}
+  % \VignetteEngine{knitr::rmarkdown}
+  % \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE, echo=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # fig.width = 7, 
+  # fig.height = 5,
+  warning = FALSE,
+  message = TRUE,
+  out.width = "100%"
+)
+```
+
+***
+
+## **Introduction**
+
+*massprocesser* can used to processed the raw MS data for peak detection and alignment, and generate a peak table for next analysis. 
+
+## **Data preparation**
+
+The MS raw data from Mass Spectrometry should be converted to `mzXML` format and then placed in different folders according to their class, for example `Subject`, `QC`, and `Blank` samples.
+
+Here we use the demo data (2 mzXML files) from `demoData` packages. Download [here](https://github.com/jaspershen/demoData/tree/master/inst/mzxml/POS/QC)
+
+You can convert raw MS data to mzXML format using [`ProteoWizard` software](http://proteowizard.sourceforge.net/). And the parameter setting is shown the below figure:
+
+![](../man/figures/Capture.PNG)
+
+
+## **Data organization**
+
+All the `mzXML` format files should be placed in different folder according to sample type, such as `QC`, `Subject`, and `Blank`. 
+
+![](../man/figures/figure2.png)
+
+## **Run `process_data()`** function
+
+We use the demo data from `demoData` to show how to process raw MS data using `massprocesser`.
+
+### **Load demo data**
+
+First we load the demo data from `demoData` package and then place them in a `example` folder.
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE}
+library(massprocesser)
+library(tidyverse)
+library(xcms)
+library(MSnbase)
+library(mzR)
+```
+
+```{r,eval=FALSE,warning=FALSE, R.options="", message=FALSE,cache = TRUE}
+##create a folder named as `example`
+path <- file.path(".", "example")
+dir.create(path = path, showWarnings = FALSE)
+```
+
+Now place the demo mzXML data in the `./example/POS` folder. There are two folder in this directory, namely `Subject` and `QC`.
+
+### **Data processing**
+
+Next, we use the `process_data()` function for peak detection and alignment.
+
+```{r,eval = FALSE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
+massprocesser::process_data(
+  path = path,
+  polarity = "positive",
+  ppm = 15,
+  peakwidth = c(5, 30),
+  snthresh = 5,
+  noise = 500,
+  threads = 6,
+  output_tic = TRUE,
+  output_bpc = TRUE,
+  output_rt_correction_plot = TRUE,
+  min_fraction = 0.5,
+  fill_peaks = FALSE,
+  group_for_figure = "QC"
+)
+```
+
+Some important arguments:
+
+* `ppm`: Peak detection ppm. See the `xcms` package.
+
+* `peakwidth`: Peak width. It is dependent on your column and LC system. See the `xcms` package.
+
+* `snthresh`: Singal to noise threshold. See the `xcms` package.
+
+* `noise`: Noise cutiff. See the `xcms` package.
+
+* `threads`: The core number for performing.
+
+* `output_tic`, `output_bpc`, and `group_for_figure`: Do you want to output the TIC or BPC of samples? Some times there are a lot of samples, so you can set the `group.for.figure` as the group name, for example, you can set it as `QC`. 
+
+* `min_fraction`: If one peak appears more than `min.fraction` sample in at least one group samples it will be kept.
+
+* `fill_peaks`: Do you want to fill the missing values (NA)? 
+
+Ohter parameters you can find here: `process_data()`.
+
+## **Output results**
+
+After all done, all the results are placed in a new folder named as `Result`.
+
+![](../man/figures/Screen Shot 2020-04-01 at 1.00.38 PM.png)
+* `Peak_table.csv`: is the peak table for next analysis.
+
+![](../man/figures/Screen Shot 2020-04-01 at 1.09.52 PM.png)
+
+* `Peak_table_for_cleaning.csv`: Some non-useful columns is deleted from the `Peak_table.csv`, this can be directory used for next data cleaning.
+
+![](../man/figures/Screen Shot 2020-04-01 at 1.07.37 PM.png)
+
+* `intermediate_data`: This is a folder which contains some intermediate data. If you want to re-run the data processing, please delete this folder first.
+
+
