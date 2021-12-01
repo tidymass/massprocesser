@@ -3,7 +3,7 @@ title: "Raw MS data processing using massprocesser"
 author:
 - name: Xiaotao Shen (https://www.shenxt.info/)
 - affiliation: School of Medicine, Stanford University
-  url: http://shenxt.info/
+  url: https://www.shenxt.info/
 date: "Created on 2020-04-01 and updated on `r Sys.Date()`"
 output:
   html_document:
@@ -58,9 +58,9 @@ All the `mzXML` format files should be placed in different folder according to s
 
 We use the demo data from `demoData` to show how to process raw MS data using `massprocesser`.
 
-### **Load demo data**
+### **Download demo data**
 
-First we load the demo data from `demoData` package and then place them in a `example` folder.
+First we download the demo data from `demoData` package and then place them in a `example` folder.
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE}
 library(massprocesser)
@@ -70,19 +70,19 @@ library(MSnbase)
 library(mzR)
 ```
 
-```{r,eval=FALSE,warning=FALSE, R.options="", message=FALSE,cache = TRUE}
-##create a folder named as `example`
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE,cache = TRUE}
+#create a folder named as `example`
 path <- file.path(".", "example")
 dir.create(path = path, showWarnings = FALSE)
 ```
 
-Now place the demo mzXML data in the `./example/POS` folder. There are two folder in this directory, namely `Subject` and `QC`.
+Now place the demo mzXML data in the `./example` folder. There are two folder in this directory, namely `Subject` and `QC`.
 
 ### **Data processing**
 
 Next, we use the `process_data()` function for peak detection and alignment.
 
-```{r,eval = FALSE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
+```{r,eval = TRUE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
 massprocesser::process_data(
   path = path,
   polarity = "positive",

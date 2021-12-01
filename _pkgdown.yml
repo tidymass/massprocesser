@@ -42,23 +42,9 @@ navbar:
       - text: Other tools for raw MS data processing
         href: articles/other_tools_for_raw_data_processing.html
       - text: -------
-      - text: "Data cleaning"
-      - text: Correct retention time
-        href: articles/correct_rt.html
-      - text: Align different batch peak tables
-        href: articles/align_batch.html
-      - text: Impute missing values
-        href: articles/missing_value_imputation.html
-      - text: Data normalization and integration
-        href: articles/data_normalization_integration.html
-      - text: -------
       - text: "Other tools"
       - text: Other tools in massprocesser
         href: articles/other_tools.html
-      - text: -------
-      - text: "Category B"
-      - text: Test
-        href: https://www.tidyverse.org/blog/2018/12/readxl-1-2-0/
     twitter:
       icon: "fab fa-twitter fa-lg"
       href: https://twitter.com/JasperShen1990

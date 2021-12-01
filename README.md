@@ -36,20 +36,11 @@ install.packages("devtools")
 devtools::install_github("tidymass/massprocesser")
 ```
 
-We use the demo data in `demoData` package to show how to use
-`massprocesser`. Please install it first.
-
-``` r
-devtools::install_github("tidymass/demoData")
-```
-
 -----
 
 ## **Usage**
 
-Please see the [Get
-started](https://tidymass.github.io/massprocesser/articles/massprocesser_instruction.html)
-page to get the instrduction of `massprocesser`.
+Please see the `Help document` page to get the instruction of `massprocesser`.
 
 -----
 

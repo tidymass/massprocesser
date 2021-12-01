@@ -1,9 +1,8 @@
 base
-demoData
-metflow2
+massprocesser
+BiocParallel
 BiocGenerics
 Biobase
-BiocParallel
 Rcpp
 mzR
 S4Vectors

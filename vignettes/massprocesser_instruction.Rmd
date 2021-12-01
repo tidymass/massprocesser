@@ -44,11 +44,7 @@ if(!require(devtools)){
 devtools::install_github("tidymass/massprocesser")
 ```
 
-We use the demo data in `demoData` package to show how to use `massprocesser`. Please install it first.
-
-```{r,eval=FALSE,warning=FALSE, message=FALSE, R.options=""}
-devtools::install_github("tidymass/demoData")
-```
+We use the demo data in `demoData` package to show how to use `massprocesser`. Link is here: [https://github.com/jaspershen/demoData/tree/master/inst/mzxml/POS](https://github.com/jaspershen/demoData/tree/master/inst/mzxml/POS)
 
 ***
 
