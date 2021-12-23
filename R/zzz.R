@@ -1,3 +1,5 @@
+
+
 .onAttach <- function(...) {
   needed <- core[!is_attached(core)]
   if (length(needed) == 0)
@@ -6,14 +8,13 @@
   crayon::num_colors(TRUE)
   massprocesser_attach()
   
-  # if (!"package:conflicted" %in% search()) {
-  #   x <- massprocesser_conflicts()
-  #   msg(massprocesser_conflict_message(x), startup = TRUE)
-  # }
+  if (!"package:conflicted" %in% search()) {
+    x <- massprocesser_conflicts()
+    msg(massprocesser_conflict_message(x), startup = TRUE)
+  }
   
 }
 
 is_attached <- function(x) {
   paste0("package:", x) %in% search()
 }
-
