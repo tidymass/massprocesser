@@ -42,6 +42,9 @@
       <a href="../articles/raw_data_processing.html">Peak detection and alignment</a>
     </li>
     <li>
+      <a href="../articles/extract_eic.html">Extract EICs of some features</a>
+    </li>
+    <li>
       <a href="../articles/other_tools_for_raw_data_processing.html">Other tools for raw MS data processing</a>
     </li>
     <li class="divider">
@@ -116,7 +119,8 @@
   threads <span class="op">=</span> <span class="fl">5</span>,
   add_point <span class="op">=</span> <span class="cn">FALSE</span>,
   path <span class="op">=</span> <span class="st">"."</span>,
-  group_for_figure <span class="op">=</span> <span class="st">"QC"</span>
+  group_for_figure <span class="op">=</span> <span class="st">"QC"</span>,
+  feature_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pdf"</span>, <span class="st">"png"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -140,6 +144,8 @@
 <dd><p>Work directory.</p></dd>
 <dt>group_for_figure</dt>
 <dd><p>what samples groups are used to extract EICs</p></dd>
+<dt>feature_type</dt>
+<dd><p>png of pdf</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

@@ -13,7 +13,8 @@ extract_eic(
   threads = 5,
   add_point = FALSE,
   path = ".",
-  group_for_figure = "QC"
+  group_for_figure = "QC",
+  feature_type = c("pdf", "png")
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ extract_eic(
 \item{path}{Work directory.}
 
 \item{group_for_figure}{what samples groups are used to extract EICs}
+
+\item{feature_type}{png of pdf}
 }
 \value{
 EICs.

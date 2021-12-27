@@ -3,10 +3,11 @@ pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   contact_us: contact_us.html
+  extract_eic: extract_eic.html
   massprocesser_install: massprocesser_install.html
   raw_data_processing: raw_data_processing.html
   version_0_9_2: version_0_9_2.html
-last_built: 2021-12-27T19:46Z
+last_built: 2021-12-27T21:33Z
 urls:
   reference: https://tidymass.github.io/massprocesser/reference
   article: https://tidymass.github.io/massprocesser/articles

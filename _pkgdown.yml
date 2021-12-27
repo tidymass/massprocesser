@@ -34,17 +34,13 @@ navbar:
     articles:
       text: Help document
       menu:
-      - text: Install massprocesser
+      - text: "Install massprocesser"
         href: articles/massprocesser_install.html
-      - text: Raw MS data processing
+      - text: "Raw MS data processing"
       - text: Peak detection and alignment
         href: articles/raw_data_processing.html
-      - text: Other tools for raw MS data processing
-        href: articles/other_tools_for_raw_data_processing.html
-      - text: -------
-      - text: "Other tools"
-      - text: Other tools in massprocesser
-        href: articles/other_tools.html
+      - text: "Extract EICs of some features"
+        href: articles/extract_eic.html
     twitter:
       icon: "fab fa-twitter fa-lg"
       href: https://twitter.com/JasperShen1990
