@@ -12,3 +12,5 @@ test_data
 man/figures
 example
 Result
+vignettes/
+vignettes

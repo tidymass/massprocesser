@@ -100,34 +100,37 @@ process_data = function(path = ".",
   dir.create(output_path, showWarnings = FALSE)
   intermediate_data_path <- file.path(output_path, "intermediate_data")
   dir.create(intermediate_data_path, showWarnings = FALSE)
-  ##paramters
-  parameters <- list(
-    path = path,
-    polarity = polarity,
-    ppm = ppm,
-    peakwidth = peakwidth,
-    snthresh = snthresh,
-    prefilter = prefilter,
-    fitgauss = fitgauss,
-    integrate = integrate,
-    mzdiff = mzdiff,
-    noise = noise,
-    threads = threads,
-    binSize = binSize,
-    bw = bw,
-    output_tic = output_tic,
-    output_bpc = output_bpc,
-    output_rt_correction_plot = output_rt_correction_plot,
-    min_fraction = min_fraction,
-    fill_peaks = fill_peaks
-  )
   
-  save(parameters, file = file.path(intermediate_data_path, "massprocesser_parameters"))
-  write.csv(
-    parameters,
-    file = file.path(intermediate_data_path, "massprocesser_parameters.csv"),
-    row.names = FALSE
+  ##paramters
+  massprocesser_parameters <- new(
+    Class = "tidymass_parameter",
+    pacakge_name = "massprocesser",
+    function_name = "process_data",
+    parameter = list(
+      path = path,
+      polarity = polarity,
+      ppm = ppm,
+      peakwidth = peakwidth,
+      snthresh = snthresh,
+      prefilter = prefilter,
+      fitgauss = fitgauss,
+      integrate = integrate,
+      mzdiff = mzdiff,
+      noise = noise,
+      threads = threads,
+      binSize = binSize,
+      bw = bw,
+      output_tic = output_tic,
+      output_bpc = output_bpc,
+      output_rt_correction_plot = output_rt_correction_plot,
+      min_fraction = min_fraction,
+      fill_peaks = fill_peaks
+    ),
+    time = Sys.time()
   )
+
+  save(massprocesser_parameters, 
+       file = file.path(intermediate_data_path, "massprocesser_parameters"))
   ##------------------------------------------------------------------------------------
   #peak detection
   

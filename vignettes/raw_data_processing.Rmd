@@ -31,34 +31,33 @@ knitr::opts_chunk$set(
 
 ***
 
-## **Introduction**
+## **Download demo data**
 
-*massprocesser* can used to processed the raw MS data for peak detection and alignment, and generate a peak table for next analysis. 
+Raw data can be downloaded from the Google drive. [Link is here](https://drive.google.com/drive/folders/1aAr9kfjXPDskgEImhHNlAIdW9c3m-HAi?usp=sharing)
 
 ## **Data preparation**
 
-The MS raw data from Mass Spectrometry should be converted to `mzXML` format and then placed in different folders according to their class, for example `Subject`, `QC`, and `Blank` samples.
+*massprocesser* can used to processed the raw MS data for peak detection and alignment, and generate a peak table for next analysis. 
 
-Here we use the demo data (2 mzXML files) from `demoData` packages. Download [here](https://github.com/jaspershen/demoData/tree/master/inst/mzxml/POS/QC)
+The MS raw data from Mass Spectrometry should be converted to `mzXML` or `mzML`format and then placed in different folders according to their class, for example `Subject`, `QC`, and `Blank` samples.
 
-You can convert raw MS data to mzXML format using [`ProteoWizard` software](http://proteowizard.sourceforge.net/). And the parameter setting is shown the below figure:
+![](../man/figures/Screen Shot 2021-12-27 at 9.20.33 AM.png)
+
+You can convert raw MS data to `mzXML` or `mzML` format using [`ProteoWizard` software](http://proteowizard.sourceforge.net/). And the parameter setting is shown the below figure:
 
 ![](../man/figures/Capture.PNG)
 
+> The demo data have been converted to `mzML` format.
 
 ## **Data organization**
 
 All the `mzXML` format files should be placed in different folder according to sample type, such as `QC`, `Subject`, and `Blank`. 
 
-![](../man/figures/figure2.png)
+![](../man/figures/Screen Shot 2021-12-27 at 9.20.33 AM.png)
 
 ## **Run `process_data()`** function
 
-We use the demo data from `demoData` to show how to process raw MS data using `massprocesser`.
-
-### **Download demo data**
-
-First we download the demo data from `demoData` package and then place them in a `example` folder.
+This function is used to peak picking and peak alignment.
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE}
 library(massprocesser)
@@ -68,21 +67,15 @@ library(MSnbase)
 library(mzR)
 ```
 
-```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE,cache = TRUE}
-#create a folder named as `example`
-path <- file.path(".", "example")
-dir.create(path = path, showWarnings = FALSE)
-```
-
-Now place the demo mzXML data in the `./example` folder. There are two folder in this directory, namely `Subject` and `QC`.
-
 ### **Data processing**
 
 Next, we use the `process_data()` function for peak detection and alignment.
 
+We first do the positive mode.
+
 ```{r,eval = TRUE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
 massprocesser::process_data(
-  path = path,
+  path = "raw_data/MS1/POS/",
   polarity = "positive",
   ppm = 15,
   peakwidth = c(5, 30),
@@ -116,7 +109,7 @@ Some important arguments:
 
 * `fill_peaks`: Do you want to fill the missing values (NA)? 
 
-Ohter parameters you can find here: `process_data()`.
+Other parameters you can find here: `process_data()`.
 
 ## **Output results**
 
@@ -133,4 +126,8 @@ After all done, all the results are placed in a new folder named as `Result`.
 
 * `intermediate_data`: This is a folder which contains some intermediate data. If you want to re-run the data processing, please delete this folder first.
 
+## **Session information**
 
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+sessionInfo()
+```

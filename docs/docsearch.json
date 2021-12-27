@@ -2,21 +2,21 @@
   "index_name": "massprocesser",
   "start_urls": [
     {
-      "url": "https://tidymass.github.io/massprocesser//index.html",
+      "url": "https://tidymass.github.io/massprocesser/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://tidymass.github.io/massprocesser//reference",
+      "url": "https://tidymass.github.io/massprocesser/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://tidymass.github.io/massprocesser//articles",
+      "url": "https://tidymass.github.io/massprocesser/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://tidymass.github.io/massprocesser//sitemap.xml"
+    "https://tidymass.github.io/massprocesser/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
