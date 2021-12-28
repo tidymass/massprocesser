@@ -451,11 +451,52 @@ process_data = function(path = ".",
                    path = file.path(output_path, "Peak_table_for_cleaning.csv"))
   cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
   
+  #####output mass_data class object
+  sample_info =
+    pd %>%
+    dplyr::rename(sample_id = sample_name,
+                  group = sample_group) %>%
+    dplyr::mutate(
+      class = dplyr::case_when(
+        stringr::str_detect(group, "QC") ~ "QC",
+        stringr::str_detect(group, "Blank") ~ "Blank",
+        stringr::str_detect(group, "Internal_standard") ~ "Internal_standard",
+        TRUE ~ "Subject"
+      )
+    ) %>%
+    dplyr::mutate(injection.order = seq_len(nrow(pd))) %>% 
+    dplyr::mutate(sample_id = stringr::str_replace(sample_id, "\\.mzML", "")) %>% 
+    dplyr::mutate(sample_id = stringr::str_replace(sample_id, "\\.mzXML", ""))
+  
+  expression_data = 
+    peak_table_for_cleaning %>% 
+    dplyr::select(-c(variable_id:rt)) %>% 
+    as.data.frame()
+  
+  variable_info = 
+    peak_table_for_cleaning %>% 
+    dplyr::select(variable_id:rt) %>% 
+    as.data.frame()
+  
+  rownames(expression_data) = variable_info$variable_id
+  rownames(variable_info) = NULL
+  
+  object = 
+  massdataset::create_mass_dataset(
+    expression_data = expression_data,
+    sample_info = sample_info,
+    variable_info = variable_info
+  )
+  
+  object@process_info$process_data = 
+    massprocesser_parameters
+  
+  save(object, file = file.path(output_path, "object"))
+  
   rm(list = c("peak_table", "peak_table_for_cleaning"))
   cat(crayon::red("OK\n"))
 
   cat(crayon::bgRed(clisymbols::symbol$tick ,"All done!\n"))
-  
 }
 
 

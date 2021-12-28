@@ -30,7 +30,7 @@
 #' @import patchwork
 #' @importFrom stats coefficients lm loess median predict
 #' @importFrom stats rgamma rt sd cor p.adjust prcomp t.test wilcox.test
-#' @importClassesFrom massdataset tidymass_parameter
+#' @importClassesFrom massdataset tidymass_parameter mass_dataset
 #' @export
 
 massprocesser_logo <- function() {
