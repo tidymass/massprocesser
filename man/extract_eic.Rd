@@ -18,9 +18,11 @@ extract_eic(
 )
 }
 \arguments{
-\item{targeted_table}{A data.frame contains the variable_id, mz and rt of features to extract.}
+\item{targeted_table}{A data.frame contains the variable_id, 
+mz and rt of features to extract.}
 
-\item{object}{object from xcms. If you use massprocesser, this should be the xdata3.}
+\item{object}{object from xcms. If you use massprocesser, 
+this should be the xdata3.}
 
 \item{polarity}{positive or negative.}
 
@@ -46,5 +48,5 @@ Extract EICs of some features from some samples.
 }
 \author{
 Xiaotao Shen
-\email{shenxt1990@163.com}
+\email{shenxt1990@outlook.com}
 }

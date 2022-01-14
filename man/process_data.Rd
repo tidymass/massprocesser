@@ -63,7 +63,8 @@ process_data(
 
 \item{fill_peaks}{Fill peaks NA or not.}
 
-\item{group_for_figure}{Which group you want to use to output TIC and BPC and EIC. Default is QC.}
+\item{group_for_figure}{Which group you want to use to output 
+TIC and BPC and EIC. Default is QC.}
 }
 \value{
 Peak table.
@@ -73,5 +74,5 @@ Raw MS data processing using xcms.
 }
 \author{
 Xiaotao Shen
-\email{shenxt1990@163.com}
+\email{shenxt1990@outlook.com}
 }

@@ -8,33 +8,26 @@ Authors@R: c(
       comment = c(ORCID = "0000-0002-9608-9964")
     )
     )
-Description: This package is used to do all the data processing and data analysis for metabolomics.
+Description: This package is used to do raw data processing of LC-MS untargeted
+             metabolomics processing. This is based on the xcms algorithm.
+             Other very usefull tools are also included in this package.
 LazyData: true
-Depends: R (>= 3.5)
+Depends: R (>= 4.2)
 Imports:
     BiocParallel,
     cli,
     crayon,
     clisymbols,
     dplyr,
-    faahKO,
     ggplot2,
-    ggsci,
-    ggfortify,
-    graphics,
     grDevices,
     magrittr,
     pbapply,
-    pheatmap,
     plyr,
     purrr,
-    patchwork,
-    snow,
     tidyverse,
     methods,
     MSnbase,
-    mzR,
-    pander,
     utils,
     stats,
     readr,
@@ -45,6 +38,7 @@ Imports:
     tibble,
     tidyr,
     xcms,
+    mzR,
     tinytools,
     Biobase,
     rstudioapi,
@@ -53,12 +47,13 @@ Imports:
 License: GPL-2 | file LICENSE
 URL: https://github.com/tidymass/massprocesser
 BugReports: https://github.com/tidymass/massprocesser/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     knitr,
     rmarkdown,
     BiocStyle,
-    RUnit
+    RUnit,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Note:
 biocViews: Metabolomics, MassSpectrometry
@@ -66,3 +61,4 @@ Encoding: UTF-8
 Remotes: 
     tidymass/tinytools,
     tidymass/massdataset
+Config/testthat/edition: 3

@@ -7,7 +7,8 @@
 check_targeted_table(targeted_table)
 }
 \arguments{
-\item{targeted_table}{targeted_table, 3 columns, 1. variable_id, 2. mz, 3. rt..}
+\item{targeted_table}{targeted_table, 
+3 columns, 1. variable_id, 2. mz, 3. rt.}
 }
 \value{
 Notice of data checking.
@@ -15,7 +16,14 @@ Notice of data checking.
 \description{
 Check targeted_table for extract_eic function.
 }
+\examples{
+targeted_table = 
+  data.frame(variable_id = letters[1:5],
+             mz = c(100, 100.01, 100.02, 100.03, 100.05),
+             rt = c(1,2,3,4,5))
+check_targeted_table(targeted_table)
+}
 \author{
 Xiaotao Shen
-\email{shenxt1990@163.com}
+\email{shenxt1990@outlook.com}
 }

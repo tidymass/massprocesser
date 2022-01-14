@@ -6,6 +6,9 @@
 \usage{
 massprocesser_conflicts()
 }
+\value{
+massprocesser_conflicts
+}
 \description{
 This function lists all the conflicts between packages in the massprocesser
 and other packages that you have loaded.

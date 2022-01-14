@@ -26,7 +26,10 @@ massprocesser_attach <- function() {
   
   msg(cli::rule(
     left = crayon::bold("Attaching packages"),
-    right = paste0("massprocesser ", massprocesser_package_version("massprocesser"))
+    right = paste0(
+      "massprocesser ",
+      massprocesser_package_version("massprocesser")
+    )
   ),
   startup = TRUE)
   
@@ -62,4 +65,3 @@ massprocesser_package_version <- function(x) {
   }
   paste0(version, collapse = ".")
 }
-

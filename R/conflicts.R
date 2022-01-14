@@ -9,6 +9,7 @@
 #' existing code.
 #'
 #' @export
+#' @return massprocesser_conflicts
 #' @examples
 #' massprocesser_conflicts()
 massprocesser_conflicts <- function() {
@@ -43,7 +44,8 @@ massprocesser_conflict_message <- function(x) {
   )
   
   winner <- pkgs %>% purrr::map_chr(1)
-  funs <- format(paste0(crayon::blue(winner), "::", crayon::green(paste0(names(x), "()"))))
+  funs <- format(paste0(crayon::blue(winner), "::", 
+                        crayon::green(paste0(names(x), "()"))))
   bullets <- paste0(
     crayon::red(cli::symbol$cross), " ", funs,
     " masks ", other_calls,

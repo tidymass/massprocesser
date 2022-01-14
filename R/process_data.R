@@ -1,7 +1,7 @@
 #' @title process_data
 #' @description Raw MS data processing using xcms.
 #' @author Xiaotao Shen
-#' \email{shenxt1990@@163.com}
+#' \email{shenxt1990@@outlook.com}
 #' @param path Work directory.
 #' @param polarity The polarity of data, "positive"or "negative".
 #' @param ppm see xcms.
@@ -20,7 +20,8 @@
 #' @param output_rt_correction_plot Output rt correction plot or not.
 #' @param min_fraction See xcms.
 #' @param fill_peaks Fill peaks NA or not.
-#' @param group_for_figure Which group you want to use to output TIC and BPC and EIC. Default is QC.
+#' @param group_for_figure Which group you want to use to output 
+#' TIC and BPC and EIC. Default is QC.
 #' @return Peak table.
 #' @export
 
@@ -76,7 +77,7 @@
 #             group_for_figure = "QC"
 # )
 
-process_data = function(path = ".",
+process_data <- function(path = ".",
                        polarity = c("positive", "negative"),
                        ppm = 15,
                        peakwidth = c(5, 30),
@@ -101,7 +102,7 @@ process_data = function(path = ".",
   intermediate_data_path <- file.path(output_path, "intermediate_data")
   dir.create(intermediate_data_path, showWarnings = FALSE)
   
-  ##paramters
+  ##parameters
   massprocesser_parameters <- new(
     Class = "tidymass_parameter",
     pacakge_name = "massprocesser",
@@ -131,15 +132,16 @@ process_data = function(path = ".",
 
   save(massprocesser_parameters, 
        file = file.path(intermediate_data_path, "massprocesser_parameters"))
-  ##------------------------------------------------------------------------------------
+  ##----------------------------------------------------
   #peak detection
   
   f.in <- list.files(path = path,
-                     pattern = '\\.(mz[X]{0,1}ML|cdf)',
+                     pattern = '\\.(mz[X|x]{0,1}[M|m][L|l]|cdf)',
                      recursive = TRUE, full.names = TRUE)
   
   sample_group <-
-    unlist(lapply(stringr::str_split(string = f.in, pattern = "/"), function(x) {
+    unlist(lapply(stringr::str_split(string = f.in, pattern = "/"), 
+                  function(x) {
       x[length(x)-1]
     }))
   
@@ -148,11 +150,13 @@ process_data = function(path = ".",
   if(!group_for_figure %in% sample_group){
     group_for_figure2 <- 
       plyr::count(sample_group) %>% 
-      dplyr::filter(freq == min(freq) & stringr::str_to_lower(x) != "blank") %>% 
+      dplyr::filter(freq == min(freq) & 
+                      stringr::str_to_lower(x) != "blank") %>% 
       pull(x) %>% 
       `[`(1) %>% 
       as.character()
-    cat(crayon::yellow(group_for_figure, "is not in you directory, so set is as ", 
+    message(crayon::yellow(group_for_figure, 
+                           "is not in you directory, so set is as ", 
                        group_for_figure2), "\n")
     group_for_figure <- group_for_figure2 
   }
@@ -171,15 +175,15 @@ process_data = function(path = ".",
   
   ## Define colors for different groups
   group_colors <-
-    paste0(RColorBrewer::brewer.pal(9, "Set1")[1:length(unique(sample_group))], "60")
-  # group_colors <-
-  #   grDevices::colorRampPalette(ggsci::pal_npg()(10))(100)[1:length(unique(sample_group))]
+    paste0(RColorBrewer::brewer.pal(9, "Set1")[seq_along(unique(sample_group))], 
+           "60")
+  
   names(group_colors) <- unique(sample_group)
   
-  cat(crayon::green("Reading raw data, it will take a while...\n"))
+  message(crayon::green("Reading raw data, it will take a while...\n"))
   
   if (any(dir(intermediate_data_path) == "raw_data")) {
-    cat(crayon::yellow("Use old saved data in Result.\n"))
+    message(crayon::yellow("Use old saved data in Result.\n"))
     load(file.path(intermediate_data_path, "raw_data"))
   } else{
     raw_data <- MSnbase::readMSData(
@@ -193,12 +197,12 @@ process_data = function(path = ".",
          )
   }
   
-  cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+  message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   
   #----------------------------------------------------------------------------
-  cat(crayon::green("Detecting peaks...\n"))
+  message(crayon::green("Detecting peaks...\n"))
   ###peak detection
-  cwp <- suppressMessages(
+  cwp <- 
     xcms::CentWaveParam(
       ppm = ppm,
       prefilter = prefilter,
@@ -209,52 +213,48 @@ process_data = function(path = ".",
       noise = noise, 
       fitgauss = fitgauss,
     )
-  )
   
   if (any(dir(intermediate_data_path) == "xdata")) {
-    cat(crayon::yellow("Use old saved data in Result.\n"))
+    message(crayon::yellow("Use old saved data in Result.\n"))
     load(file.path(intermediate_data_path, "xdata"))
   } else{
     
     if(tinytools::get_os() == "windows"){
-      bpparam =
+      bpparam <-
         BiocParallel::SnowParam(workers = threads,
                                 progressbar = TRUE)
     }else{
-      bpparam = BiocParallel::MulticoreParam(workers = threads,
+      bpparam <- BiocParallel::MulticoreParam(workers = threads,
                                              progressbar = TRUE)
     }
     
     xdata <- 
-      suppressMessages(
         try(xcms::findChromPeaks(
           raw_data,
           param = cwp,
           BPPARAM = bpparam
         ), silent = FALSE
         )
-      )
     
-    if(class(xdata) == "try-error"){
+      if(is(xdata, class2 = "try-error")){
       stop("Error in xcms::findChromPeaks.\n")
     }
     
     save(xdata,
          file = file.path(intermediate_data_path, "xdata")
-         # compress = "xz"
     )
   }
   
   rm(list = "raw_data")
-  cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+  message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   
-  #--------------------------------------------------------------------------------
+  #-------------------------------------------------------
   #retention time correction
   #Alignment
-  cat(crayon::green("Correcting rentention time...\n "))
+  message(crayon::green("Correcting rentention time...\n "))
   
   if (any(dir(intermediate_data_path) == "xdata2")) {
-    cat(crayon::yellow("Use old saved data in Result.\n"))
+    message(crayon::yellow("Use old saved data in Result.\n"))
     load(file.path(intermediate_data_path, "xdata2"))
   } else{
     xdata2 <- try(xcms::adjustRtime(xdata,
@@ -266,9 +266,9 @@ process_data = function(path = ".",
     )
   }
   
-  cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+  message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   
-  if (class(xdata2) == "try-error") {
+  if(is(xdata2, class2 = "try-error")){
     xdata2 <- xdata
     save(xdata2,
          file = file.path(intermediate_data_path, "xdata2")
@@ -277,7 +277,7 @@ process_data = function(path = ".",
   } else{
     ## Plot also the difference of adjusted to raw retention time.
     if (output_rt_correction_plot) {
-      cat(crayon::green("Drawing RT correction plot..."))
+      message(crayon::green("Drawing RT correction plot..."))
       rt_correction_plot <- plot_adjusted_rt(object = xdata2)
 
       ggplot2::ggsave(
@@ -287,7 +287,7 @@ process_data = function(path = ".",
         height = 7
       )
       rm(list = c("rt_correction_plot"))
-      cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+      message(crayon::red(clisymbols::symbol$tick, "OK\n"))
     }
   }
   
@@ -295,16 +295,16 @@ process_data = function(path = ".",
   
   ###TIC
   if(tinytools::get_os() == "windows"){
-    bpparam =
+    bpparam <-
       BiocParallel::SnowParam(workers = threads,
                               progressbar = TRUE)
   }else{
-    bpparam = BiocParallel::MulticoreParam(workers = threads,
+    bpparam <- BiocParallel::MulticoreParam(workers = threads,
                                            progressbar = TRUE)
   }
   
   if (output_tic) {
-    cat(crayon::green("Drawing TIC plot..."))
+    message(crayon::green("Drawing TIC plot..."))
     tic.plot <- xcms::chromatogram(object = xdata2,
                                    aggregationFun = "sum",
                                    BPPARAM = bpparam
@@ -328,20 +328,20 @@ process_data = function(path = ".",
     }
     
     rm(list = c("plot", "tic.plot"))
-    cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+    message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   }
   
   ###BPC
   if (output_bpc) {
     if(tinytools::get_os() == "windows"){
-      bpparam =
+      bpparam <-
         BiocParallel::SnowParam(workers = threads,
                                 progressbar = TRUE)
     }else{
-      bpparam = BiocParallel::MulticoreParam(workers = threads,
+      bpparam <- BiocParallel::MulticoreParam(workers = threads,
                                              progressbar = TRUE)
     }
-    cat(crayon::green("Drawing BPC plot..."))
+    message(crayon::green("Drawing BPC plot..."))
     bpc.plot <- xcms::chromatogram(object = xdata2,
                                    aggregationFun = "max",
                                    BPPARAM = bpparam)
@@ -363,16 +363,16 @@ process_data = function(path = ".",
     }
     
     rm(list = c("plot", "bpc.plot"))
-    cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+    message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   }
   
   
-  #-------------------------------------------------------------------------------------
+  #-----------------------------------------------
   ## Perform the correspondence
-  cat(crayon::green("Grouping peaks across samples...\n"))
+  message(crayon::green("Grouping peaks across samples...\n"))
   
   if (any(dir(intermediate_data_path) == "xdata3")) {
-    cat(crayon::yellow("Use old saved data in Result.\n"))
+    message(crayon::yellow("Use old saved data in Result.\n"))
     load(file.path(intermediate_data_path, "xdata3"))
   } else{
     pdp <- xcms::PeakDensityParam(
@@ -391,7 +391,7 @@ process_data = function(path = ".",
     )
   }
   
-  cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+  message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   rm(list = "xdata2")
   
   if (fill_peaks) {
@@ -404,7 +404,7 @@ process_data = function(path = ".",
     )
   }
   
-  cat(crayon::green("Outputting peak table...\n"))
+  message(crayon::green("Outputting peak table...\n"))
   ##output peak table
   values <- xcms::featureValues(xdata3, value = "into")
   definition <- xcms::featureDefinitions(object = xdata3)
@@ -417,7 +417,8 @@ process_data = function(path = ".",
     as.data.frame()
   
   peak_name <- xcms::groupnames(xdata3)
-  peak_name <- paste(peak_name, ifelse(polarity == "positive", "POS", "NEG"), sep = "_")
+  peak_name <- paste(peak_name, 
+                     ifelse(polarity == "positive", "POS", "NEG"), sep = "_")
   
   colnames(values) <-
     stringr::str_replace(
@@ -442,17 +443,18 @@ process_data = function(path = ".",
   readr::write_csv(peak_table, path = file.path(output_path, "Peak_table.csv"))
   peak_table_for_cleaning <-
     definition %>%
-    dplyr::select(-c("mzmin", 'mzmax', 'rtmin', 'rtmax', 'npeaks', unique(sample_group))) %>% 
+    dplyr::select(-c("mzmin", 'mzmax', 'rtmin', 
+                     'rtmax', 'npeaks', unique(sample_group))) %>% 
     dplyr::rename(mz = mzmed, rt = rtmed) %>% 
     data.frame(variable_id = peak_name, ., values, stringsAsFactors = FALSE)
   
   
   readr::write_csv(peak_table_for_cleaning, 
                    path = file.path(output_path, "Peak_table_for_cleaning.csv"))
-  cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+  message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   
   #####output mass_data class object
-  sample_info =
+  sample_info <-
     pd %>%
     dplyr::rename(sample_id = sample_name,
                   group = sample_group) %>%
@@ -465,38 +467,39 @@ process_data = function(path = ".",
       )
     ) %>%
     dplyr::mutate(injection.order = seq_len(nrow(pd))) %>% 
-    dplyr::mutate(sample_id = stringr::str_replace(sample_id, "\\.mzML", "")) %>% 
+    dplyr::mutate(sample_id = 
+                    stringr::str_replace(sample_id, "\\.mzML", "")) %>% 
     dplyr::mutate(sample_id = stringr::str_replace(sample_id, "\\.mzXML", ""))
   
-  expression_data = 
+  expression_data <- 
     peak_table_for_cleaning %>% 
     dplyr::select(-c(variable_id:rt)) %>% 
     as.data.frame()
   
-  variable_info = 
+  variable_info <- 
     peak_table_for_cleaning %>% 
     dplyr::select(variable_id:rt) %>% 
     as.data.frame()
   
-  rownames(expression_data) = variable_info$variable_id
-  rownames(variable_info) = NULL
+  rownames(expression_data) <- variable_info$variable_id
+  rownames(variable_info) <- NULL
   
-  object = 
+  object <- 
   massdataset::create_mass_dataset(
     expression_data = expression_data,
     sample_info = sample_info,
     variable_info = variable_info
   )
   
-  object@process_info$process_data = 
+  object@process_info$process_data <- 
     massprocesser_parameters
   
   save(object, file = file.path(output_path, "object"))
   
   rm(list = c("peak_table", "peak_table_for_cleaning"))
-  cat(crayon::red("OK\n"))
+  message(crayon::red("OK\n"))
 
-  cat(crayon::bgRed(clisymbols::symbol$tick ,"All done!\n"))
+  message(crayon::bgRed(clisymbols::symbol$tick ,"All done!\n"))
 }
 
 

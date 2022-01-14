@@ -39,7 +39,7 @@ navbar:
       - text: "Raw MS data processing"
       - text: Peak detection and alignment
         href: articles/raw_data_processing.html
-      - text: "Extract EICs of some features"
+      - text: "Extract EICs of some features/Internal standards"
         href: articles/extract_eic.html
     twitter:
       icon: "fab fa-twitter fa-lg"

@@ -9,6 +9,12 @@ massprocesser_packages(include_self = TRUE)
 \arguments{
 \item{include_self}{Include massprocesser in the list?}
 }
+\value{
+massprocesser_packages
+}
 \description{
 List all packages in the massprocesser
+}
+\examples{
+massprocesser_packages()
 }

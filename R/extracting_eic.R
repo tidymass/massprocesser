@@ -1,4 +1,4 @@
-# ##-------------------------------------------------------------------------------------
+# ##-------------------------------------------------
 # #output EIC of specific peaks
 # sxtTools::setwd_project()
 # setwd("test_data/mzxml/")
@@ -26,9 +26,11 @@
 #' @title extract_eic
 #' @description Extract EICs of some features from some samples.
 #' @author Xiaotao Shen
-#' \email{shenxt1990@@163.com}
-#' @param targeted_table A data.frame contains the variable_id, mz and rt of features to extract.
-#' @param object object from xcms. If you use massprocesser, this should be the xdata3.
+#' \email{shenxt1990@@outlook.com}
+#' @param targeted_table A data.frame contains the variable_id, 
+#' mz and rt of features to extract.
+#' @param object object from xcms. If you use massprocesser, 
+#' this should be the xdata3.
 #' @param polarity positive or negative.
 #' @param mz_tolerance default is 15 ppm.
 #' @param rt_tolerance default is 30 ppm.
@@ -40,7 +42,7 @@
 #' @return EICs.
 #' @export
 
-extract_eic = function(targeted_table,
+extract_eic <- function(targeted_table,
                        object,
                        polarity = c("positive", "negative"),
                        mz_tolerance = 15,
@@ -56,8 +58,8 @@ extract_eic = function(targeted_table,
   
   dir.create(path, showWarnings = FALSE)
   
-  feature_type = match.arg(feature_type)
-  polarity = match.arg(polarity)
+  feature_type <- match.arg(feature_type)
+  polarity <- match.arg(polarity)
   
   peak_name <- xcms::groupnames(object)
   peak_name <-
@@ -77,14 +79,15 @@ extract_eic = function(targeted_table,
   rownames(peak_table) <- NULL
   
   if (missing(targeted_table)) {
-    cat(
+    message(
       crayon::yellow(
-        "No targeted_table is provided, all the features' EICs will be outputted.\n"
+        "No targeted_table is provided, 
+        all the features' EICs will be outputted.\n"
       )
     )
-    targeted_table = peak_table
-    mz_tolerance = 0.0001
-    rt_tolerance = 0.0001
+    targeted_table <- peak_table
+    mz_tolerance <- 0.0001
+    rt_tolerance <- 0.0001
   }
   
   check_targeted_table(targeted_table = targeted_table)
@@ -102,7 +105,7 @@ extract_eic = function(targeted_table,
     stop("No features are in the object.\n")
   }
   
-  cat(crayon::green("Outputting peak EICs...\n"))
+  message(crayon::green("Outputting peak EICs...\n"))
   feature_EIC_path <- file.path(path, "feature_EIC")
   dir.create(feature_EIC_path, showWarnings = FALSE)
   
@@ -144,7 +147,7 @@ extract_eic = function(targeted_table,
         ggplot2::theme_bw()
       
       if (add_point) {
-        plot =
+        plot <-
           plot +
           ggplot2::geom_point(ggplot2::aes(color = sample_name))
       }
@@ -162,14 +165,14 @@ extract_eic = function(targeted_table,
   
   index2 <- sort(unique(match_result[, 2]))
   metabolite_name <-
-    targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
+targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
   
   if (tinytools::get_os() == "windows") {
-    bpparam =
+    bpparam <-
       BiocParallel::SnowParam(workers = threads,
                               progressbar = TRUE)
   } else{
-    bpparam = BiocParallel::MulticoreParam(workers = threads,
+    bpparam <- BiocParallel::MulticoreParam(workers = threads,
                                            progressbar = TRUE)
   }
   
@@ -185,7 +188,8 @@ extract_eic = function(targeted_table,
     feature_eic@.Data %>%
     pbapply::pbapply(1, function(y) {
       y <- lapply(y, function(x) {
-        if (class(x) == "XChromatogram") {
+        # if (class(x) == "XChromatogram") {
+          if (is(x, class2 = "XChromatogram")) {
           if (nrow(x@chromPeaks) == 0) {
             data.frame(
               rt.med = NA,
@@ -259,7 +263,7 @@ extract_eic = function(targeted_table,
     })
   
   BiocParallel::bplapply(
-    1:length(index2),
+    seq_len(length(index2)),
     FUN = temp_fun,
     BPPARAM = bpparam,
     feature_eic_data = feature_eic_data,
@@ -270,6 +274,6 @@ extract_eic = function(targeted_table,
     feature_type = feature_type
   )
   
-  cat(crayon::red(clisymbols::symbol$tick, "OK\n"))
+  message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   
 }

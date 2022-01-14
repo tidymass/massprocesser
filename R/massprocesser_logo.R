@@ -1,7 +1,7 @@
 #' @title massprocesser_logo
 #' @description massprocesser_logo
 #' @author Xiaotao Shen
-#' \email{shenxt@@stanford.edu}
+#' \email{shenxt1990@@outlook.com}
 #' @importFrom xcms CentWaveParam findChromPeaks adjustRtime ObiwarpParam chromatogram PeakDensityParam groupChromPeaks
 #' @importFrom xcms featureChromatograms groupnames featureDefinitions featureValues fillChromPeaks
 #' @importFrom Biobase featureData
@@ -26,18 +26,23 @@
 #' @importFrom magrittr %>%
 #' @importFrom plotly ggplotly
 #' @importFrom BiocGenerics basename
-#' @importFrom patchwork plot_layout
-#' @import patchwork
 #' @importFrom stats coefficients lm loess median predict
 #' @importFrom stats rgamma rt sd cor p.adjust prcomp t.test wilcox.test
+#' @importFrom methods is
+#' @import mzR
+#' @import tidyr
+#' @import tidyverse
 #' @importClassesFrom massdataset tidymass_parameter mass_dataset
 #' @export
+#' @return massprocesser_logo
+#' @examples 
+#' massprocesser_logo()
 
 massprocesser_logo <- function() {
-  cat(crayon::green("Thank you for using massprocesser!\n"))
-  cat(crayon::green("Version 0.9.2 (20210312)\n"))
-  cat(crayon::green("Bug fixing\n"))
-  cat(
+  message(crayon::green("Thank you for using massprocesser!\n"))
+  message(crayon::green("Version 0.9.2 (20210312)\n"))
+  message(crayon::green("Bug fixing\n"))
+  message(
     crayon::green(
       "More information: searching 'tidymass massprocesser'.\n"
     )
@@ -55,6 +60,23 @@ massprocesser_logo <- function() {
     )
     
   ), sep = "\n")
+}
+
+
+massprocesser_version <- "0.9.2"
+
+
+#' @title get_massprocesser_version
+#' @description get_massprocesser_version
+#' @author Xiaotao Shen
+#' \email{shenxt1990@@outlook.com}
+#' @export
+#' @return massprocesser_version
+#' @examples 
+#' get_massprocesser_version()
+
+get_massprocesser_version <- function(){
+  return(massprocesser_version)
 }
 
 #' .onAttach <- function(libname, pkgname){

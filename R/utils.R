@@ -28,7 +28,10 @@ text_col <- function(x) {
 #' List all packages in the massprocesser
 #'
 #' @param include_self Include massprocesser in the list?
+#' @return massprocesser_packages
 #' @export
+#' @examples
+#' massprocesser_packages()
 
 massprocesser_packages <- function(include_self = TRUE) {
   raw <- utils::packageDescription("massprocesser")$Imports
@@ -39,7 +42,6 @@ massprocesser_packages <- function(include_self = TRUE) {
   if (include_self) {
     names <- c(names, "massprocesser")
   }
-  
   names
 }
 
@@ -58,12 +60,10 @@ style_grey <- function(level, ...) {
 }
 
 
-
-
 #' @title plot_chromatogram
 #' @description Draw TIC or BPC.
 #' @author Xiaotao Shen
-#' \email{shenxt1990@@163.com}
+#' \email{shenxt1990@@outlook.com}
 #' @param object Object for tic.plot or bpc.plot.
 #' @param title.size Font size of title..
 #' @param lab.size Font size of lab title.
@@ -75,7 +75,7 @@ style_grey <- function(level, ...) {
 #' @return A ggplot2 object.
 #' @export
 
-plot_chromatogram = function(
+plot_chromatogram <- function(
   object,
   title.size = 15,
   lab.size = 15,
@@ -98,7 +98,7 @@ plot_chromatogram = function(
   }
   
   if (nrow(info) > 10) {
-    idx <- sort(sample(1:nrow(info), 10))
+    idx <- sort(sample(seq_len(nrow(info)), 10))
     info <- info[idx, , drop = FALSE]
     data <- data[, idx, drop = FALSE]
   }
@@ -139,18 +139,16 @@ plot_chromatogram = function(
   # })
   
   data <- do.call(rbind, args = data)
-  
-  # data <- plyr::dlply(.data = data, .variables = plyr::.(sample))
-  
+
   plot <-
     ggplot2::ggplot(data = data,
                     ggplot2::aes(x = mz, y = intensity)) +
     ggplot2::geom_line(data = data,
                        mapping = ggplot2::aes(colour = sample, 
                                               group = sample)) +
-    # ggsci::scale_fill_lancet() +
     ggplot2::theme_bw() +
-    ggplot2::labs(x = "Retention time (RT, second)", y = "Intensity", title = title) +
+    ggplot2::labs(x = "Retention time (RT, second)", 
+                  y = "Intensity", title = title) +
     ggplot2::theme(
       plot.title = ggplot2::element_text(
         color = "black",
@@ -182,14 +180,14 @@ plot_chromatogram = function(
 #' @title plot_adjusted_rt
 #' @description plot_adjusted_rt
 #' @author Xiaotao Shen
-#' \email{shenxt1990@@163.com}
+#' \email{shenxt1990@@outlook.com}
 #' @param object object
 #' @param title.size title.size
 #' @param lab.size lab.size
 #' @param axis.text.size axis.text.size
 #' @return A ggplot2 object.
 
-plot_adjusted_rt = function(
+plot_adjusted_rt <- function(
   object,
   title.size = 15,
   lab.size = 15,
