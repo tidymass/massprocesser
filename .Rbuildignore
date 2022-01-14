@@ -12,5 +12,15 @@ test_data
 man/figures
 example
 Result
-vignettes/
-vignettes
+vignettes/*.html
+vignettes/*.pdf
+vignettes/*.png
+vignettes/*_cache
+vignettes/*.html
+vignettes/mzxml_ms1_data/
+vignettes/mzxml_ms1_data
+vignettes/figures
+vignettes/figures/
+
+
+
