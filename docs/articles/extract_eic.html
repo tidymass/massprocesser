@@ -69,16 +69,7 @@
       <a href="../articles/raw_data_processing.html">Peak detection and alignment</a>
     </li>
     <li>
-      <a href="../articles/extract_eic.html">Extract EICs of some features</a>
-    </li>
-    <li>
-      <a href="../articles/other_tools_for_raw_data_processing.html">Other tools for raw MS data processing</a>
-    </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Other tools</li>
-    <li>
-      <a href="../articles/other_tools.html">Other tools in massprocesser</a>
+      <a href="../articles/extract_eic.html">Extract EICs of some features/Internal standards</a>
     </li>
   </ul>
 </li>
@@ -142,7 +133,7 @@
       <h1 data-toc-skip>Extract EICs of some features</h1>
                         <h4 data-toc-skip class="author">Xiaotao Shen (<a href="https://www.shenxt.info/" class="external-link uri">https://www.shenxt.info/</a>)</h4>
                         
-            <h4 data-toc-skip class="date">Created on 2020-04-01 and updated on 2021-12-27</h4>
+            <h4 data-toc-skip class="date">Created on 2020-04-01 and updated on 2022-01-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tidymass/massprocesser/blob/HEAD/vignettes/extract_eic.Rmd" class="external-link"><code>vignettes/extract_eic.Rmd</code></a></small>
       <div class="hidden name"><code>extract_eic.Rmd</code></div>
@@ -152,21 +143,21 @@
     
     
 <hr>
-<div class="section level2">
-<h2 id="extract-eics-of-some-features">
+<div class="section level1">
+<h1 id="extract-eics-of-some-features">
 <strong>Extract EICs of some features</strong><a class="anchor" aria-label="anchor" href="#extract-eics-of-some-features"></a>
-</h2>
+</h1>
 <p><code>massprocesser</code> can be used to extract of EICs of some features, so you can evaluate the peak shape quality of targeted features.</p>
 <p>We still use the Result from <a href="https://tidymass.github.io/massprocesser/articles/raw_data_processing.html">Raw MS data processing using massprocesser</a> as a example.</p>
 </div>
-<div class="section level2">
-<h2 id="data-preparation">
+<div class="section level1">
+<h1 id="data-preparation">
 <strong>Data preparation</strong><a class="anchor" aria-label="anchor" href="#data-preparation"></a>
-</h2>
-<div class="section level3">
-<h3 id="targeted-feature-label">
+</h1>
+<div class="section level2">
+<h2 id="targeted-feature-label">
 <strong>Targeted feature label</strong><a class="anchor" aria-label="anchor" href="#targeted-feature-label"></a>
-</h3>
+</h2>
 <p>Here we just want to extract the feature with top 10 abundane in all samples.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymass/massprocesser" class="external-link">massprocesser</a></span><span class="op">)</span>
@@ -188,34 +179,21 @@
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mean_int</span><span class="op">)</span>
 
-<span class="va">targeted_table</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 3</span></span>
-<span class="co">#&gt;    variable_id       mz    rt</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> M338T506_POS    338. 506. </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> M339T506_3_POS  339. 506. </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> M276T52_1_POS   276.  52.3</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> M338T538_POS    338. 538. </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> M338T619_POS    338. 619. </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> M261T19_1_POS   261.  18.7</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> M515T183_1_POS  515. 183. </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> M338T601_POS    338. 601. </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> M338T579_POS    338. 579. </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> M353T185_1_POS  353. 185.</span></code></pre></div>
+<span class="va">targeted_table</span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="load-intermediate-data">
+<div class="section level2">
+<h2 id="load-intermediate-data">
 <strong>Load intermediate data</strong><a class="anchor" aria-label="anchor" href="#load-intermediate-data"></a>
-</h3>
+</h2>
 <p>Load the intermediate data “xdata3” from <code>Result</code> folder.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"raw_data/MS1/POS/Result/intermediate_data/xdata3"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="data-processing">
+<div class="section level1">
+<h1 id="data-processing">
 <strong>Data processing</strong><a class="anchor" aria-label="anchor" href="#data-processing"></a>
-</h2>
+</h1>
 <p>Next, we use the <code><a href="../reference/extract_eic.html">extract_eic()</a></code> to extract feature EICs. And the results are placed in <code>raw_data/MS1/POS/Result</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/extract_eic.html">extract_eic</a></span><span class="op">(</span>
@@ -234,102 +212,12 @@
 <p><img src="../reference/figures/Screen%20Shot%202021-12-27%20at%201.30.04%20PM.png"></p>
 <p><img src="../reference/figures/M338T506_POS.png"></p>
 </div>
-<div class="section level2">
-<h2 id="session-information">
+<div class="section level1">
+<h1 id="session-information">
 <strong>Session information</strong><a class="anchor" aria-label="anchor" href="#session-information"></a>
-</h2>
+</h1>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.1.0 (2021-05-18)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats4    parallel  stats     graphics  grDevices utils     datasets </span>
-<span class="co">#&gt; [8] methods   base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt;  [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.7        </span>
-<span class="co">#&gt;  [4] purrr_0.3.4         readr_2.0.0         tidyr_1.1.3        </span>
-<span class="co">#&gt;  [7] tibble_3.1.3        ggplot2_3.3.5       tidyverse_1.3.1    </span>
-<span class="co">#&gt; [10] xcms_3.14.1         MSnbase_2.18.0      ProtGenerics_1.24.0</span>
-<span class="co">#&gt; [13] S4Vectors_0.30.0    mzR_2.26.1          Rcpp_1.0.7         </span>
-<span class="co">#&gt; [16] Biobase_2.52.0      BiocGenerics_0.38.0 BiocParallel_1.26.1</span>
-<span class="co">#&gt; [19] massprocesser_0.9.2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;   [1] readxl_1.3.1                backports_1.2.1            </span>
-<span class="co">#&gt;   [3] circlize_0.4.14             systemfonts_1.0.2          </span>
-<span class="co">#&gt;   [5] plyr_1.8.6                  lazyeval_0.2.2             </span>
-<span class="co">#&gt;   [7] GenomeInfoDb_1.28.1         tinytools_0.9.1            </span>
-<span class="co">#&gt;   [9] digest_0.6.27               foreach_1.5.1              </span>
-<span class="co">#&gt;  [11] htmltools_0.5.2             massdataset_0.0.1          </span>
-<span class="co">#&gt;  [13] fansi_0.5.0                 magrittr_2.0.1             </span>
-<span class="co">#&gt;  [15] memoise_2.0.0               cluster_2.1.2              </span>
-<span class="co">#&gt;  [17] doParallel_1.0.16           tzdb_0.1.2                 </span>
-<span class="co">#&gt;  [19] openxlsx_4.2.4              limma_3.48.1               </span>
-<span class="co">#&gt;  [21] ComplexHeatmap_2.8.0        modelr_0.1.8               </span>
-<span class="co">#&gt;  [23] matrixStats_0.60.0          vroom_1.5.3                </span>
-<span class="co">#&gt;  [25] pkgdown_2.0.1               colorspace_2.0-2           </span>
-<span class="co">#&gt;  [27] rvest_1.0.1                 textshaping_0.3.6          </span>
-<span class="co">#&gt;  [29] haven_2.4.1                 xfun_0.24                  </span>
-<span class="co">#&gt;  [31] crayon_1.4.1                RCurl_1.98-1.3             </span>
-<span class="co">#&gt;  [33] jsonlite_1.7.2              impute_1.66.0              </span>
-<span class="co">#&gt;  [35] iterators_1.0.13            glue_1.4.2                 </span>
-<span class="co">#&gt;  [37] gtable_0.3.0                zlibbioc_1.38.0            </span>
-<span class="co">#&gt;  [39] XVector_0.32.0              GetoptLong_1.0.5           </span>
-<span class="co">#&gt;  [41] DelayedArray_0.18.0         shape_1.4.6                </span>
-<span class="co">#&gt;  [43] DEoptimR_1.0-9              scales_1.1.1               </span>
-<span class="co">#&gt;  [45] vsn_3.60.0                  DBI_1.1.1                  </span>
-<span class="co">#&gt;  [47] viridisLite_0.4.0           clue_0.3-59                </span>
-<span class="co">#&gt;  [49] gridGraphics_0.5-1          bit_4.0.4                  </span>
-<span class="co">#&gt;  [51] preprocessCore_1.54.0       clisymbols_1.2.0           </span>
-<span class="co">#&gt;  [53] MsCoreUtils_1.4.0           htmlwidgets_1.5.3          </span>
-<span class="co">#&gt;  [55] httr_1.4.2                  RColorBrewer_1.1-2         </span>
-<span class="co">#&gt;  [57] ellipsis_0.3.2              pkgconfig_2.0.3            </span>
-<span class="co">#&gt;  [59] XML_3.99-0.6                sass_0.4.0                 </span>
-<span class="co">#&gt;  [61] dbplyr_2.1.1                utf8_1.2.2                 </span>
-<span class="co">#&gt;  [63] ggplotify_0.0.8             tidyselect_1.1.1           </span>
-<span class="co">#&gt;  [65] rlang_0.4.11                munsell_0.5.0              </span>
-<span class="co">#&gt;  [67] cellranger_1.1.0            tools_4.1.0                </span>
-<span class="co">#&gt;  [69] cachem_1.0.5                cli_3.0.1                  </span>
-<span class="co">#&gt;  [71] generics_0.1.0              broom_0.7.9                </span>
-<span class="co">#&gt;  [73] evaluate_0.14               fastmap_1.1.0              </span>
-<span class="co">#&gt;  [75] mzID_1.30.0                 yaml_2.2.1                 </span>
-<span class="co">#&gt;  [77] ragg_1.1.3                  bit64_4.0.5                </span>
-<span class="co">#&gt;  [79] knitr_1.33                  fs_1.5.0                   </span>
-<span class="co">#&gt;  [81] zip_2.2.0                   robustbase_0.93-8          </span>
-<span class="co">#&gt;  [83] RANN_2.6.1                  ncdf4_1.17                 </span>
-<span class="co">#&gt;  [85] pbapply_1.4-3               xml2_1.3.2                 </span>
-<span class="co">#&gt;  [87] compiler_4.1.0              rstudioapi_0.13            </span>
-<span class="co">#&gt;  [89] plotly_4.9.4.1              png_0.1-7                  </span>
-<span class="co">#&gt;  [91] affyio_1.62.0               reprex_2.0.0               </span>
-<span class="co">#&gt;  [93] MassSpecWavelet_1.58.0      bslib_0.3.1                </span>
-<span class="co">#&gt;  [95] stringi_1.7.3               desc_1.3.0                 </span>
-<span class="co">#&gt;  [97] lattice_0.20-44             Matrix_1.3-3               </span>
-<span class="co">#&gt;  [99] ggsci_2.9                   vctrs_0.3.8                </span>
-<span class="co">#&gt; [101] pillar_1.6.2                lifecycle_1.0.0            </span>
-<span class="co">#&gt; [103] BiocManager_1.30.16         jquerylib_0.1.4            </span>
-<span class="co">#&gt; [105] MALDIquant_1.20             GlobalOptions_0.1.2        </span>
-<span class="co">#&gt; [107] data.table_1.14.0           bitops_1.0-7               </span>
-<span class="co">#&gt; [109] patchwork_1.1.1             GenomicRanges_1.44.0       </span>
-<span class="co">#&gt; [111] R6_2.5.0                    pcaMethods_1.84.0          </span>
-<span class="co">#&gt; [113] affy_1.70.0                 IRanges_2.26.0             </span>
-<span class="co">#&gt; [115] codetools_0.2-18            MASS_7.3-54                </span>
-<span class="co">#&gt; [117] assertthat_0.2.1            SummarizedExperiment_1.22.0</span>
-<span class="co">#&gt; [119] rprojroot_2.0.2             rjson_0.2.20               </span>
-<span class="co">#&gt; [121] withr_2.4.2                 GenomeInfoDbData_1.2.6     </span>
-<span class="co">#&gt; [123] hms_1.1.0                   grid_4.1.0                 </span>
-<span class="co">#&gt; [125] rmarkdown_2.9               rvcheck_0.1.8              </span>
-<span class="co">#&gt; [127] MatrixGenerics_1.4.2        Cairo_1.5-12.2             </span>
-<span class="co">#&gt; [129] lubridate_1.7.10</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 

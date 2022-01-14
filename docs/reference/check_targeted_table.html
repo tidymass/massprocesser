@@ -42,15 +42,7 @@
       <a href="../articles/raw_data_processing.html">Peak detection and alignment</a>
     </li>
     <li>
-      <a href="../articles/extract_eic.html">Extract EICs of some features</a>
-    </li>
-    <li>
-      <a href="../articles/other_tools_for_raw_data_processing.html">Other tools for raw MS data processing</a>
-    </li>
-    <li class="divider">
-    <li class="dropdown-header">Other tools</li>
-    <li>
-      <a href="../articles/other_tools.html">Other tools in massprocesser</a>
+      <a href="../articles/extract_eic.html">Extract EICs of some features/Internal standards</a>
     </li>
   </ul></li>
 <li class="dropdown">
@@ -116,7 +108,8 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>targeted_table</dt>
-<dd><p>targeted_table, 3 columns, 1. variable_id, 2. mz, 3. rt..</p></dd>
+<dd><p>targeted_table, 
+3 columns, 1. variable_id, 2. mz, 3. rt.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -125,9 +118,18 @@
     <div id="author">
     <h2>Author</h2>
     <p>Xiaotao Shen
-<a href="mailto:shenxt1990@163.com">shenxt1990@163.com</a></p>
+<a href="mailto:shenxt1990@outlook.com">shenxt1990@outlook.com</a></p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">targeted_table</span> <span class="op">=</span> </span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>variable_id <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,</span>
+<span class="r-in">             mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100.01</span>, <span class="fl">100.02</span>, <span class="fl">100.03</span>, <span class="fl">100.05</span><span class="op">)</span>,</span>
+<span class="r-in">             rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">check_targeted_table</span><span class="op">(</span><span class="va">targeted_table</span><span class="op">)</span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

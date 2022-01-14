@@ -59,7 +59,7 @@ All the `mzXML` format files should be placed in different folder according to s
 
 This function is used to peak picking and peak alignment.
 
-```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE}
+```{r,eval=FALSE,warning=FALSE, R.options="", message=FALSE}
 library(massprocesser)
 library(tidyverse)
 library(xcms)
@@ -73,7 +73,7 @@ Next, we use the `process_data()` function for peak detection and alignment.
 
 We first do the positive mode.
 
-```{r,eval = TRUE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
+```{r,eval=FALSE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
 massprocesser::process_data(
   path = "raw_data/MS1/POS/",
   polarity = "positive",
@@ -128,6 +128,6 @@ After all done, all the results are placed in a new folder named as `Result`.
 
 # **Session information**
 
-```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+```{r,eval=FALSE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 sessionInfo()
 ```
