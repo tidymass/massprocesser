@@ -31,11 +31,19 @@ knitr::opts_chunk$set(
 
 ***
 
+---
+
 # **Download demo data**
+
+---
 
 Raw data can be downloaded from the Google drive. [Link is here](https://drive.google.com/drive/folders/1aAr9kfjXPDskgEImhHNlAIdW9c3m-HAi?usp=sharing)
 
+---
+
 # **Data preparation**
+
+---
 
 *massprocesser* can used to processed the raw MS data for peak detection and alignment, and generate a peak table for next analysis. 
 
@@ -49,13 +57,21 @@ You can convert raw MS data to `mzXML` or `mzML` format using [`ProteoWizard` so
 
 > The demo data have been converted to `mzML` format.
 
+---
+
 # **Data organization**
+
+---
 
 All the `mzXML` format files should be placed in different folder according to sample type, such as `QC`, `Subject`, and `Blank`. 
 
 ![](../man/figures/Screen Shot 2021-12-27 at 9.20.33 AM.png)
 
+---
+
 # **Run `process_data()`** function
+
+---
 
 This function is used to peak picking and peak alignment.
 
@@ -111,7 +127,11 @@ Some important arguments:
 
 Other parameters you can find here: `process_data()`.
 
+---
+
 # **Output results**
+
+---
 
 After all done, all the results are placed in a new folder named as `Result`.
 
@@ -126,7 +146,11 @@ After all done, all the results are placed in a new folder named as `Result`.
 
 * `intermediate_data`: This is a folder which contains some intermediate data. If you want to re-run the data processing, please delete this folder first.
 
+---
+
 # **Session information**
+
+---
 
 ```{r,eval=FALSE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 sessionInfo()

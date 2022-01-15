@@ -31,11 +31,19 @@ knitr::opts_chunk$set(
 
 In this version, we just added a new function `output_eic()`. This can be used to generate peaks in some samples after you run `process_data()`. For example, you analyzed data, and found some features are very important, so you want to check the peak shapes of them in QC samples, so you can use `output_eic()` function.
 
+---
+
 # **Set work directory**
+
+---
 
 First, you need to set the work directory to the folder which you used to run the `process_data()` function. For example, in our [example for `process_Data`](https://tidymass.github.io/massprocesser/articles/raw_data_processing.html), we set the work directory in `example/POS`, so here, we also set work directory in this folder.
 
+---
+
 # **Run `output_eic()`**
+
+---
 
 Then we can run `output_eic()` function. 
 
@@ -51,7 +59,11 @@ output_eic(path = ".",
 
 Then the peak shape of plots will be outputted in `example/POS/Result`.
 
+---
+
 # **Session information**
+
+---
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 sessionInfo()

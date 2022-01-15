@@ -36,8 +36,7 @@ navbar:
       menu:
       - text: "Install massprocesser"
         href: articles/massprocesser_install.html
-      - text: "Raw MS data processing"
-      - text: Peak detection and alignment
+      - text: "Peak detection and alignment"
         href: articles/raw_data_processing.html
       - text: "Extract EICs of some features/Internal standards"
         href: articles/extract_eic.html
