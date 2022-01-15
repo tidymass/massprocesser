@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 
 ---
 
-Raw data can be downloaded from the Google drive. [Link is here](https://drive.google.com/drive/folders/1aAr9kfjXPDskgEImhHNlAIdW9c3m-HAi?usp=sharing)
+Raw data can be downloaded from the Google drive. [Link is here](https://drive.google.com/file/d/15OheYiPbqK7Bq8hdEvP9hdA0ER20P-xm/view?usp=sharing)
 
 ---
 
@@ -49,23 +49,20 @@ Raw data can be downloaded from the Google drive. [Link is here](https://drive.g
 
 The MS raw data from Mass Spectrometry should be converted to `mzXML` or `mzML`format and then placed in different folders according to their class, for example `Subject`, `QC`, and `Blank` samples.
 
-![](../man/figures/Screen Shot 2021-12-27 at 9.20.33 AM.png)
+![](figures/Screen-Shot-2022-01-14-at-11.52.53-PM.png)
 
 You can convert raw MS data to `mzXML` or `mzML` format using [`ProteoWizard` software](http://proteowizard.sourceforge.net/). And the parameter setting is shown the below figure:
 
-![](../man/figures/Capture.PNG)
-
-> The demo data have been converted to `mzML` format.
-
+![](figures/Screen-Shot-2022-01-14-at-11.54.24-PM.png)
 ---
 
 # **Data organization**
 
 ---
 
-All the `mzXML` format files should be placed in different folder according to sample type, such as `QC`, `Subject`, and `Blank`. 
+All the `mzXML` format files should be placed in different folder according to sample type, such as `QC`, `Subject`, `Control`, `Case`, and `Blank`. 
 
-![](../man/figures/Screen Shot 2021-12-27 at 9.20.33 AM.png)
+![](figures/Screen-Shot-2022-01-14-at-11.52.53-PM.png)
 
 ---
 
@@ -89,12 +86,12 @@ Next, we use the `process_data()` function for peak detection and alignment.
 
 We first do the positive mode.
 
-```{r,eval=FALSE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
+```{r,eval=TRUE,warning=FALSE, message=FALSE,R.options="",cache=TRUE, message=FALSE}
 massprocesser::process_data(
-  path = "raw_data/MS1/POS/",
+  path = "massprocesser_demo_data/POS/",
   polarity = "positive",
   ppm = 15,
-  peakwidth = c(5, 30),
+  peakwidth = c(10, 60),
   snthresh = 5,
   noise = 500,
   threads = 6,
@@ -113,13 +110,13 @@ Some important arguments:
 
 * `peakwidth`: Peak width. It is dependent on your column and LC system. See the `xcms` package.
 
-* `snthresh`: Singal to noise threshold. See the `xcms` package.
+* `snthresh`: Signal to noise threshold. See the `xcms` package.
 
-* `noise`: Noise cutiff. See the `xcms` package.
+* `noise`: Noise cutoff. See the `xcms` package.
 
 * `threads`: The core number for performing.
 
-* `output_tic`, `output_bpc`, and `group_for_figure`: Do you want to output the TIC or BPC of samples? Some times there are a lot of samples, so you can set the `group.for.figure` as the group name, for example, you can set it as `QC`. 
+* `output_tic`, `output_bpc`, and `group_for_figure`: Do you want to output the TIC or BPC of samples? Some times there are a lot of samples, so you can set the `group_for_figure` as the group name, for example, you can set it as `QC`. 
 
 * `min_fraction`: If one peak appears more than `min.fraction` sample in at least one group samples it will be kept.
 
@@ -135,16 +132,64 @@ Other parameters you can find here: `process_data()`.
 
 After all done, all the results are placed in a new folder named as `Result`.
 
-![](../man/figures/Screen Shot 2020-04-01 at 1.00.38 PM.png)
-* `Peak_table.csv`: is the peak table for next analysis.
+![](figures/Screen-Shot-2022-01-15-at-8.42.04-AM.png)
+## `Peak_table.csv`
 
-![](../man/figures/Screen Shot 2020-04-01 at 1.09.52 PM.png)
+The peak table for next analysis.
 
-* `Peak_table_for_cleaning.csv`: Some non-useful columns is deleted from the `Peak_table.csv`, this can be directory used for next data cleaning.
+```{r,eval=TRUE, echo=FALSE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+data = readr::read_csv("massprocesser_demo_data/POS/Result/Peak_table.csv")
+library(kableExtra)
+library(magrittr)
+kbl(data[1:500,]) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                fixed_thead = TRUE) %>% 
+  scroll_box(width = "100%", height = "600px")
+```
 
-![](../man/figures/Screen Shot 2020-04-01 at 1.07.37 PM.png)
+> Only top 500 features show.
 
-* `intermediate_data`: This is a folder which contains some intermediate data. If you want to re-run the data processing, please delete this folder first.
+
+## `Peak_table_for_cleaning.csv`
+
+Some usefulness columns are deleted from the `Peak_table.csv`, this can be directory used for next data cleaning.
+
+```{r,eval=TRUE, echo=FALSE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+data = readr::read_csv("massprocesser_demo_data/POS/Result/Peak_table_for_cleaning.csv")
+library(kableExtra)
+library(magrittr)
+kbl(data[1:500,]) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                fixed_thead = TRUE) %>% 
+  scroll_box(width = "100%", height = "600px")
+```
+
+> Only top 500 features show.
+
+
+## `BPC.pdf` 
+
+Base peak chromatogram
+
+![](figures/Screen-Shot-2022-01-15-at-11.36.11-AM.png)
+
+## `TIC.pdf` 
+
+Total ion peak chromatogram
+
+![](figures/Screen-Shot.png)
+
+## `RT correction plot.pdf`
+
+RT correction.
+
+![](figures/Screen-Shot-1.png)
+
+## `intermediate_data` 
+
+This is a folder which contains some intermediate data. If you want to re-run the data processing, please delete this folder first.
+
+![](figures/Screen-Shot-2022-01-15-at-9.03.43-AM.png)
 
 ---
 

@@ -6,6 +6,9 @@
 \usage{
 massprocesser_logo()
 }
+\value{
+massprocesser_logo
+}
 \description{
 massprocesser_logo
 }

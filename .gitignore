@@ -47,6 +47,9 @@ example
 Result
 vignettes/
 vignettes
+vignettes/*.rar
+vignettes/*.zip
+
 
 
 

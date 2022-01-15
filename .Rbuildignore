@@ -21,6 +21,9 @@ vignettes/mzxml_ms1_data/
 vignettes/mzxml_ms1_data
 vignettes/figures
 vignettes/figures/
+vignettes/*.rar
+vignettes/*.zip
+
 
 
 
