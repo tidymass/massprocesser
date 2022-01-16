@@ -355,6 +355,6 @@ This is a folder which contains some intermediate data. If you want to re-run th
 
 ---
 
-```{r,eval=FALSE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 sessionInfo()
 ```
