@@ -425,7 +425,7 @@ process_data <- function(path = ".",
   colnames(values) <-
     stringr::str_replace(
       string = colnames(values),
-      pattern = "\\.mz[X]{0,1}ML",
+      pattern = "\\.mz[X|x]{0,1}[M|m][L|l]",
       replacement = ""
     )
   
@@ -442,7 +442,7 @@ process_data <- function(path = ".",
       replacement = ""
     )
   
-  readr::write_csv(peak_table, path = file.path(output_path, "Peak_table.csv"))
+  readr::write_csv(peak_table, file = file.path(output_path, "Peak_table.csv"))
   peak_table_for_cleaning <-
     definition %>%
     dplyr::select(-c("mzmin", 'mzmax', 'rtmin', 
@@ -452,7 +452,7 @@ process_data <- function(path = ".",
   
   
   readr::write_csv(peak_table_for_cleaning, 
-                   path = file.path(output_path, "Peak_table_for_cleaning.csv"))
+                   file = file.path(output_path, "Peak_table_for_cleaning.csv"))
   message(crayon::red(clisymbols::symbol$tick, "OK\n"))
   
   #####output mass_data class object
