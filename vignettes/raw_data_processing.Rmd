@@ -133,6 +133,17 @@ Other parameters you can find here: `process_data()`.
 After all done, all the results are placed in a new folder named as `Result`.
 
 ![](figures/Screen-Shot-2022-01-15-at-8.42.04-AM.png)
+
+## `object`
+
+`object` is a `mass_dataset` class object which can be used for next analysis. See more about [`mass_dataset` class here](https://tidymass.github.io/massdataset/).
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+load("massprocesser_demo_data/POS/Result/object")
+library(massdataset)
+object
+```
+
 ## `Peak_table.csv`
 
 The peak table for next analysis.
@@ -169,9 +180,66 @@ kbl(data[1:500,]) %>%
 
 ## `BPC.pdf` 
 
-Base peak chromatogram
+Base peak chromatogram.
 
 ![](figures/Screen-Shot-2022-01-15-at-11.36.11-AM.png)
+
+
+Default it only shows the samples which are in the group you set in `group_for_figure`. If you want to show other samples, you can try to do use the below script.
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+###load data
+load("massprocesser_demo_data/POS/Result/intermediate_data/xdata2")
+##set threads
+if(tinytools::get_os() == "windows") {
+  bpparam <-
+    BiocParallel::SnowParam(workers = 4,
+                            progressbar = TRUE)
+} else{
+  bpparam <- BiocParallel::MulticoreParam(workers = 4,
+                                          progressbar = TRUE)
+}
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+###extract bpc plot object
+bpc.plot <- xcms::chromatogram(object = xdata2,
+                               aggregationFun = "max",
+                               BPPARAM = bpparam)
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+####plot_chromatogram to show the plot
+##set the group_for_figure if you want to show specific groups. And set it as "all" if you want to show all samples.
+plot <- plot_chromatogram(object = bpc.plot,
+                          title = "BPC",
+                          group_for_figure = c("Case", "QC"))
+plot
+```
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+plot <- plot_chromatogram(object = bpc.plot,
+                          title = "BPC",
+                          group_for_figure = c("all"))
+plot
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+##if you want to show specific samples, set the `sample_for_figure` parameter
+plot <- plot_chromatogram(object = bpc.plot,
+                          title = "BPC",
+                          sample_for_figure = c("sample_11", "sample_78"))
+plot
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+##set `interactive` as TRUE to get interactive plot
+plot <- plot_chromatogram(object = bpc.plot,
+                          title = "BPC",
+                          sample_for_figure = c("sample_11", "sample_78"),
+                          interactive = TRUE
+                          )
+plot
+```
 
 ## `TIC.pdf` 
 
@@ -179,11 +247,101 @@ Total ion peak chromatogram
 
 ![](figures/Screen-Shot.png)
 
+
+Default it only shows the samples which are in the group you set in `group_for_figure`. If you want to show other samples, you can try to do use the below script.
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+###load data
+load("massprocesser_demo_data/POS/Result/intermediate_data/xdata2")
+##set threads
+if(tinytools::get_os() == "windows") {
+  bpparam <-
+    BiocParallel::SnowParam(workers = 4,
+                            progressbar = TRUE)
+} else{
+  bpparam <- BiocParallel::MulticoreParam(workers = 4,
+                                          progressbar = TRUE)
+}
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+###extract tic plot object
+tic.plot <- xcms::chromatogram(object = xdata2,
+                               aggregationFun = "sum",
+                               BPPARAM = bpparam)
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+####plot_chromatogram to show the plot
+##set the group_for_figure if you want to show specific groups. And set it as "all" if you want to show all samples.
+plot <- plot_chromatogram(object = tic.plot,
+                          title = "TIC",
+                          group_for_figure = c("Case", "QC"))
+plot
+```
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+plot <- plot_chromatogram(object = tic.plot,
+                          title = "TIC",
+                          group_for_figure = c("all"))
+plot
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+##if you want to show specific samples, set the `sample_for_figure` parameter
+plot <- plot_chromatogram(object = tic.plot,
+                          title = "TIC",
+                          sample_for_figure = c("sample_11", "sample_78"))
+plot
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+##set `interactive` as TRUE to get interactive plot
+plot <- plot_chromatogram(object = tic.plot,
+                          title = "TIC",
+                          sample_for_figure = c("sample_11", "sample_78"),
+                          interactive = TRUE
+                          )
+plot
+```
+
 ## `RT correction plot.pdf`
 
 RT correction.
 
 ![](figures/Screen-Shot-1.png)
+
+Default it only shows the samples which are in the group you set in `group_for_figure`. If you want to show other samples, you can try to do use the below script.
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+###load data
+load("massprocesser_demo_data/POS/Result/intermediate_data/xdata2")
+##set the group_for_figure if you want to show specific groups. And set it as "all" if you want to show all samples.
+plot = 
+plot_adjusted_rt(object = xdata2, 
+                 group_for_figure = c("Case", "QC"))
+plot
+```
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+plot = 
+plot_adjusted_rt(object = xdata2, 
+                 group_for_figure = "all")
+plot
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+plot = 
+plot_adjusted_rt(object = xdata2, 
+                sample_for_figure = c("sample_11", "sample_78"))
+plot
+```
+
+```{r,eval=TRUE, echo=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+plot = 
+plot_adjusted_rt(object = xdata2, 
+                sample_for_figure = "all", 
+                interactive = TRUE)
+plot
+```
 
 ## `intermediate_data` 
 

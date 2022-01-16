@@ -1,4 +1,5 @@
 
+
 msg <- function(..., startup = FALSE) {
   if (startup) {
     if (!isTRUE(getOption("massprocesser.quiet"))) {
@@ -21,7 +22,10 @@ text_col <- function(x) {
   
   theme <- rstudioapi::getThemeInfo()
   
-  if (isTRUE(theme$dark)) crayon::white(x) else crayon::black(x)
+  if (isTRUE(theme$dark))
+    crayon::white(x)
+  else
+    crayon::black(x)
   
 }
 
@@ -37,7 +41,8 @@ massprocesser_packages <- function(include_self = TRUE) {
   raw <- utils::packageDescription("massprocesser")$Imports
   imports <- strsplit(raw, ",")[[1]]
   parsed <- gsub("^\\s+|\\s+$", "", imports)
-  names <- vapply(strsplit(parsed, "\\s+"), "[[", 1, FUN.VALUE = character(1))
+  names <-
+    vapply(strsplit(parsed, "\\s+"), "[[", 1, FUN.VALUE = character(1))
   
   if (include_self) {
     names <- c(names, "massprocesser")
@@ -46,17 +51,16 @@ massprocesser_packages <- function(include_self = TRUE) {
 }
 
 invert <- function(x) {
-  if (length(x) == 0) return()
+  if (length(x) == 0)
+    return()
   stacked <- utils::stack(x)
   tapply(as.character(stacked$ind), stacked$values, list)
 }
 
 
 style_grey <- function(level, ...) {
-  crayon::style(
-    paste0(...),
-    crayon::make_style(grDevices::grey(level), grey = TRUE)
-  )
+  crayon::style(paste0(...),
+                crayon::make_style(grDevices::grey(level), grey = TRUE))
 }
 
 
@@ -69,29 +73,49 @@ style_grey <- function(level, ...) {
 #' @param lab.size Font size of lab title.
 #' @param axis.text.size Font size of axis text.
 #' @param alpha alpha.
-#' @param title Title of the plot..
-#' @param interactive interactive.
+#' @param title Title of the plot.
+#' @param interactive interactive or not.
 #' @param group_for_figure What groups to show EIC.
+#' @param sample_for_figure sample_for_figure
 #' @return A ggplot2 object.
 #' @export
 
-plot_chromatogram <- function(
-  object,
-  title.size = 15,
-  lab.size = 15,
-  axis.text.size = 15,
-  alpha = 0.5,
-  title = "",
-  interactive = FALSE,
-  group_for_figure = "QC"
-){
+plot_chromatogram <- function(object,
+                              title.size = 13,
+                              lab.size = 13,
+                              axis.text.size = 12,
+                              alpha = 0.5,
+                              title = "",
+                              interactive = FALSE,
+                              group_for_figure = "QC",
+                              sample_for_figure = NULL) {
   options(warn = -1)
   info <- object@phenoData@data
   data <- object@.Data
-  data <-
-    data[1, which(info$sample_group %in% group_for_figure), drop = FALSE]
-  info <-
-    info[info$sample_group %in% group_for_figure, , drop = FALSE]
+  if (group_for_figure == "all") {
+    group_for_figure <-
+      unique(info$sample_group)
+  }
+  
+  if (!is.null(sample_for_figure)) {
+    sample_for_figure <-
+      sample_for_figure[sample_for_figure %in% info$sample_name]
+    if (length(sample_for_figure) == 0) {
+      sample_for_figure <- NULL
+    }
+  }
+  
+  if (!is.null(sample_for_figure)) {
+    data <-
+      data[1, which(info$sample_name %in% sample_for_figure), drop = FALSE]
+    info <-
+      info[info$sample_name %in% sample_for_figure, , drop = FALSE]
+  } else{
+    data <-
+      data[1, which(info$sample_group %in% group_for_figure), drop = FALSE]
+    info <-
+      info[info$sample_group %in% group_for_figure, , drop = FALSE]
+  }
   
   if (nrow(info) == 0) {
     return(NULL)
@@ -139,15 +163,15 @@ plot_chromatogram <- function(
   # })
   
   data <- do.call(rbind, args = data)
-
+  
   plot <-
     ggplot2::ggplot(data = data,
                     ggplot2::aes(x = mz, y = intensity)) +
     ggplot2::geom_line(data = data,
-                       mapping = ggplot2::aes(colour = sample, 
+                       mapping = ggplot2::aes(colour = sample,
                                               group = sample)) +
     ggplot2::theme_bw() +
-    ggplot2::labs(x = "Retention time (RT, second)", 
+    ggplot2::labs(x = "Retention time (RT, second)",
                   y = "Intensity", title = title) +
     ggplot2::theme(
       plot.title = ggplot2::element_text(
@@ -185,16 +209,23 @@ plot_chromatogram <- function(
 #' @param title.size title.size
 #' @param lab.size lab.size
 #' @param axis.text.size axis.text.size
+#' @param interactive interactive or not.
+#' @param group_for_figure What groups to show EIC.
+#' @param sample_for_figure sample_for_figure
 #' @return A ggplot2 object.
+#' @export
 
-plot_adjusted_rt <- function(
-  object,
-  title.size = 15,
-  lab.size = 15,
-  axis.text.size = 15
-){
-  diffRt <- xcms::rtime(object, adjusted = TRUE) - xcms::rtime(object,
-                                                               adjusted = FALSE)
+plot_adjusted_rt <- function(object,
+                             title.size = 13,
+                             lab.size = 13,
+                             axis.text.size = 12,
+                             interactive = FALSE,
+                             group_for_figure = "QC",
+                             sample_for_figure = NULL
+                             ) {
+  diffRt <- xcms::rtime(object, adjusted = TRUE) -
+    xcms::rtime(object,
+                adjusted = FALSE)
   diffRt <- split(diffRt, MSnbase::fromFile(object))
   xRt <- xcms::rtime(object,
                      adjusted = TRUE,
@@ -203,31 +234,75 @@ plot_adjusted_rt <- function(
   sample_name <- object@phenoData@data$sample_name
   sample_group <- object@phenoData@data$sample_group
   
-  diffRt <- mapply(
-    FUN = function(x, y) {
-      list(data.frame(x, y, stringsAsFactors = FALSE))
-    },
-    x = diffRt,
-    y = sample_name
-  )
+  diffRt <- 
+    purrr::map(.x = seq_along(sample_name), function(idx){
+      data.frame(diff_rt = diffRt[[idx]],
+                 sample_name = sample_name[idx],
+                 sample_group = sample_group[idx])
+    }) %>% 
+    dplyr::bind_rows()
   
-  xRt <- mapply(
-    FUN = function(x, y) {
-      list(data.frame(x, y, stringsAsFactors = FALSE))
-    },
-    x = xRt,
-    y = sample_name
-  )
+  # diffRt <- mapply(
+  #   FUN = function(x, y) {
+  #     list(data.frame(x, y, stringsAsFactors = FALSE))
+  #   },
+  #   x = diffRt,
+  #   y = sample_name
+  # )
   
-  diffRt <- do.call(what = rbind, args = diffRt)
-  xRt <- do.call(rbind, xRt)
+  xRt <- 
+    purrr::map(.x = seq_along(sample_name), function(idx){
+      data.frame(rt = xRt[[idx]],
+                 sample_name = sample_name[idx],
+                 sample_group = sample_group[idx])
+    }) %>% 
+    dplyr::bind_rows()
   
-  temp.data <-
-    data.frame(xRt, diffRt, stringsAsFactors = FALSE)
+  # xRt <- mapply(
+  #   FUN = function(x, y) {
+  #     list(data.frame(x, y, stringsAsFactors = FALSE))
+  #   },
+  #   x = xRt,
+  #   y = sample_name
+  # )
+  # 
+  # diffRt <- do.call(what = rbind, args = diffRt)
+  # xRt <- do.call(rbind, xRt)
+  
+  temp.data = 
+    cbind(xRt, diffRt[,1, drop = FALSE])
+  
+  # temp.data <-
+  #   data.frame(xRt, diffRt, stringsAsFactors = FALSE)
   
   colnames(temp.data) <-
-    c("rt", "sample.name", "diffRT", "sample.name2")
+    c("rt", "sample.name", "sample_group", "diffRT")
+  
   rm(list = c("object", "xRt", "diffRt"))
+  
+  if (group_for_figure == "all") {
+    group_for_figure <-
+      unique(sample_group)
+  }
+  
+  if (!is.null(sample_for_figure)) {
+    sample_for_figure <-
+      sample_for_figure[sample_for_figure %in% sample_name]
+    if (length(sample_for_figure) == 0) {
+      sample_for_figure <- NULL
+    }
+  }
+  
+  if (!is.null(sample_for_figure)) {
+    temp.data <-
+      temp.data %>% 
+      dplyr::filter(sample.name %in% sample_for_figure)
+  } else{
+    temp.data <-
+      temp.data %>% 
+      dplyr::filter(sample_group %in% group_for_figure)
+  }
+  
   
   plot <-
     ggplot2::ggplot(data = temp.data, ggplot2::aes(x = rt, y = diffRT)) +
@@ -235,7 +310,7 @@ plot_adjusted_rt <- function(
     ggplot2::theme_bw() +
     ggplot2::labs(x = "Retention time (second)", y = "RT deviation (second)") +
     ggplot2::theme(
-      legend.position = "none",
+      # legend.position = "none",
       axis.title = ggplot2::element_text(
         color = "black",
         size = lab.size,
@@ -247,6 +322,10 @@ plot_adjusted_rt <- function(
         face = "plain"
       )
     )
+  
+  if (interactive) {
+    plot <- plotly::ggplotly(plot)
+  }
+  
   plot
 }
-

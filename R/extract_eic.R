@@ -27,9 +27,9 @@
 #' @description Extract EICs of some features from some samples.
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
-#' @param targeted_table A data.frame contains the variable_id, 
+#' @param targeted_table A data.frame contains the variable_id,
 #' mz and rt of features to extract.
-#' @param object object from xcms. If you use massprocesser, 
+#' @param object object from xcms. If you use massprocesser,
 #' this should be the xdata3.
 #' @param polarity positive or negative.
 #' @param mz_tolerance default is 15 ppm.
@@ -43,15 +43,15 @@
 #' @export
 
 extract_eic <- function(targeted_table,
-                       object,
-                       polarity = c("positive", "negative"),
-                       mz_tolerance = 15,
-                       rt_tolerance = 30,
-                       threads = 5,
-                       add_point = FALSE,
-                       path = ".",
-                       group_for_figure = "QC",
-                       feature_type = c("pdf", "png")) {
+                        object,
+                        polarity = c("positive", "negative"),
+                        mz_tolerance = 15,
+                        rt_tolerance = 30,
+                        threads = 5,
+                        add_point = FALSE,
+                        path = ".",
+                        group_for_figure = "QC",
+                        feature_type = c("pdf", "png")) {
   if (missing(object)) {
     stop("No object provided, which should be from the xcms.\n")
   }
@@ -81,7 +81,7 @@ extract_eic <- function(targeted_table,
   if (missing(targeted_table)) {
     message(
       crayon::yellow(
-        "No targeted_table is provided, 
+        "No targeted_table is provided,
         all the features' EICs will be outputted.\n"
       )
     )
@@ -165,7 +165,7 @@ extract_eic <- function(targeted_table,
   
   index2 <- sort(unique(match_result[, 2]))
   metabolite_name <-
-targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
+  targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
   
   if (tinytools::get_os() == "windows") {
     bpparam <-
@@ -173,7 +173,7 @@ targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
                               progressbar = TRUE)
   } else{
     bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                           progressbar = TRUE)
+                                            progressbar = TRUE)
   }
   
   feature_eic <-
@@ -189,7 +189,7 @@ targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
     pbapply::pbapply(1, function(y) {
       y <- lapply(y, function(x) {
         # if (class(x) == "XChromatogram") {
-          if (is(x, class2 = "XChromatogram")) {
+        if (is(x, class2 = "XChromatogram")) {
           if (nrow(x@chromPeaks) == 0) {
             data.frame(
               rt.med = NA,
@@ -262,6 +262,7 @@ targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
       x
     })
   
+  # browser()
   BiocParallel::bplapply(
     seq_len(length(index2)),
     FUN = temp_fun,

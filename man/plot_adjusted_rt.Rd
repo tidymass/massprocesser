@@ -4,7 +4,15 @@
 \alias{plot_adjusted_rt}
 \title{plot_adjusted_rt}
 \usage{
-plot_adjusted_rt(object, title.size = 15, lab.size = 15, axis.text.size = 15)
+plot_adjusted_rt(
+  object,
+  title.size = 13,
+  lab.size = 13,
+  axis.text.size = 12,
+  interactive = FALSE,
+  group_for_figure = "QC",
+  sample_for_figure = NULL
+)
 }
 \arguments{
 \item{object}{object}
@@ -14,6 +22,12 @@ plot_adjusted_rt(object, title.size = 15, lab.size = 15, axis.text.size = 15)
 \item{lab.size}{lab.size}
 
 \item{axis.text.size}{axis.text.size}
+
+\item{interactive}{interactive or not.}
+
+\item{group_for_figure}{What groups to show EIC.}
+
+\item{sample_for_figure}{sample_for_figure}
 }
 \value{
 A ggplot2 object.

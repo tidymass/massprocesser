@@ -165,7 +165,7 @@ process_data <- function(path = ".",
     data.frame(
       sample_name = sub(
         basename(f.in),
-        pattern = ".mzXML",
+        pattern = '\\.(mz[X|x]{0,1}[M|m][L|l]|cdf)',
         replacement = "",
         fixed = TRUE
       ),
@@ -278,7 +278,9 @@ process_data <- function(path = ".",
     ## Plot also the difference of adjusted to raw retention time.
     if (output_rt_correction_plot) {
       message(crayon::green("Drawing RT correction plot..."))
-      rt_correction_plot <- plot_adjusted_rt(object = xdata2)
+      rt_correction_plot <- 
+        plot_adjusted_rt(object = xdata2, 
+                         group_for_figure = group_for_figure)
 
       ggplot2::ggsave(
         filename = file.path(output_path, "RT correction plot.pdf"),
@@ -311,9 +313,9 @@ process_data <- function(path = ".",
     )
     
     ## Plot all chromatograms.
-    # save(tic.plot,
-    #      file = file.path(intermediate_data_path, "tic.plot"),
-    #      compress = "xz")
+    save(tic.plot,
+         file = file.path(intermediate_data_path, "tic.plot"),
+         compress = "xz")
     plot <- plot_chromatogram(object = tic.plot,
                               title = "TIC",
                               group_for_figure = group_for_figure)
@@ -347,9 +349,9 @@ process_data <- function(path = ".",
                                    BPPARAM = bpparam)
     
     ## Plot all chromatograms.
-    # save(bpc.plot,
-    #      file = file.path(intermediate_data_path, "bpc.plot"),
-    #      compress = "xz")
+    save(bpc.plot,
+         file = file.path(intermediate_data_path, "bpc.plot"),
+         compress = "xz")
     
     plot <- plot_chromatogram(object = bpc.plot, title = "BPC", 
                              group_for_figure = group_for_figure)
@@ -468,8 +470,8 @@ process_data <- function(path = ".",
     ) %>%
     dplyr::mutate(injection.order = seq_len(nrow(pd))) %>% 
     dplyr::mutate(sample_id = 
-                    stringr::str_replace(sample_id, "\\.mzML", "")) %>% 
-    dplyr::mutate(sample_id = stringr::str_replace(sample_id, "\\.mzXML", ""))
+                    stringr::str_replace(sample_id, "\\.mz[M|m][L|l]", "")) %>% 
+    dplyr::mutate(sample_id = stringr::str_replace(sample_id, "\\.mz[X|x][M|m][L|l]", ""))
   
   expression_data <- 
     peak_table_for_cleaning %>% 

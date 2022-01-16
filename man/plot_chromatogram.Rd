@@ -6,13 +6,14 @@
 \usage{
 plot_chromatogram(
   object,
-  title.size = 15,
-  lab.size = 15,
-  axis.text.size = 15,
+  title.size = 13,
+  lab.size = 13,
+  axis.text.size = 12,
   alpha = 0.5,
   title = "",
   interactive = FALSE,
-  group_for_figure = "QC"
+  group_for_figure = "QC",
+  sample_for_figure = NULL
 )
 }
 \arguments{
@@ -26,11 +27,13 @@ plot_chromatogram(
 
 \item{alpha}{alpha.}
 
-\item{title}{Title of the plot..}
+\item{title}{Title of the plot.}
 
-\item{interactive}{interactive.}
+\item{interactive}{interactive or not.}
 
 \item{group_for_figure}{What groups to show EIC.}
+
+\item{sample_for_figure}{sample_for_figure}
 }
 \value{
 A ggplot2 object.
