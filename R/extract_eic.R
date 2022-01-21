@@ -93,7 +93,7 @@ extract_eic <- function(targeted_table,
   check_targeted_table(targeted_table = targeted_table)
   
   match_result <-
-    tinytools::mz_rt_match(
+    masstools::mz_rt_match(
       data1 = as.matrix(targeted_table[, c(2, 3)]),
       data2 = as.matrix(definition[, c("mzmed", "rtmed")]),
       mz.tol = mz_tolerance,
@@ -167,7 +167,7 @@ extract_eic <- function(targeted_table,
   metabolite_name <-
   targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
   
-  if (tinytools::get_os() == "windows") {
+  if (masstools::get_os() == "windows") {
     bpparam <-
       BiocParallel::SnowParam(workers = threads,
                               progressbar = TRUE)

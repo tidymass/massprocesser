@@ -219,7 +219,7 @@ process_data <- function(path = ".",
     load(file.path(intermediate_data_path, "xdata"))
   } else{
     
-    if(tinytools::get_os() == "windows"){
+    if(masstools::get_os() == "windows"){
       bpparam <-
         BiocParallel::SnowParam(workers = threads,
                                 progressbar = TRUE)
@@ -296,7 +296,7 @@ process_data <- function(path = ".",
   rm(list = "xdata")
   
   ###TIC
-  if(tinytools::get_os() == "windows"){
+  if(masstools::get_os() == "windows"){
     bpparam <-
       BiocParallel::SnowParam(workers = threads,
                               progressbar = TRUE)
@@ -335,7 +335,7 @@ process_data <- function(path = ".",
   
   ###BPC
   if (output_bpc) {
-    if(tinytools::get_os() == "windows"){
+    if(masstools::get_os() == "windows"){
       bpparam <-
         BiocParallel::SnowParam(workers = threads,
                                 progressbar = TRUE)
