@@ -35,18 +35,13 @@
 #' @importClassesFrom massdataset tidymass_parameter mass_dataset
 #' @export
 #' @return massprocesser_logo
-#' @examples 
+#' @examples
 #' massprocesser_logo()
 
 massprocesser_logo <- function() {
   message(crayon::green("Thank you for using massprocesser!\n"))
-  message(crayon::green("Version 0.9.2 (20210312)\n"))
-  message(crayon::green("Bug fixing\n"))
-  message(
-    crayon::green(
-      "More information: searching 'tidymass massprocesser'.\n"
-    )
-  )
+  message(crayon::green("Version", massprocesser_version, "(", update_date, ')\n'))
+  message(crayon::green("More information: searching 'tidymass massprocesser'.\n"))
   cat(crayon::green(
     c(
       "                 _    __ _              ___  ",
@@ -62,8 +57,8 @@ massprocesser_logo <- function() {
   ), sep = "\n")
 }
 
-
-massprocesser_version <- "0.9.2"
+massprocesser_version = "0.99.3"
+update_date = as.character(Sys.time())
 
 
 #' @title get_massprocesser_version
@@ -72,10 +67,10 @@ massprocesser_version <- "0.9.2"
 #' \email{shenxt1990@@outlook.com}
 #' @export
 #' @return massprocesser_version
-#' @examples 
+#' @examples
 #' get_massprocesser_version()
 
-get_massprocesser_version <- function(){
+get_massprocesser_version <- function() {
   return(massprocesser_version)
 }
 
