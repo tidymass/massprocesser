@@ -25,10 +25,10 @@ You can install `massprocesser` from
 
 ``` r
 # Install `massprocesser` from GitHub
-if(!require(devtools)){
-install.packages("devtools")
+if(!require(remotes)){
+install.packages("remotes")
 }
-devtools::install_github("tidymass/massprocesser")
+remotes::install_github("tidymass/massprocesser")
 ```
 
 -----
