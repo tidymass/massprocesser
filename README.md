@@ -11,19 +11,23 @@
 
 # **About**
 
-`massprocesser` is a R package which is used for untargeted metabolomics data
+`massprocesser` is a R package which is used for untargeted metabolomics raw data
 processing and analysis.
 
 # **Installation**
 
-You can install `massprocesser` from
-[Github](https://github.com/tidymass/massprocesser).
+You can install `massprocesser` from [GitLab](https://gitlab.com/jaspershen/massprocesser)
 
 ``` r
-# Install `massprocesser` from GitHub
 if(!require(remotes)){
 install.packages("remotes")
 }
+remotes::install_gitlab("jaspershen/massprocesser")
+```
+
+or [GitHub](https://github.com/tidymass/massprocesser)
+
+``` r
 remotes::install_github("tidymass/massprocesser")
 ```
 
@@ -51,7 +55,7 @@ CA 94304](https://www.google.com/maps/place/Alway+Building/@37.4322345,-122.1770
 
 # **Citation**
 
-If you use `masscleaner` in you publication, please cite this publication:
+If you use `massprocesser` in you publication, please cite this publication:
 
 TidyMass: An Object-oriented Reproducible Analysis Framework for LC-MS Data.
 
