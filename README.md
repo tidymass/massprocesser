@@ -33,7 +33,7 @@ remotes::install_github("tidymass/massprocesser")
 
 # **Usage**
 
-Please see the `Help document` page to get the instruction of `massprocesser`.
+Please see the `Help documents` page to get the instruction of `massprocesser`.
 
 
 # **Need help?**
@@ -55,7 +55,7 @@ CA 94304](https://www.google.com/maps/place/Alway+Building/@37.4322345,-122.1770
 
 # **Citation**
 
-If you use `massprocesser` in you publication, please cite this publication:
+If you use `massprocesser` in your publications, please cite this paper:
 
 TidyMass: An Object-oriented Reproducible Analysis Framework for LC-MS Data.
 
