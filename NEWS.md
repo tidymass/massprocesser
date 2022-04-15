@@ -51,3 +51,7 @@
 # Version 0.9.2 (20210312)
 --------------
 * Add output_eic function.
+
+# Version 0.9.4 (20220414)
+--------------
+* Fix small bugs in process_data.

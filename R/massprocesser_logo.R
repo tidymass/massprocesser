@@ -57,7 +57,9 @@ massprocesser_logo <- function() {
   ), sep = "\n")
 }
 
-massprocesser_version = "0.99.3"
+# massprocesser_version = "0.99.3"
+massprocesser_version <-
+  as.character(utils::packageVersion(pkg = "massprocesser"))
 update_date = as.character(Sys.time())
 
 

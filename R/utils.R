@@ -89,6 +89,9 @@ plot_chromatogram <- function(object,
                               interactive = FALSE,
                               group_for_figure = "QC",
                               sample_for_figure = NULL) {
+  if(is.null(object)){
+    return(NULL)
+  }
   options(warn = -1)
   info <- object@phenoData@data
   data <- object@.Data

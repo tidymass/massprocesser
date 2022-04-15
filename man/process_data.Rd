@@ -63,7 +63,7 @@ process_data(
 
 \item{fill_peaks}{Fill peaks NA or not.}
 
-\item{group_for_figure}{Which group you want to use to output 
+\item{group_for_figure}{Which group you want to use to output
 TIC and BPC and EIC. Default is QC.}
 }
 \value{
