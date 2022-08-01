@@ -55,3 +55,7 @@
 # Version 0.9.4 (20220414)
 --------------
 * Fix small bugs in process_data.
+
+# Version 1.0.1 (20220801)
+--------------
+* Fixed small bugs.

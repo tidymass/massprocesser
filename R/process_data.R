@@ -32,7 +32,6 @@
 # library(xcms)
 # library(MSnbase)
 # library(mzR)
-# library(tidyverse)
 #
 # path = "."
 # polarity = "positive"
@@ -188,8 +187,20 @@ process_data <-
       )
     
     ## Define colors for different groups
+    temp_color <-
+      c(
+        "#E41A1C",
+        "#377EB8",
+        "#4DAF4A",
+        "#984EA3",
+        "#FF7F00",
+        "#FFFF33",
+        "#A65628",
+        "#F781BF",
+        "#999999"
+      )
     group_colors <-
-      paste0(RColorBrewer::brewer.pal(9, "Set1")[seq_along(unique(sample_group))],
+      paste0(temp_color[seq_along(unique(sample_group))],
              "60")
     
     names(group_colors) <- unique(sample_group)

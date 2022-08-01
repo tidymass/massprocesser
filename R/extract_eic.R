@@ -165,7 +165,7 @@ extract_eic <- function(targeted_table,
   
   index2 <- sort(unique(match_result[, 2]))
   metabolite_name <-
-  targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
+    targeted_table$variable_id[match_result[match(index2, match_result[, 2]), 1]]
   
   if (masstools::get_os() == "windows") {
     bpparam <-
@@ -186,9 +186,8 @@ extract_eic <- function(targeted_table,
   
   feature_eic_data <-
     feature_eic@.Data %>%
-    pbapply::pbapply(1, function(y) {
+    apply(1, function(y) {
       y <- lapply(y, function(x) {
-        # if (class(x) == "XChromatogram") {
         if (is(x, class2 = "XChromatogram")) {
           if (nrow(x@chromPeaks) == 0) {
             data.frame(
@@ -241,7 +240,6 @@ extract_eic <- function(targeted_table,
       
       y <- do.call(rbind, y)
       y
-      
     })
   
   feature_eic_data <-

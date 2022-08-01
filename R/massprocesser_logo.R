@@ -7,7 +7,6 @@
 #' @importFrom Biobase featureData
 #' @importFrom crayon yellow red green bold bgRed
 #' @import ggplot2
-#' @importFrom pbapply pblapply pboptions
 #' @importFrom stringr str_split str_replace_all str_trim str_detect str_extract
 #' @importFrom dplyr filter select pull everything distinct one_of left_join mutate bind_cols arrange
 #' @importFrom tibble as_tibble enframe tibble rownames_to_column
@@ -16,7 +15,6 @@
 #' @importFrom utils packageVersion object.size write.csv tail
 #' @importFrom purrr map map2
 #' @importFrom plyr dlply .
-#' @importFrom RColorBrewer brewer.pal
 #' @importFrom Biobase featureData
 #' @importFrom MSnbase readMSData
 #' @importFrom readr read_csv cols
@@ -25,13 +23,10 @@
 #' @importFrom BiocParallel MulticoreParam SnowParam bplapply
 #' @importFrom magrittr %>%
 #' @importFrom plotly ggplotly
-#' @importFrom BiocGenerics basename
 #' @importFrom stats coefficients lm loess median predict
 #' @importFrom stats rgamma rt sd cor p.adjust prcomp t.test wilcox.test
 #' @importFrom methods is
 #' @import mzR
-#' @import tidyr
-#' @import tidyverse
 #' @importClassesFrom massdataset tidymass_parameter mass_dataset
 #' @export
 #' @return massprocesser_logo
