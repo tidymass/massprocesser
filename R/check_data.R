@@ -15,40 +15,40 @@
 
 check_targeted_table <- function(targeted_table) {
   if (missing(targeted_table)) {
-    stop("No targeted_table prodvided.\n")
+    stop("No targeted_table prodvided.")
   }
   
   if (all(!class(targeted_table) %in% c("matrix", "data.frame", "tbl"))) {
-    stop("targeted_table must be a data.frame/matrix.\n")
+    stop("targeted_table must be a data.frame/matrix.")
   }
   
   if (ncol(targeted_table) < 3) {
     stop("The first column of targeted_table must be variable_id, 
-         mz, and rt (s).\n")
+         mz, and rt (s).")
   }
   
   if (sum(colnames(targeted_table)[seq_len(3)] == 
           c("variable_id", "mz", "rt")) != 3) {
-    stop("The first 3 columns must be variable_id, mz, and rt (s).\n")
+    stop("The first 3 columns must be variable_id, mz, and rt (s).")
   }
   
   if (sum(is.na(targeted_table[, seq_len(3)])) > 0) {
-    stop("No NA is allowed in the first 3 columns.\n")
+    stop("No NA is allowed in the first 3 columns.")
   }
   
   if (sum(targeted_table[, seq_len(3)] == "") > 0) {
-    stop("No space is allowed in the first 3 columns.\n")
+    stop("No space is allowed in the first 3 columns.")
   }
   
   if (!is.character(targeted_table$variable_id)) {
-    stop("variable_id must all be character.\n")
+    stop("variable_id must all be character.")
   }
   
   if (!is.numeric(targeted_table$mz)) {
-    stop("mz must all be numeric.\n")
+    stop("mz must all be numeric.")
   }
   
   if (!is.numeric(targeted_table$rt)) {
-    stop("rt must all be numeric.\n")
+    stop("rt must all be numeric.")
   }
 }

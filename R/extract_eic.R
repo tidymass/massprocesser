@@ -53,7 +53,7 @@ extract_eic <- function(targeted_table,
                         group_for_figure = "QC",
                         feature_type = c("pdf", "png")) {
   if (missing(object)) {
-    stop("No object provided, which should be from the xcms.\n")
+    stop("No object provided, which should be from the xcms.")
   }
   
   dir.create(path, showWarnings = FALSE)
@@ -82,7 +82,7 @@ extract_eic <- function(targeted_table,
     message(
       crayon::yellow(
         "No targeted_table is provided,
-        all the features' EICs will be outputted.\n"
+        all the features' EICs will be outputted."
       )
     )
     targeted_table <- peak_table
@@ -102,10 +102,10 @@ extract_eic <- function(targeted_table,
     )
   
   if (is.null(match_result) | nrow(match_result) == 0) {
-    stop("No features are in the object.\n")
+    stop("No features are in the object.")
   }
   
-  message(crayon::green("Outputting peak EICs...\n"))
+  message(crayon::green("Outputting peak EICs..."))
   feature_EIC_path <- file.path(path, "feature_EIC")
   dir.create(feature_EIC_path, showWarnings = FALSE)
   
@@ -273,6 +273,6 @@ extract_eic <- function(targeted_table,
     feature_type = feature_type
   )
   
-  message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+  message(crayon::red("OK"))
   
 }

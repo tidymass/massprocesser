@@ -151,8 +151,14 @@ process_data <-
                       x[length(x) - 1]
                     }))
     
+    sample_group[sample_group == ""] <- "Subject"
+    
     sample_group[grep("\\.(mz[X]{0,1}ML|cdf)", sample_group)] <-
       "Group0"
+    
+    if (missing(group_for_figure)) {
+      group_for_figure <- "QC"
+    }
     
     if (!group_for_figure %in% sample_group) {
       group_for_figure2 <-
@@ -167,8 +173,7 @@ process_data <-
           group_for_figure,
           "is not in you directory, so set is as ",
           group_for_figure2
-        ),
-        "\n"
+        )
       )
       group_for_figure <- group_for_figure2
     }
@@ -199,16 +204,17 @@ process_data <-
         "#F781BF",
         "#999999"
       )
+    
     group_colors <-
       paste0(temp_color[seq_along(unique(sample_group))],
              "60")
     
     names(group_colors) <- unique(sample_group)
     
-    message(crayon::green("Reading raw data, it will take a while...\n"))
+    message(crayon::green("Reading raw data, it will take a while..."))
     
     if (any(dir(intermediate_data_path) == "raw_data")) {
-      message(crayon::yellow("Use old saved data in Result.\n"))
+      message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "raw_data"))
     } else{
       raw_data <- MSnbase::readMSData(
@@ -221,10 +227,11 @@ process_data <-
            file = file.path(intermediate_data_path, "raw_data"))
     }
     
-    message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+    message(crayon::red("OK"))
     
     #----------------------------------------------------------------------------
-    message(crayon::green("Detecting peaks...\n"))
+    message(crayon::green("Detecting peaks..."))
+    
     ###peak detection
     cwp <-
       xcms::CentWaveParam(
@@ -239,7 +246,7 @@ process_data <-
       )
     
     if (any(dir(intermediate_data_path) == "xdata")) {
-      message(crayon::yellow("Use old saved data in Result.\n"))
+      message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata"))
     } else{
       if (masstools::get_os() == "windows") {
@@ -258,7 +265,7 @@ process_data <-
             silent = FALSE)
       
       if (is(xdata, class2 = "try-error")) {
-        stop("Error in xcms::findChromPeaks.\n")
+        stop("Error in xcms::findChromPeaks.")
       }
       
       save(xdata,
@@ -266,15 +273,15 @@ process_data <-
     }
     
     rm(list = "raw_data")
-    message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+    message(crayon::red("OK"))
     
     #-------------------------------------------------------
     #retention time correction
     #Alignment
-    message(crayon::green("Correcting rentention time...\n "))
+    message(crayon::green("Correcting rentention time..."))
     
     if (any(dir(intermediate_data_path) == "xdata2")) {
-      message(crayon::yellow("Use old saved data in Result.\n"))
+      message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata2"))
     } else{
       xdata2 <- try(xcms::adjustRtime(xdata,
@@ -284,7 +291,7 @@ process_data <-
            file = file.path(intermediate_data_path, "xdata2"))
     }
     
-    message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+    message(crayon::red("OK"))
     
     if (is(xdata2, class2 = "try-error")) {
       xdata2 <- xdata
@@ -305,7 +312,7 @@ process_data <-
           height = 7
         )
         rm(list = c("rt_correction_plot"))
-        message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+        message(crayon::red("OK"))
       }
     }
     
@@ -380,7 +387,7 @@ process_data <-
       }
       
       rm(list = c("plot", "tic.plot"))
-      message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+      message(crayon::red("OK"))
     }
     
     ###BPC
@@ -448,16 +455,15 @@ process_data <-
       }
       
       rm(list = c("plot", "bpc.plot"))
-      message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+      message(crayon::red("OK"))
     }
-    
     
     #-----------------------------------------------
     ## Perform the correspondence
-    message(crayon::green("Grouping peaks across samples...\n"))
+    message(crayon::green("Grouping peaks across samples..."))
     
     if (any(dir(intermediate_data_path) == "xdata3")) {
-      message(crayon::yellow("Use old saved data in Result.\n"))
+      message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata3"))
     } else{
       pdp <- xcms::PeakDensityParam(
@@ -474,7 +480,7 @@ process_data <-
            file = file.path(intermediate_data_path, "xdata3"))
     }
     
-    message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+    message(crayon::red("OK"))
     rm(list = "xdata2")
     
     if (fill_peaks) {
@@ -485,7 +491,8 @@ process_data <-
            file = file.path(intermediate_data_path, "xdata3"))
     }
     
-    message(crayon::green("Outputting peak table...\n"))
+    message(crayon::green("Outputting peak table..."))
+    
     ##output peak table
     values <- xcms::featureValues(xdata3, value = "into")
     definition <- xcms::featureDefinitions(object = xdata3)
@@ -515,6 +522,7 @@ process_data <-
       stringsAsFactors = FALSE,
       check.names = FALSE
     )
+    
     rownames(peak_table) <- NULL
     
     colnames(peak_table) <-
@@ -525,6 +533,7 @@ process_data <-
       )
     
     readr::write_csv(peak_table, file = file.path(output_path, "Peak_table.csv"))
+    
     peak_table_for_cleaning <-
       definition %>%
       dplyr::select(-c(
@@ -544,10 +553,10 @@ process_data <-
         check.names = FALSE
       )
     
-    
     readr::write_csv(peak_table_for_cleaning,
                      file = file.path(output_path, "Peak_table_for_cleaning.csv"))
-    message(crayon::red(clisymbols::symbol$tick, "OK\n"))
+    
+    message(crayon::red("OK"))
     
     #####output mass_data class object
     sample_info <-
@@ -593,7 +602,7 @@ process_data <-
     save(object, file = file.path(output_path, "object"))
     
     rm(list = c("peak_table", "peak_table_for_cleaning"))
-    message(crayon::red("OK\n"))
+    message(crayon::red("OK"))
     
-    message(crayon::bgRed(clisymbols::symbol$tick , "All done!\n"))
+    message(crayon::bgRed("All done!"))
   }

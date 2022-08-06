@@ -56,12 +56,13 @@ massprocesser_attach <- function() {
   invisible()
 }
 
-massprocesser_package_version <- function(x) {
-  version <- as.character(unclass(utils::packageVersion(x))[[1]])
-  
-  if (length(version) > 3) {
-    version[4:length(version)] <-
-      crayon::red(as.character(version[4:length(version)]))
+massprocesser_package_version <-
+  function(x) {
+    version <- as.character(unclass(utils::packageVersion(x))[[1]])
+    
+    if (length(version) > 3) {
+      version[4:length(version)] <-
+        crayon::red(as.character(version[4:length(version)]))
+    }
+    paste0(version, collapse = ".")
   }
-  paste0(version, collapse = ".")
-}

@@ -59,3 +59,7 @@
 # Version 1.0.1 (20220801)
 --------------
 * Fixed small bugs.
+
+# Version 1.0.2 (20220806)
+--------------
+* Fixed small bugs.

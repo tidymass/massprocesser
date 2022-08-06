@@ -10,7 +10,6 @@
 #' @importFrom stringr str_split str_replace_all str_trim str_detect str_extract
 #' @importFrom dplyr filter select pull everything distinct one_of left_join mutate bind_cols arrange
 #' @importFrom tibble as_tibble enframe tibble rownames_to_column
-#' @importFrom clisymbols symbol
 #' @importFrom cli rule col_cyan tree
 #' @importFrom utils packageVersion object.size write.csv tail
 #' @importFrom purrr map map2
@@ -33,24 +32,25 @@
 #' @examples
 #' massprocesser_logo()
 
-massprocesser_logo <- function() {
-  message(crayon::green("Thank you for using massprocesser!\n"))
-  message(crayon::green("Version", massprocesser_version, "(", update_date, ')\n'))
-  message(crayon::green("More information: searching 'tidymass massprocesser'.\n"))
-  cat(crayon::green(
-    c(
-      "                 _    __ _              ___  ",
-      "                | |  / _| |            |__ \\ ",
-      "  _ __ ___   ___| |_| |_| | _____      __ ) |",
-      " | '_ ` _ \\ / _ \\ __|  _| |/ _ \\ \\ /\\ / // / ",
-      " | | | | | |  __/ |_| | | | (_) \\ V  V // /_ ",
-      " |_| |_| |_|\\___|\\__|_| |_|\\___/ \\_/\\_/|____|",
-      "                                             ",
-      "                                             "
+massprocesser_logo <-
+  function() {
+    message("Thank you for using massprocesser!")
+    message("Version ", massprocesser_version, " (", update_date, ')')
+    message("More information: massprocesser.tidymass.org")
+    cat(
+      c(
+        "                          _____                                       ",
+        "                         |  __ \\                                      ",
+        "  _ __ ___   __ _ ___ ___| |__) | __ ___   ___ ___  ___ ___  ___ _ __ ",
+        " | '_ ` _ \\ / _` / __/ __|  ___/ '__/ _ \\ / __/ _ \\/ __/ __|/ _ \\ '__|",
+        " | | | | | | (_| \\__ \\__ \\ |   | | | (_) | (_|  __/\\__ \\__ \\  __/ |   ",
+        " |_| |_| |_|\\__,_|___/___/_|   |_|  \\___/ \\___\\___||___/___/\\___|_|   ",
+        "                                                                      ",
+        "                                                                      "
+      ),
+      sep = "\n"
     )
-    
-  ), sep = "\n")
-}
+  }
 
 # massprocesser_version = "0.99.3"
 massprocesser_version <-
@@ -87,7 +87,7 @@ get_massprocesser_version <- function() {
 #' # library(cowsay)
 #' #https://onlineasciitools.com/convert-text-to-ascii-art
 #' # writeLines(capture.output(say("Hello"), type = "message"), con = "ascii_art.txt")
-#' # art <- readLines("ascii_art.txt")
+#' # art <- readLines("logo.txt")
 #' # dput(art)
 #' # metflow_logo <-
 #' #   c("                 _    __ _              ___  ", "                | |  / _| |            |__ \\ ",
