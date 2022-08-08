@@ -48,14 +48,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">massprocesser</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Help document
      
     <span class="caret"></span>
@@ -73,7 +73,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     News
      
     <span class="caret"></span>
@@ -105,7 +105,7 @@
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/JasperShen1990" class="external-link">
+  <a href="https://twitter.com/xiaotaoshen1990" class="external-link">
     <span class="fab fa-twitter fa-lg"></span>
      
   </a>
@@ -130,9 +130,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Extract EICs of some features</h1>
-                        <h4 data-toc-skip class="author">Xiaotao Shen (<a href="https://www.shenxt.info/" class="external-link uri">https://www.shenxt.info/</a>)</h4>
+                        <h4 data-toc-skip class="author">Xiaotao Shen
+(<a href="https://www.shenxt.info/" class="external-link uri">https://www.shenxt.info/</a>)</h4>
                         
-            <h4 data-toc-skip class="date">Created on 2020-04-01 and updated on 2022-03-21</h4>
+            <h4 data-toc-skip class="date">Created on 2020-04-01 and
+updated on 2022-08-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tidymass/massprocesser/blob/HEAD/vignettes/extract_eic.Rmd" class="external-link"><code>vignettes/extract_eic.Rmd</code></a></small>
       <div class="hidden name"><code>extract_eic.Rmd</code></div>
@@ -148,8 +150,11 @@
 <strong>Extract EICs of some features</strong><a class="anchor" aria-label="anchor" href="#extract-eics-of-some-features"></a>
 </h2>
 <hr>
-<p><code>massprocesser</code> can be used to extract of EICs of some features, so you can evaluate the peak shape quality of targeted features.</p>
-<p>We still use the Result from <a href="https://tidymass.github.io/massprocesser/articles/raw_data_processing.html">Raw MS data processing using massprocesser</a> as a example.</p>
+<p><code>massprocesser</code> can be used to extract of EICs of some
+features, so you can evaluate the peak shape quality of targeted
+features.</p>
+<p>We still use the Result from <a href="https://tidymass.github.io/massprocesser/articles/raw_data_processing.html">Raw
+MS data processing using massprocesser</a> as a example.</p>
 <hr>
 </div>
 <div class="section level2">
@@ -161,98 +166,102 @@
 <h3 id="targeted-feature-label">
 <strong>Targeted feature label</strong><a class="anchor" aria-label="anchor" href="#targeted-feature-label"></a>
 </h3>
-<p>Here we just want to extract the feature with top 10 abundance in all samples.</p>
+<p>Here we just want to extract the feature with top 10 abundance in all
+samples.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymass/massprocesser" class="external-link">massprocesser</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymass/massprocesser" class="external-link">massprocesser</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">targeted_table</span> <span class="op">=</span> 
-  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"massprocesser_demo_data/POS/Result/Peak_table_for_cleaning.csv"</span><span class="op">)</span>
-
-<span class="va">mean_int</span> <span class="op">=</span> <span class="va">targeted_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">variable_id</span><span class="op">:</span><span class="va">rt</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="op">}</span><span class="op">)</span>
-
-<span class="va">targeted_table</span> <span class="op">=</span> 
-<span class="va">targeted_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">variable_id</span><span class="op">:</span><span class="va">rt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mean_int <span class="op">=</span> <span class="va">mean_int</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mean_int</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mean_int</span><span class="op">)</span>
-
-<span class="va">targeted_table</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 3</span></span>
-<span class="co">#&gt;    variable_id       mz    rt</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> M163T776_3_POS  163.  776.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> M166T100_4_POS  166.  100.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> M163T666_POS    163.  666.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> M131T776_POS    131.  776.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> M311T315_2_POS  311.  315.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> M353T695_4_POS  353.  695.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> M120T100_3_POS  120.  100.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> M206T791_POS    206.  791.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> M135T824_POS    135.  824.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> M192T803_POS    192.  803.</span></code></pre></div>
-<p>You can also use the <code>mass_dataset</code> class object to get the <code>targeted_table</code>.</p>
+<code class="sourceCode R"><span><span class="va">targeted_table</span> <span class="op">=</span> </span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"massprocesser_demo_data/POS/Result/Peak_table_for_cleaning.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mean_int</span> <span class="op">=</span> <span class="va">targeted_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">variable_id</span><span class="op">:</span><span class="va">rt</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">targeted_table</span> <span class="op">=</span> </span>
+<span><span class="va">targeted_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">variable_id</span><span class="op">:</span><span class="va">rt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mean_int <span class="op">=</span> <span class="va">mean_int</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mean_int</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mean_int</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">targeted_table</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 3</span></span></span>
+<span><span class="co">#&gt;    variable_id       mz    rt</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> M163T776_3_POS  163.  776.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> M166T100_4_POS  166.  100.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> M163T666_POS    163.  666.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> M131T776_POS    131.  776.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> M311T315_2_POS  311.  315.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> M353T695_4_POS  353.  695.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> M120T100_3_POS  120.  100.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> M206T791_POS    206.  791.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> M135T824_POS    135.  824.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> M192T803_POS    192.  803.</span></span></code></pre></div>
+<p>You can also use the <code>mass_dataset</code> class object to get
+the <code>targeted_table</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymass/massdataset" class="external-link">massdataset</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"massprocesser_demo_data/POS/Result/object"</span><span class="op">)</span>
-<span class="va">object</span>
-<span class="co">#&gt; <span style="color: #BBBB00;">-------------------- </span></span>
-<span class="co"><span style="color: #BBBB00;">#&gt; </span><span style="color: #00BB00;">massdataset version: 0.99.1 </span></span>
-<span class="co"><span style="color: #00BB00;">#&gt; </span><span style="color: #BBBB00;">-------------------- </span></span>
-<span class="co"><span style="color: #BBBB00;">#&gt; </span><span style="color: #00BB00;">1.expression_data:</span>[ 15597 x 9 data.frame]</span>
-<span class="co">#&gt; <span style="color: #00BB00;">2.sample_info:</span>[ 9 x 4 data.frame]</span>
-<span class="co">#&gt; <span style="color: #00BB00;">3.variable_info:</span>[ 15597 x 3 data.frame]</span>
-<span class="co">#&gt; <span style="color: #00BB00;">4.sample_info_note:</span>[ 4 x 2 data.frame]</span>
-<span class="co">#&gt; <span style="color: #00BB00;">5.variable_info_note:</span>[ 3 x 2 data.frame]</span>
-<span class="co">#&gt; <span style="color: #00BB00;">6.ms2_data:</span>[ 0 variables x 0 MS2 spectra]</span>
-<span class="co">#&gt; <span style="color: #BBBB00;">-------------------- </span></span>
-<span class="co"><span style="color: #BBBB00;">#&gt; </span><span style="color: #00BB00;">Processing information (extract_process_info())</span></span>
-<span class="co"><span style="color: #00BB00;">#&gt; create_mass_dataset ---------- </span></span>
-<span class="co"><span style="color: #00BB00;">#&gt; </span>      Package         Function.used                Time</span>
-<span class="co">#&gt; 1 massdataset create_mass_dataset() 2022-01-15 00:34:49</span>
-<span class="co">#&gt; <span style="color: #00BB00;">process_data ---------- </span></span>
-<span class="co"><span style="color: #00BB00;">#&gt; </span>        Package Function.used                Time</span>
-<span class="co">#&gt; 1 massprocesser  process_data 2022-01-15 00:05:38</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymass/massdataset" class="external-link">massdataset</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"massprocesser_demo_data/POS/Result/object"</span><span class="op">)</span></span>
+<span><span class="va">object</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">-------------------- </span></span></span>
+<span><span class="co"><span style="color: #BBBB00;">#&gt; </span><span style="color: #00BB00;">massdataset version: 0.99.1 </span></span></span>
+<span><span class="co"><span style="color: #00BB00;">#&gt; </span><span style="color: #BBBB00;">-------------------- </span></span></span>
+<span><span class="co"><span style="color: #BBBB00;">#&gt; </span><span style="color: #00BB00;">1.expression_data:</span>[ 15597 x 9 data.frame]</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">2.sample_info:</span>[ 9 x 4 data.frame]</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">3.variable_info:</span>[ 15597 x 3 data.frame]</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">4.sample_info_note:</span>[ 4 x 2 data.frame]</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">5.variable_info_note:</span>[ 3 x 2 data.frame]</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">6.ms2_data:</span>[ 0 variables x 0 MS2 spectra]</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">-------------------- </span></span></span>
+<span><span class="co"><span style="color: #BBBB00;">#&gt; </span><span style="color: #00BB00;">Processing information (extract_process_info())</span></span></span>
+<span><span class="co"><span style="color: #00BB00;">#&gt; 2 processings in total</span></span></span>
+<span><span class="co"><span style="color: #00BB00;">#&gt; create_mass_dataset ---------- </span></span></span>
+<span><span class="co"><span style="color: #00BB00;">#&gt; </span>      Package         Function.used                Time</span></span>
+<span><span class="co">#&gt; 1 massdataset create_mass_dataset() 2022-01-15 00:34:49</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">process_data ---------- </span></span></span>
+<span><span class="co"><span style="color: #00BB00;">#&gt; </span>        Package Function.used                Time</span></span>
+<span><span class="co">#&gt; 1 massprocesser  process_data 2022-01-15 00:05:38</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">###add mean intensity to variable information</span>
-<span class="va">object</span> <span class="op">=</span> 
-<span class="va">object</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">massdataset</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/massdataset/man/add_new_column-mass_dataset.html" class="external-link">mutate_mean_intensity</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">targeted_table2</span> <span class="op">=</span> 
-<span class="va">object</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/massdataset/man/activate_mass_dataset.html" class="external-link">activate_mass_dataset</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"variable_info"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mean_int</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/massdataset/man/extract-mass_dataset.html" class="external-link">extract_variable_info</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">variable_id</span>, <span class="va">mz</span>, <span class="va">rt</span><span class="op">)</span>
-
-<span class="va">targeted_table2</span>
-<span class="co">#&gt;                   variable_id       mz       rt</span>
-<span class="co">#&gt; M163T776_3_POS M163T776_3_POS 163.0277 776.2580</span>
-<span class="co">#&gt; M166T100_4_POS M166T100_4_POS 166.0863 100.2956</span>
-<span class="co">#&gt; M163T666_POS     M163T666_POS 163.0241 666.0185</span>
-<span class="co">#&gt; M131T776_POS     M131T776_POS 131.0016 776.4105</span>
-<span class="co">#&gt; M311T315_2_POS M311T315_2_POS 311.0808 315.1178</span>
-<span class="co">#&gt; M353T695_4_POS M353T695_4_POS 353.2661 694.9374</span>
-<span class="co">#&gt; M120T100_3_POS M120T100_3_POS 120.0808 100.2956</span>
-<span class="co">#&gt; M206T791_POS     M206T791_POS 205.9873 791.4752</span>
-<span class="co">#&gt; M135T824_POS     M135T824_POS 134.9966 824.1867</span>
-<span class="co">#&gt; M192T803_POS     M192T803_POS 191.9716 802.7890</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">###add mean intensity to variable information</span></span>
+<span><span class="va">object</span> <span class="op">=</span> </span>
+<span><span class="va">object</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">massdataset</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/massdataset/man/add_new_column-mass_dataset.html" class="external-link">mutate_mean_intensity</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">targeted_table2</span> <span class="op">=</span> </span>
+<span><span class="va">object</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/massdataset/man/activate_mass_dataset.html" class="external-link">activate_mass_dataset</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"variable_info"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mean_int</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/massdataset/man/extract-mass_dataset.html" class="external-link">extract_variable_info</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">variable_id</span>, <span class="va">mz</span>, <span class="va">rt</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">targeted_table2</span></span>
+<span><span class="co">#&gt;                   variable_id       mz       rt</span></span>
+<span><span class="co">#&gt; M163T776_3_POS M163T776_3_POS 163.0277 776.2580</span></span>
+<span><span class="co">#&gt; M166T100_4_POS M166T100_4_POS 166.0863 100.2956</span></span>
+<span><span class="co">#&gt; M163T666_POS     M163T666_POS 163.0241 666.0185</span></span>
+<span><span class="co">#&gt; M131T776_POS     M131T776_POS 131.0016 776.4105</span></span>
+<span><span class="co">#&gt; M311T315_2_POS M311T315_2_POS 311.0808 315.1178</span></span>
+<span><span class="co">#&gt; M353T695_4_POS M353T695_4_POS 353.2661 694.9374</span></span>
+<span><span class="co">#&gt; M120T100_3_POS M120T100_3_POS 120.0808 100.2956</span></span>
+<span><span class="co">#&gt; M206T791_POS     M206T791_POS 205.9873 791.4752</span></span>
+<span><span class="co">#&gt; M135T824_POS     M135T824_POS 134.9966 824.1867</span></span>
+<span><span class="co">#&gt; M192T803_POS     M192T803_POS 191.9716 802.7890</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="load-intermediate-data">
 <strong>Load intermediate data</strong><a class="anchor" aria-label="anchor" href="#load-intermediate-data"></a>
 </h3>
-<p>Load the intermediate data “xdata3” from <code>Result</code> folder.</p>
+<p>Load the intermediate data “xdata3” from <code>Result</code>
+folder.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"massprocesser_demo_data/POS/Result/intermediate_data/xdata3"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"massprocesser_demo_data/POS/Result/intermediate_data/xdata3"</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -261,21 +270,23 @@
 <strong>Data processing</strong><a class="anchor" aria-label="anchor" href="#data-processing"></a>
 </h2>
 <hr>
-<p>Next, we use the <code><a href="../reference/extract_eic.html">extract_eic()</a></code> to extract feature EICs. And the results are placed in <code>raw_data/MS1/POS/Result</code></p>
+<p>Next, we use the <code><a href="../reference/extract_eic.html">extract_eic()</a></code> to extract feature EICs.
+And the results are placed in <code>raw_data/MS1/POS/Result</code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/extract_eic.html">extract_eic</a></span><span class="op">(</span>
-  targeted_table <span class="op">=</span> <span class="va">targeted_table</span>,
-  object <span class="op">=</span> <span class="va">xdata3</span>,
-  polarity <span class="op">=</span> <span class="st">"positive"</span>,
-  mz_tolerance <span class="op">=</span> <span class="fl">15</span>,
-  rt_tolerance <span class="op">=</span> <span class="fl">30</span>,
-  threads <span class="op">=</span> <span class="fl">5</span>,
-  add_point <span class="op">=</span> <span class="cn">FALSE</span>,
-  path <span class="op">=</span> <span class="st">"massprocesser_demo_data/POS/Result"</span>,
-  group_for_figure <span class="op">=</span> <span class="st">"QC"</span>, 
-  feature_type <span class="op">=</span> <span class="st">"png"</span>
-<span class="op">)</span></code></pre></div>
-<p>All the result will be outputted in <code>massprocesser_demo_data/POS/feature_EIC</code>.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eic.html">extract_eic</a></span><span class="op">(</span></span>
+<span>  targeted_table <span class="op">=</span> <span class="va">targeted_table</span>,</span>
+<span>  object <span class="op">=</span> <span class="va">xdata3</span>,</span>
+<span>  polarity <span class="op">=</span> <span class="st">"positive"</span>,</span>
+<span>  mz_tolerance <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  rt_tolerance <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  threads <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  add_point <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"massprocesser_demo_data/POS/Result"</span>,</span>
+<span>  group_for_figure <span class="op">=</span> <span class="st">"QC"</span>, </span>
+<span>  feature_type <span class="op">=</span> <span class="st">"png"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>All the result will be outputted in
+<code>massprocesser_demo_data/POS/feature_EIC</code>.</p>
 <p><img src="figures/Screen-Shot-2.png"></p>
 <div class="section level3">
 <h3 id="section">
@@ -289,97 +300,97 @@
 </h2>
 <hr>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R Under development (unstable) (2022-01-11 r81473)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span>
-<span class="co">#&gt; [8] base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt;  [1] magrittr_2.0.1       tinytools_0.9.1      massdataset_0.99.1  </span>
-<span class="co">#&gt;  [4] forcats_0.5.1        stringr_1.4.0        dplyr_1.0.7         </span>
-<span class="co">#&gt;  [7] purrr_0.3.4          readr_2.1.1          tidyr_1.1.4         </span>
-<span class="co">#&gt; [10] tibble_3.1.6         ggplot2_3.3.5        tidyverse_1.3.1     </span>
-<span class="co">#&gt; [13] xcms_3.17.1          MSnbase_2.21.3       ProtGenerics_1.27.2 </span>
-<span class="co">#&gt; [16] S4Vectors_0.33.10    mzR_2.29.1           Rcpp_1.0.7          </span>
-<span class="co">#&gt; [19] Biobase_2.55.0       BiocGenerics_0.41.2  BiocParallel_1.29.10</span>
-<span class="co">#&gt; [22] massprocesser_0.9.2 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;   [1] circlize_0.4.14             readxl_1.3.1               </span>
-<span class="co">#&gt;   [3] backports_1.4.1             systemfonts_1.0.3          </span>
-<span class="co">#&gt;   [5] plyr_1.8.6                  lazyeval_0.2.2             </span>
-<span class="co">#&gt;   [7] crosstalk_1.2.0             leaflet_2.0.4.1            </span>
-<span class="co">#&gt;   [9] GenomeInfoDb_1.31.1         digest_0.6.29              </span>
-<span class="co">#&gt;  [11] yulab.utils_0.0.4           foreach_1.5.1              </span>
-<span class="co">#&gt;  [13] htmltools_0.5.2             fansi_1.0.0                </span>
-<span class="co">#&gt;  [15] memoise_2.0.1               cluster_2.1.2              </span>
-<span class="co">#&gt;  [17] doParallel_1.0.16           openxlsx_4.2.5             </span>
-<span class="co">#&gt;  [19] tzdb_0.2.0                  limma_3.51.2               </span>
-<span class="co">#&gt;  [21] ComplexHeatmap_2.11.0       modelr_0.1.8               </span>
-<span class="co">#&gt;  [23] matrixStats_0.61.0          vroom_1.5.7                </span>
-<span class="co">#&gt;  [25] MsFeatures_1.3.0            pkgdown_2.0.1              </span>
-<span class="co">#&gt;  [27] colorspace_2.0-2            rvest_1.0.2                </span>
-<span class="co">#&gt;  [29] textshaping_0.3.6           haven_2.4.3                </span>
-<span class="co">#&gt;  [31] xfun_0.29                   crayon_1.4.2               </span>
-<span class="co">#&gt;  [33] RCurl_1.98-1.5              jsonlite_1.7.2             </span>
-<span class="co">#&gt;  [35] impute_1.69.0               iterators_1.0.13           </span>
-<span class="co">#&gt;  [37] glue_1.6.0                  gtable_0.3.0               </span>
-<span class="co">#&gt;  [39] zlibbioc_1.41.0             XVector_0.35.0             </span>
-<span class="co">#&gt;  [41] GetoptLong_1.0.5            DelayedArray_0.21.2        </span>
-<span class="co">#&gt;  [43] shape_1.4.6                 DEoptimR_1.0-10            </span>
-<span class="co">#&gt;  [45] scales_1.1.1                vsn_3.63.0                 </span>
-<span class="co">#&gt;  [47] DBI_1.1.2                   viridisLite_0.4.0          </span>
-<span class="co">#&gt;  [49] clue_0.3-60                 gridGraphics_0.5-1         </span>
-<span class="co">#&gt;  [51] bit_4.0.4                   preprocessCore_1.57.0      </span>
-<span class="co">#&gt;  [53] clisymbols_1.2.0            MsCoreUtils_1.7.1          </span>
-<span class="co">#&gt;  [55] htmlwidgets_1.5.4           httr_1.4.2                 </span>
-<span class="co">#&gt;  [57] RColorBrewer_1.1-2          ellipsis_0.3.2             </span>
-<span class="co">#&gt;  [59] pkgconfig_2.0.3             XML_3.99-0.8               </span>
-<span class="co">#&gt;  [61] sass_0.4.0                  dbplyr_2.1.1               </span>
-<span class="co">#&gt;  [63] utf8_1.2.2                  ggplotify_0.1.0            </span>
-<span class="co">#&gt;  [65] tidyselect_1.1.1            rlang_0.4.12               </span>
-<span class="co">#&gt;  [67] munsell_0.5.0               cellranger_1.1.0           </span>
-<span class="co">#&gt;  [69] tools_4.2.0                 cachem_1.0.6               </span>
-<span class="co">#&gt;  [71] cli_3.1.0                   generics_0.1.1             </span>
-<span class="co">#&gt;  [73] broom_0.7.11                evaluate_0.14              </span>
-<span class="co">#&gt;  [75] fastmap_1.1.0               mzID_1.33.0                </span>
-<span class="co">#&gt;  [77] yaml_2.2.1                  ragg_1.2.1                 </span>
-<span class="co">#&gt;  [79] bit64_4.0.5                 knitr_1.37                 </span>
-<span class="co">#&gt;  [81] fs_1.5.2                    zip_2.2.0                  </span>
-<span class="co">#&gt;  [83] robustbase_0.93-8           RANN_2.6.1                 </span>
-<span class="co">#&gt;  [85] ncdf4_1.17                  pbapply_1.5-0              </span>
-<span class="co">#&gt;  [87] xml2_1.3.3                  compiler_4.2.0             </span>
-<span class="co">#&gt;  [89] rstudioapi_0.13             plotly_4.10.0              </span>
-<span class="co">#&gt;  [91] png_0.1-7                   affyio_1.65.0              </span>
-<span class="co">#&gt;  [93] reprex_2.0.1                MassSpecWavelet_1.61.0     </span>
-<span class="co">#&gt;  [95] bslib_0.3.1                 stringi_1.7.6              </span>
-<span class="co">#&gt;  [97] desc_1.4.0                  lattice_0.20-45            </span>
-<span class="co">#&gt;  [99] Matrix_1.4-0                ggsci_2.9                  </span>
-<span class="co">#&gt; [101] vctrs_0.3.8                 pillar_1.6.4               </span>
-<span class="co">#&gt; [103] lifecycle_1.0.1             BiocManager_1.30.16        </span>
-<span class="co">#&gt; [105] GlobalOptions_0.1.2         jquerylib_0.1.4            </span>
-<span class="co">#&gt; [107] MALDIquant_1.21             data.table_1.14.2          </span>
-<span class="co">#&gt; [109] bitops_1.0-7                GenomicRanges_1.47.6       </span>
-<span class="co">#&gt; [111] R6_2.5.1                    pcaMethods_1.87.0          </span>
-<span class="co">#&gt; [113] affy_1.73.0                 IRanges_2.29.1             </span>
-<span class="co">#&gt; [115] codetools_0.2-18            MASS_7.3-55                </span>
-<span class="co">#&gt; [117] assertthat_0.2.1            SummarizedExperiment_1.25.3</span>
-<span class="co">#&gt; [119] rjson_0.2.21                rprojroot_2.0.2            </span>
-<span class="co">#&gt; [121] withr_2.4.3                 GenomeInfoDbData_1.2.7     </span>
-<span class="co">#&gt; [123] parallel_4.2.0              hms_1.1.1                  </span>
-<span class="co">#&gt; [125] grid_4.2.0                  rmarkdown_2.11             </span>
-<span class="co">#&gt; [127] MatrixGenerics_1.7.0        lubridate_1.8.0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2022-01-11 r81473)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">#&gt; [8] base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt;  [1] magrittr_2.0.1       tinytools_0.9.1      massdataset_0.99.1  </span></span>
+<span><span class="co">#&gt;  [4] forcats_0.5.1        stringr_1.4.0        dplyr_1.0.7         </span></span>
+<span><span class="co">#&gt;  [7] purrr_0.3.4          readr_2.1.1          tidyr_1.1.4         </span></span>
+<span><span class="co">#&gt; [10] tibble_3.1.6         ggplot2_3.3.5        tidyverse_1.3.1     </span></span>
+<span><span class="co">#&gt; [13] xcms_3.17.1          MSnbase_2.21.3       ProtGenerics_1.27.2 </span></span>
+<span><span class="co">#&gt; [16] S4Vectors_0.33.10    mzR_2.29.1           Rcpp_1.0.7          </span></span>
+<span><span class="co">#&gt; [19] Biobase_2.55.0       BiocGenerics_0.41.2  BiocParallel_1.29.10</span></span>
+<span><span class="co">#&gt; [22] massprocesser_0.9.2 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;   [1] circlize_0.4.14             readxl_1.3.1               </span></span>
+<span><span class="co">#&gt;   [3] backports_1.4.1             systemfonts_1.0.3          </span></span>
+<span><span class="co">#&gt;   [5] plyr_1.8.6                  lazyeval_0.2.2             </span></span>
+<span><span class="co">#&gt;   [7] crosstalk_1.2.0             leaflet_2.0.4.1            </span></span>
+<span><span class="co">#&gt;   [9] GenomeInfoDb_1.31.1         digest_0.6.29              </span></span>
+<span><span class="co">#&gt;  [11] yulab.utils_0.0.4           foreach_1.5.1              </span></span>
+<span><span class="co">#&gt;  [13] htmltools_0.5.2             fansi_1.0.0                </span></span>
+<span><span class="co">#&gt;  [15] memoise_2.0.1               cluster_2.1.2              </span></span>
+<span><span class="co">#&gt;  [17] doParallel_1.0.16           openxlsx_4.2.5             </span></span>
+<span><span class="co">#&gt;  [19] tzdb_0.2.0                  limma_3.51.2               </span></span>
+<span><span class="co">#&gt;  [21] ComplexHeatmap_2.11.0       modelr_0.1.8               </span></span>
+<span><span class="co">#&gt;  [23] matrixStats_0.61.0          vroom_1.5.7                </span></span>
+<span><span class="co">#&gt;  [25] MsFeatures_1.3.0            pkgdown_2.0.1              </span></span>
+<span><span class="co">#&gt;  [27] colorspace_2.0-2            rvest_1.0.2                </span></span>
+<span><span class="co">#&gt;  [29] textshaping_0.3.6           haven_2.4.3                </span></span>
+<span><span class="co">#&gt;  [31] xfun_0.29                   crayon_1.4.2               </span></span>
+<span><span class="co">#&gt;  [33] RCurl_1.98-1.5              jsonlite_1.7.2             </span></span>
+<span><span class="co">#&gt;  [35] impute_1.69.0               iterators_1.0.13           </span></span>
+<span><span class="co">#&gt;  [37] glue_1.6.0                  gtable_0.3.0               </span></span>
+<span><span class="co">#&gt;  [39] zlibbioc_1.41.0             XVector_0.35.0             </span></span>
+<span><span class="co">#&gt;  [41] GetoptLong_1.0.5            DelayedArray_0.21.2        </span></span>
+<span><span class="co">#&gt;  [43] shape_1.4.6                 DEoptimR_1.0-10            </span></span>
+<span><span class="co">#&gt;  [45] scales_1.1.1                vsn_3.63.0                 </span></span>
+<span><span class="co">#&gt;  [47] DBI_1.1.2                   viridisLite_0.4.0          </span></span>
+<span><span class="co">#&gt;  [49] clue_0.3-60                 gridGraphics_0.5-1         </span></span>
+<span><span class="co">#&gt;  [51] bit_4.0.4                   preprocessCore_1.57.0      </span></span>
+<span><span class="co">#&gt;  [53] clisymbols_1.2.0            MsCoreUtils_1.7.1          </span></span>
+<span><span class="co">#&gt;  [55] htmlwidgets_1.5.4           httr_1.4.2                 </span></span>
+<span><span class="co">#&gt;  [57] RColorBrewer_1.1-2          ellipsis_0.3.2             </span></span>
+<span><span class="co">#&gt;  [59] pkgconfig_2.0.3             XML_3.99-0.8               </span></span>
+<span><span class="co">#&gt;  [61] sass_0.4.0                  dbplyr_2.1.1               </span></span>
+<span><span class="co">#&gt;  [63] utf8_1.2.2                  ggplotify_0.1.0            </span></span>
+<span><span class="co">#&gt;  [65] tidyselect_1.1.1            rlang_0.4.12               </span></span>
+<span><span class="co">#&gt;  [67] munsell_0.5.0               cellranger_1.1.0           </span></span>
+<span><span class="co">#&gt;  [69] tools_4.2.0                 cachem_1.0.6               </span></span>
+<span><span class="co">#&gt;  [71] cli_3.1.0                   generics_0.1.1             </span></span>
+<span><span class="co">#&gt;  [73] broom_0.7.11                evaluate_0.14              </span></span>
+<span><span class="co">#&gt;  [75] fastmap_1.1.0               mzID_1.33.0                </span></span>
+<span><span class="co">#&gt;  [77] yaml_2.2.1                  ragg_1.2.1                 </span></span>
+<span><span class="co">#&gt;  [79] bit64_4.0.5                 knitr_1.37                 </span></span>
+<span><span class="co">#&gt;  [81] fs_1.5.2                    zip_2.2.0                  </span></span>
+<span><span class="co">#&gt;  [83] robustbase_0.93-8           RANN_2.6.1                 </span></span>
+<span><span class="co">#&gt;  [85] ncdf4_1.17                  pbapply_1.5-0              </span></span>
+<span><span class="co">#&gt;  [87] xml2_1.3.3                  compiler_4.2.0             </span></span>
+<span><span class="co">#&gt;  [89] rstudioapi_0.13             plotly_4.10.0              </span></span>
+<span><span class="co">#&gt;  [91] png_0.1-7                   affyio_1.65.0              </span></span>
+<span><span class="co">#&gt;  [93] reprex_2.0.1                MassSpecWavelet_1.61.0     </span></span>
+<span><span class="co">#&gt;  [95] bslib_0.3.1                 stringi_1.7.6              </span></span>
+<span><span class="co">#&gt;  [97] desc_1.4.0                  lattice_0.20-45            </span></span>
+<span><span class="co">#&gt;  [99] Matrix_1.4-0                ggsci_2.9                  </span></span>
+<span><span class="co">#&gt; [101] vctrs_0.3.8                 pillar_1.6.4               </span></span>
+<span><span class="co">#&gt; [103] lifecycle_1.0.1             BiocManager_1.30.16        </span></span>
+<span><span class="co">#&gt; [105] GlobalOptions_0.1.2         jquerylib_0.1.4            </span></span>
+<span><span class="co">#&gt; [107] MALDIquant_1.21             data.table_1.14.2          </span></span>
+<span><span class="co">#&gt; [109] bitops_1.0-7                GenomicRanges_1.47.6       </span></span>
+<span><span class="co">#&gt; [111] R6_2.5.1                    pcaMethods_1.87.0          </span></span>
+<span><span class="co">#&gt; [113] affy_1.73.0                 IRanges_2.29.1             </span></span>
+<span><span class="co">#&gt; [115] codetools_0.2-18            MASS_7.3-55                </span></span>
+<span><span class="co">#&gt; [117] assertthat_0.2.1            SummarizedExperiment_1.25.3</span></span>
+<span><span class="co">#&gt; [119] rjson_0.2.21                rprojroot_2.0.2            </span></span>
+<span><span class="co">#&gt; [121] withr_2.4.3                 GenomeInfoDbData_1.2.7     </span></span>
+<span><span class="co">#&gt; [123] parallel_4.2.0              hms_1.1.1                  </span></span>
+<span><span class="co">#&gt; [125] grid_4.2.0                  rmarkdown_2.11             </span></span>
+<span><span class="co">#&gt; [127] MatrixGenerics_1.7.0        lubridate_1.8.0</span></span></code></pre></div>
 </div>
   </div>
 

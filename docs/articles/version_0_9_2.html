@@ -48,14 +48,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">massprocesser</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Help document
      
     <span class="caret"></span>
@@ -73,7 +73,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     News
      
     <span class="caret"></span>
@@ -105,7 +105,7 @@
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/JasperShen1990" class="external-link">
+  <a href="https://twitter.com/xiaotaoshen1990" class="external-link">
     <span class="fab fa-twitter fa-lg"></span>
      
   </a>
@@ -130,9 +130,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Version 0.9.2</h1>
-                        <h4 data-toc-skip class="author">Xiaotao Shen (<a href="https://www.shenxt.info/" class="external-link uri">https://www.shenxt.info/</a>)</h4>
+                        <h4 data-toc-skip class="author">Xiaotao Shen
+(<a href="https://www.shenxt.info/" class="external-link uri">https://www.shenxt.info/</a>)</h4>
                         
-            <h4 data-toc-skip class="date">Created on 2020-04-01 and updated on 2022-03-21</h4>
+            <h4 data-toc-skip class="date">Created on 2020-04-01 and
+updated on 2022-08-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tidymass/massprocesser/blob/HEAD/vignettes/version_0_9_2.Rmd" class="external-link"><code>vignettes/version_0_9_2.Rmd</code></a></small>
       <div class="hidden name"><code>version_0_9_2.Rmd</code></div>
@@ -142,14 +144,24 @@
     
     
 <hr>
-<p>In this version, we just added a new function <code>output_eic()</code>. This can be used to generate peaks in some samples after you run <code><a href="../reference/process_data.html">process_data()</a></code>. For example, you analyzed data, and found some features are very important, so you want to check the peak shapes of them in QC samples, so you can use <code>output_eic()</code> function.</p>
+<p>In this version, we just added a new function
+<code>output_eic()</code>. This can be used to generate peaks in some
+samples after you run <code><a href="../reference/process_data.html">process_data()</a></code>. For example, you
+analyzed data, and found some features are very important, so you want
+to check the peak shapes of them in QC samples, so you can use
+<code>output_eic()</code> function.</p>
 <hr>
 <div class="section level2">
 <h2 id="set-work-directory">
 <strong>Set work directory</strong><a class="anchor" aria-label="anchor" href="#set-work-directory"></a>
 </h2>
 <hr>
-<p>First, you need to set the work directory to the folder which you used to run the <code><a href="../reference/process_data.html">process_data()</a></code> function. For example, in our <a href="https://tidymass.github.io/massprocesser/articles/raw_data_processing.html">example for <code>process_Data</code></a>, we set the work directory in <code>example/POS</code>, so here, we also set work directory in this folder.</p>
+<p>First, you need to set the work directory to the folder which you
+used to run the <code><a href="../reference/process_data.html">process_data()</a></code> function. For example, in
+our <a href="https://tidymass.github.io/massprocesser/articles/raw_data_processing.html">example
+for <code>process_Data</code></a>, we set the work directory in
+<code>example/POS</code>, so here, we also set work directory in this
+folder.</p>
 <hr>
 </div>
 <div class="section level2">
@@ -159,14 +171,15 @@
 <hr>
 <p>Then we can run <code>output_eic()</code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymass/massprocesser" class="external-link">massprocesser</a></span><span class="op">)</span>
-
-<span class="fu">output_eic</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, 
-           query_sample_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"QC_1"</span><span class="op">)</span>, 
-           query_peak_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M70T54_POS"</span>, <span class="st">"M70T579_POS"</span><span class="op">)</span>,
-           polarity <span class="op">=</span> <span class="st">"positive"</span>, 
-           threads <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
-<p>Then the peak shape of plots will be outputted in <code>example/POS/Result</code>.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymass/massprocesser" class="external-link">massprocesser</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">output_eic</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, </span>
+<span>           query_sample_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"QC_1"</span><span class="op">)</span>, </span>
+<span>           query_peak_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M70T54_POS"</span>, <span class="st">"M70T579_POS"</span><span class="op">)</span>,</span>
+<span>           polarity <span class="op">=</span> <span class="st">"positive"</span>, </span>
+<span>           threads <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<p>Then the peak shape of plots will be outputted in
+<code>example/POS/Result</code>.</p>
 <hr>
 </div>
 <div class="section level2">
@@ -175,30 +188,30 @@
 </h2>
 <hr>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R Under development (unstable) (2022-01-11 r81473)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] rprojroot_2.0.2   digest_0.6.29     crayon_1.4.2      R6_2.5.1         </span>
-<span class="co">#&gt;  [5] jsonlite_1.7.2    magrittr_2.0.1    evaluate_0.14     stringi_1.7.6    </span>
-<span class="co">#&gt;  [9] rlang_0.4.12      cachem_1.0.6      fs_1.5.2          jquerylib_0.1.4  </span>
-<span class="co">#&gt; [13] bslib_0.3.1       ragg_1.2.1        rmarkdown_2.11    pkgdown_2.0.1    </span>
-<span class="co">#&gt; [17] textshaping_0.3.6 desc_1.4.0        tools_4.2.0       stringr_1.4.0    </span>
-<span class="co">#&gt; [21] purrr_0.3.4       yaml_2.2.1        xfun_0.29         fastmap_1.1.0    </span>
-<span class="co">#&gt; [25] compiler_4.2.0    systemfonts_1.0.3 memoise_2.0.1     htmltools_0.5.2  </span>
-<span class="co">#&gt; [29] knitr_1.37        sass_0.4.0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2022-01-11 r81473)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] rprojroot_2.0.2   digest_0.6.29     crayon_1.4.2      R6_2.5.1         </span></span>
+<span><span class="co">#&gt;  [5] jsonlite_1.7.2    magrittr_2.0.1    evaluate_0.14     stringi_1.7.6    </span></span>
+<span><span class="co">#&gt;  [9] rlang_0.4.12      cachem_1.0.6      fs_1.5.2          jquerylib_0.1.4  </span></span>
+<span><span class="co">#&gt; [13] bslib_0.3.1       ragg_1.2.1        rmarkdown_2.11    pkgdown_2.0.1    </span></span>
+<span><span class="co">#&gt; [17] textshaping_0.3.6 desc_1.4.0        tools_4.2.0       stringr_1.4.0    </span></span>
+<span><span class="co">#&gt; [21] purrr_0.3.4       yaml_2.2.1        xfun_0.29         fastmap_1.1.0    </span></span>
+<span><span class="co">#&gt; [25] compiler_4.2.0    systemfonts_1.0.3 memoise_2.0.1     htmltools_0.5.2  </span></span>
+<span><span class="co">#&gt; [29] knitr_1.37        sass_0.4.0</span></span></code></pre></div>
 </div>
   </div>
 

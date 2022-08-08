@@ -23,13 +23,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">massprocesser</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Help document
      
     <span class="caret"></span>
@@ -45,7 +45,7 @@
     </li>
   </ul></li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     News
      
     <span class="caret"></span>
@@ -72,7 +72,7 @@
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/JasperShen1990" class="external-link">
+  <a href="https://twitter.com/xiaotaoshen1990" class="external-link">
     <span class="fab fa-twitter fa-lg"></span>
      
   </a>
@@ -101,74 +101,113 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">process_data</span><span class="op">(</span>
-  path <span class="op">=</span> <span class="st">"."</span>,
-  polarity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"negative"</span><span class="op">)</span>,
-  ppm <span class="op">=</span> <span class="fl">15</span>,
-  peakwidth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">30</span><span class="op">)</span>,
-  snthresh <span class="op">=</span> <span class="fl">10</span>,
-  prefilter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">500</span><span class="op">)</span>,
-  fitgauss <span class="op">=</span> <span class="cn">FALSE</span>,
-  integrate <span class="op">=</span> <span class="fl">2</span>,
-  mzdiff <span class="op">=</span> <span class="fl">0.01</span>,
-  noise <span class="op">=</span> <span class="fl">500</span>,
-  threads <span class="op">=</span> <span class="fl">6</span>,
-  binSize <span class="op">=</span> <span class="fl">0.025</span>,
-  bw <span class="op">=</span> <span class="fl">5</span>,
-  output_tic <span class="op">=</span> <span class="cn">TRUE</span>,
-  output_bpc <span class="op">=</span> <span class="cn">TRUE</span>,
-  output_rt_correction_plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  min_fraction <span class="op">=</span> <span class="fl">0.5</span>,
-  fill_peaks <span class="op">=</span> <span class="cn">FALSE</span>,
-  group_for_figure <span class="op">=</span> <span class="st">"QC"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">process_data</span><span class="op">(</span></span>
+<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  polarity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"negative"</span><span class="op">)</span>,</span>
+<span>  ppm <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  peakwidth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">30</span><span class="op">)</span>,</span>
+<span>  snthresh <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  prefilter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">500</span><span class="op">)</span>,</span>
+<span>  fitgauss <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  integrate <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  mzdiff <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  noise <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  threads <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>  binSize <span class="op">=</span> <span class="fl">0.025</span>,</span>
+<span>  bw <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  output_tic <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  output_bpc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  output_rt_correction_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  min_fraction <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  fill_peaks <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  group_for_figure <span class="op">=</span> <span class="st">"QC"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>path</dt>
 <dd><p>Work directory.</p></dd>
+
+
 <dt>polarity</dt>
 <dd><p>The polarity of data, "positive"or "negative".</p></dd>
+
+
 <dt>ppm</dt>
 <dd><p>see xcms.</p></dd>
+
+
 <dt>peakwidth</dt>
 <dd><p>See xcms.</p></dd>
+
+
 <dt>snthresh</dt>
 <dd><p>See xcms.</p></dd>
+
+
 <dt>prefilter</dt>
 <dd><p>See xcms.</p></dd>
+
+
 <dt>fitgauss</dt>
 <dd><p>see xcms.</p></dd>
+
+
 <dt>integrate</dt>
 <dd><p>see xcms.</p></dd>
+
+
 <dt>mzdiff</dt>
 <dd><p>see xcms.</p></dd>
+
+
 <dt>noise</dt>
 <dd><p>See xcms.</p></dd>
+
+
 <dt>threads</dt>
 <dd><p>Number of threads.</p></dd>
+
+
 <dt>binSize</dt>
 <dd><p>see xcms.</p></dd>
+
+
 <dt>bw</dt>
 <dd><p>see xcms.</p></dd>
+
+
 <dt>output_tic</dt>
 <dd><p>Output TIC plot or not.</p></dd>
+
+
 <dt>output_bpc</dt>
 <dd><p>Output BPC plot or not.</p></dd>
+
+
 <dt>output_rt_correction_plot</dt>
 <dd><p>Output rt correction plot or not.</p></dd>
+
+
 <dt>min_fraction</dt>
 <dd><p>See xcms.</p></dd>
+
+
 <dt>fill_peaks</dt>
 <dd><p>Fill peaks NA or not.</p></dd>
+
+
 <dt>group_for_figure</dt>
-<dd><p>Which group you want to use to output 
+<dd><p>Which group you want to use to output
 TIC and BPC and EIC. Default is QC.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Peak table.</p>
+    
+
+<p>Peak table.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

@@ -23,13 +23,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">massprocesser</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Help document
      
     <span class="caret"></span>
@@ -45,7 +45,7 @@
     </li>
   </ul></li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     News
      
     <span class="caret"></span>
@@ -72,7 +72,7 @@
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/JasperShen1990" class="external-link">
+  <a href="https://twitter.com/xiaotaoshen1990" class="external-link">
     <span class="fab fa-twitter fa-lg"></span>
      
   </a>
@@ -101,37 +101,52 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_adjusted_rt</span><span class="op">(</span>
-  <span class="va">object</span>,
-  title.size <span class="op">=</span> <span class="fl">13</span>,
-  lab.size <span class="op">=</span> <span class="fl">13</span>,
-  axis.text.size <span class="op">=</span> <span class="fl">12</span>,
-  interactive <span class="op">=</span> <span class="cn">FALSE</span>,
-  group_for_figure <span class="op">=</span> <span class="st">"QC"</span>,
-  sample_for_figure <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_adjusted_rt</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  title.size <span class="op">=</span> <span class="fl">13</span>,</span>
+<span>  lab.size <span class="op">=</span> <span class="fl">13</span>,</span>
+<span>  axis.text.size <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>  interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  group_for_figure <span class="op">=</span> <span class="st">"QC"</span>,</span>
+<span>  sample_for_figure <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object</p></dd>
+
+
 <dt>title.size</dt>
 <dd><p>title.size</p></dd>
+
+
 <dt>lab.size</dt>
 <dd><p>lab.size</p></dd>
+
+
 <dt>axis.text.size</dt>
 <dd><p>axis.text.size</p></dd>
+
+
 <dt>interactive</dt>
 <dd><p>interactive or not.</p></dd>
+
+
 <dt>group_for_figure</dt>
 <dd><p>What groups to show EIC.</p></dd>
+
+
 <dt>sample_for_figure</dt>
 <dd><p>sample_for_figure</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot2 object.</p>
+    
+
+<p>A ggplot2 object.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
