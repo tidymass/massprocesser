@@ -1,4 +1,4 @@
-core <- c("xcms", "mzR", "MSnbase")
+core <- c("xcms", "mzR", "MSnbase", "ggplot2", "masstools", "massdataset", "magrittr", "dplyr")
 
 massprocesser_core_unloaded <- function() {
   search <- paste0("package:", core)
@@ -24,14 +24,14 @@ massprocesser_attach <- function() {
   if (length(to_load) == 0)
     return(invisible())
   
-  msg(cli::rule(
-    left = crayon::bold("Attaching packages"),
-    right = paste0(
-      "massprocesser ",
-      massprocesser_package_version("massprocesser")
-    )
-  ),
-  startup = TRUE)
+  # msg(cli::rule(
+  #   left = crayon::bold("Attaching packages"),
+  #   right = paste0(
+  #     "massprocesser ",
+  #     massprocesser_package_version("massprocesser")
+  #   )
+  # ),
+  # startup = TRUE)
   
   versions <-
     vapply(to_load, massprocesser_package_version, character(1))
@@ -49,7 +49,7 @@ massprocesser_attach <- function() {
   col1 <- seq_len(length(packages) / 2)
   info <- paste0(packages[col1], "     ", packages[-col1])
   
-  msg(paste(info, collapse = "\n"), startup = TRUE)
+  # msg(paste(info, collapse = "\n"), startup = TRUE)
   
   suppressPackageStartupMessages(lapply(to_load, same_library))
   
