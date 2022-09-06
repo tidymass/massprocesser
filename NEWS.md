@@ -18,6 +18,7 @@
 
 # Version 0.0.6 (20191212)
 
+
 * New functions can be used to translate ID of metabolite using oliver Fiech website.
 * New functions can be used to get class of metabolites using calssyfire.
 
@@ -63,3 +64,7 @@
 # Version 1.0.2 (20220806)
 --------------
 * Fixed small bugs.
+
+# Version 1.0.3 (20220905)
+--------------
+* Fixed small bug in extract_eic function.

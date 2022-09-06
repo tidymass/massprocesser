@@ -249,7 +249,7 @@ extract_eic <- function(targeted_table,
         x %>%
         dplyr::filter(sample_group %in% group_for_figure)
       
-      if (length(unique(x$sample_name)) > 8) {
+      if (length(unique(x$sample_name)) > 18) {
         idx <-
           which(x$sample_name %in% sort(sample(unique(
             x$sample_name

@@ -10,7 +10,7 @@
   #   x <- massprocesser_conflicts()
   #   msg(massprocesser_conflict_message(x), startup = TRUE)
   # }
-  msg(paste0("Version ", massprocesser_version, " (", update_date, ')'))
+  msg(paste0("massprocesser ", massprocesser_version, " (", update_date, ')'))
 }
 
 is_attached <- function(x) {
