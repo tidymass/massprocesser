@@ -259,10 +259,30 @@ process_data <-
       }
       
       xdata <-
-        try(xcms::findChromPeaks(raw_data,
-                                 param = cwp,
-                                 BPPARAM = bpparam),
-            silent = FALSE)
+        tryCatch(
+          xcms::findChromPeaks(raw_data,
+                               param = cwp,
+                               BPPARAM = bpparam),
+          error = function(e) {
+            NULL
+          }
+        )
+      
+      if (is.null(xdata)) {
+        if (masstools::get_os() != "windows") {
+          bpparam <-
+            BiocParallel::SnowParam(workers = threads,
+                                    progressbar = TRUE)
+        } else{
+          bpparam <- BiocParallel::MulticoreParam(workers = threads,
+                                                  progressbar = TRUE)
+        }
+        xdata <-
+          try(xcms::findChromPeaks(raw_data,
+                                   param = cwp,
+                                   BPPARAM = bpparam),
+              silent = FALSE)
+      }
       
       if (is(xdata, class2 = "try-error")) {
         stop("Error in xcms::findChromPeaks.")

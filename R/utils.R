@@ -167,6 +167,13 @@ plot_chromatogram <- function(object,
   
   data <- do.call(rbind, args = data)
   
+  data$sample <-
+    data$sample %>% 
+    stringr::str_replace("\\.mzXML", "") %>% 
+    stringr::str_replace("\\.mzML", "") %>% 
+    stringr::str_replace("\\.mzxml", "") %>% 
+    stringr::str_replace("\\.mzml", "")
+  
   plot <-
     ggplot2::ggplot(data = data,
                     ggplot2::aes(x = mz, y = intensity)) +

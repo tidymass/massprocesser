@@ -72,3 +72,7 @@
 # Version 1.0.4
 --------------
 * Fixed small bug.
+
+# Version 1.0.5 (20220916)
+--------------
+* Fixed small bug.
