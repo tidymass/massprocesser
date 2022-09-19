@@ -16,13 +16,13 @@ processing and analysis.
 
 # **Installation**
 
-You can install `massprocesser` from [GitLab](https://gitlab.com/jaspershen/massprocesser)
+You can install `massprocesser` from [GitLab](https://gitlab.com/tidymass/massprocesser)
 
 ``` r
 if(!require(remotes)){
 install.packages("remotes")
 }
-remotes::install_gitlab("jaspershen/massprocesser")
+remotes::install_gitlab("tidymass/massprocesser")
 ```
 
 or [GitHub](https://github.com/tidymass/massprocesser)

@@ -1,5 +1,5 @@
 pandoc: '2.18'
-pkgdown: 2.0.5
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   contact_us: contact_us.html
@@ -7,7 +7,7 @@ articles:
   massprocesser_install: massprocesser_install.html
   raw_data_processing: raw_data_processing.html
   version_0_9_2: version_0_9_2.html
-last_built: 2022-08-08T02:53Z
+last_built: 2022-09-19T23:27Z
 urls:
   reference: https://tidymass.github.io/massprocesser/reference
   article: https://tidymass.github.io/massprocesser/articles
