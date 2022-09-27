@@ -76,3 +76,7 @@
 # Version 1.0.5 (20220916)
 --------------
 * Fixed small bug.
+
+# Version 1.0.6 (20220926)
+--------------
+* Fixed small bug in extract_eic function.

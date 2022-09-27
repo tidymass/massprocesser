@@ -14,7 +14,10 @@ extract_eic(
   add_point = FALSE,
   path = ".",
   group_for_figure = "QC",
-  feature_type = c("pdf", "png")
+  feature_type = c("pdf", "png"),
+  width = 10,
+  height = 6,
+  device = NULL
 )
 }
 \arguments{
@@ -39,6 +42,15 @@ this should be the xdata3.}
 \item{group_for_figure}{what samples groups are used to extract EICs}
 
 \item{feature_type}{png of pdf}
+
+\item{width}{figure width}
+
+\item{height}{height width}
+
+\item{device}{Device to use.
+Can either be a device function (e.g. png),
+or one of "eps", "ps", "tex" (pictex), "pdf", "
+jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).}
 }
 \value{
 EICs.
