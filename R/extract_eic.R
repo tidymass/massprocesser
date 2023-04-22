@@ -196,7 +196,7 @@ extract_eic <-
             } else{
               if (nrow(x@chromPeaks) > 1) {
                 x@chromPeaks <-
-                  tibble::as_tibble(x@chromPeaks) %>%
+                  as.data.frame(x@chromPeaks) %>%
                   dplyr::filter(maxo == max(maxo)) %>%
                   as.matrix()
               }

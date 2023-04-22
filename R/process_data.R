@@ -552,7 +552,8 @@ process_data <-
         replacement = ""
       )
     
-    readr::write_csv(peak_table, file = file.path(output_path, "Peak_table.csv"))
+    readr::write_csv(peak_table,
+                     file = file.path(output_path, "Peak_table.csv"))
     
     peak_table_for_cleaning <-
       definition %>%

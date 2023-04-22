@@ -9,7 +9,6 @@
 #' @import ggplot2
 #' @importFrom stringr str_split str_replace_all str_trim str_detect str_extract
 #' @importFrom dplyr filter select pull everything distinct one_of left_join mutate bind_cols arrange
-#' @importFrom tibble as_tibble enframe tibble rownames_to_column
 #' @importFrom cli rule col_cyan tree
 #' @importFrom utils packageVersion object.size write.csv tail
 #' @importFrom purrr map map2
@@ -17,7 +16,6 @@
 #' @importFrom Biobase featureData
 #' @importFrom MSnbase readMSData
 #' @importFrom readr read_csv cols
-#' @importFrom readxl read_excel
 #' @importFrom masstools get_os mz_rt_match
 #' @importFrom BiocParallel MulticoreParam SnowParam bplapply
 #' @importFrom magrittr %>%

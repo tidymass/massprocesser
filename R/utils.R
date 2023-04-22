@@ -205,9 +205,7 @@ plot_chromatogram <- function(object,
   if (interactive) {
     plot <- plotly::ggplotly(plot)
   }
-  
   return(plot)
-  
 }
 
 
