@@ -28,12 +28,10 @@ Imports:
     utils,
     stats,
     readr,
-    plotly,
     stringr,
     xcms,
     mzR,
     masstools,
-    Biobase,
     rstudioapi,
     massdataset
 License: GPL-2 | file LICENSE
@@ -46,7 +44,9 @@ Suggests:
     BiocStyle,
     RUnit,
     testthat (>= 3.0.0),
-    readxl
+    readxl,
+    plotly,
+    Biobase
 VignetteBuilder: knitr
 Note:
 biocViews: Metabolomics, MassSpectrometry

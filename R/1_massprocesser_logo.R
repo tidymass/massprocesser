@@ -4,7 +4,6 @@
 #' \email{shenxt1990@@outlook.com}
 #' @importFrom xcms CentWaveParam findChromPeaks adjustRtime ObiwarpParam chromatogram PeakDensityParam groupChromPeaks
 #' @importFrom xcms featureChromatograms groupnames featureDefinitions featureValues fillChromPeaks
-#' @importFrom Biobase featureData
 #' @importFrom crayon yellow red green bold bgRed
 #' @import ggplot2
 #' @importFrom stringr str_split str_replace_all str_trim str_detect str_extract
@@ -13,13 +12,11 @@
 #' @importFrom utils packageVersion object.size write.csv tail
 #' @importFrom purrr map map2
 #' @importFrom plyr dlply .
-#' @importFrom Biobase featureData
 #' @importFrom MSnbase readMSData
 #' @importFrom readr read_csv cols
 #' @importFrom masstools get_os mz_rt_match
 #' @importFrom BiocParallel MulticoreParam SnowParam bplapply
 #' @importFrom magrittr %>%
-#' @importFrom plotly ggplotly
 #' @importFrom stats coefficients lm loess median predict
 #' @importFrom stats rgamma rt sd cor p.adjust prcomp t.test wilcox.test
 #' @importFrom methods is
