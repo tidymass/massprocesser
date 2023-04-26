@@ -216,6 +216,9 @@ process_data <-
     if (any(dir(intermediate_data_path) == "raw_data")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "raw_data"))
+      ###change the files if changed the path
+      raw_data <-
+        change_file_path(object = raw_data, path = path)
     } else{
       raw_data <- MSnbase::readMSData(
         files = f.in,
@@ -248,6 +251,8 @@ process_data <-
     if (any(dir(intermediate_data_path) == "xdata")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata"))
+      xdata <-
+        change_file_path(object = xdata, path = path)
     } else{
       if (masstools::get_os() == "windows") {
         bpparam <-
@@ -256,42 +261,6 @@ process_data <-
       } else{
         bpparam <- BiocParallel::MulticoreParam(workers = threads,
                                                 progressbar = TRUE)
-      }
-      
-      ###change the files if changed the path
-      files <-
-        raw_data@processingData@files
-      
-      new_files <-
-        list.files(
-          path = ".",
-          pattern = '\\.(mz[X|x]{0,1}[M|m][L|l]|cdf)',
-          recursive = TRUE,
-          full.names = TRUE,
-          include.dirs = TRUE
-        ) %>%
-        normalizePath()
-      
-      if (length(new_files) != length(files)) {
-        stop("Old save xdata is different with your mzXML data now,
-             delete the xdata and run again.")
-      }
-      
-      files_name <- basename(files)
-      new_files_name <- basename(new_files)
-      
-      if (sum(files_name == new_files_name) != length(files_name)) {
-        stop("Old save xdata is different with your mzXML data now,
-             delete the xdata and run again.")
-      }
-      
-      idx <-
-        match(new_files_name, files_name)
-      new_files <- new_files[idx]
-      
-      if (sum(files == new_files) != length(files)) {
-        raw_data@processingData@files <-
-          new_files
       }
       
       xdata <-
@@ -339,6 +308,8 @@ process_data <-
     if (any(dir(intermediate_data_path) == "xdata2")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata2"))
+      xdata2 <-
+        change_file_path(object = xdata2, path = path)
     } else{
       xdata2 <- try(xcms::adjustRtime(xdata,
                                       param = xcms::ObiwarpParam(binSize = 0.5)),
@@ -521,6 +492,9 @@ process_data <-
     if (any(dir(intermediate_data_path) == "xdata3")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata3"))
+      xdata3 <-
+        change_file_path(object = xdata3, path = path)
+      
     } else{
       pdp <- xcms::PeakDensityParam(
         sampleGroups = xdata2$sample_group,

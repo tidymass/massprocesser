@@ -16,3 +16,43 @@
 is_attached <- function(x) {
   paste0("package:", x) %in% search()
 }
+
+
+change_file_path <- function(object,
+                             path = "."){
+  files <- 
+    object@processingData@files
+  
+  new_files <-
+    list.files(
+      path = path,
+      pattern = '\\.(mz[X|x]{0,1}[M|m][L|l]|cdf)',
+      recursive = TRUE,
+      full.names = TRUE, 
+      include.dirs = TRUE
+    ) %>% 
+    normalizePath()
+  
+  if(length(new_files) != length(files)){
+    stop("Old save xdata is different with your mzXML data now, 
+             delete the xdata and run again.")
+  }
+  
+  files_name <- basename(files)
+  new_files_name <- basename(new_files)
+  
+  if(sum(files_name == new_files_name) != length(files_name)){
+    stop("Old save xdata is different with your mzXML data now, 
+             delete the xdata and run again.")
+  }
+  
+  idx <-
+    match(new_files_name, files_name)
+  new_files <- new_files[idx]
+  
+  if(sum(files == new_files) != length(files)){
+    object@processingData@files <-
+      new_files
+  }
+  return(object)
+}
