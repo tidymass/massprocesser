@@ -84,3 +84,7 @@
 # Version 1.0.7 (20230421)
 --------------
 * Fixed small bug.
+
+# Version 1.0.8 (20230428)
+--------------
+* Fixed small bug in process_data function.

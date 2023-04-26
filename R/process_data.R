@@ -258,6 +258,42 @@ process_data <-
                                                 progressbar = TRUE)
       }
       
+      ###change the files if changed the path
+      files <-
+        raw_data@processingData@files
+      
+      new_files <-
+        list.files(
+          path = ".",
+          pattern = '\\.(mz[X|x]{0,1}[M|m][L|l]|cdf)',
+          recursive = TRUE,
+          full.names = TRUE,
+          include.dirs = TRUE
+        ) %>%
+        normalizePath()
+      
+      if (length(new_files) != length(files)) {
+        stop("Old save xdata is different with your mzXML data now,
+             delete the xdata and run again.")
+      }
+      
+      files_name <- basename(files)
+      new_files_name <- basename(new_files)
+      
+      if (sum(files_name == new_files_name) != length(files_name)) {
+        stop("Old save xdata is different with your mzXML data now,
+             delete the xdata and run again.")
+      }
+      
+      idx <-
+        match(new_files_name, files_name)
+      new_files <- new_files[idx]
+      
+      if (sum(files == new_files) != length(files)) {
+        raw_data@processingData@files <-
+          new_files
+      }
+      
       xdata <-
         tryCatch(
           xcms::findChromPeaks(raw_data,
@@ -552,8 +588,7 @@ process_data <-
         replacement = ""
       )
     
-    readr::write_csv(peak_table,
-                     file = file.path(output_path, "Peak_table.csv"))
+    readr::write_csv(peak_table, file = file.path(output_path, "Peak_table.csv"))
     
     peak_table_for_cleaning <-
       definition %>%
