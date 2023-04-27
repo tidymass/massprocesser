@@ -38,5 +38,7 @@ globalVariables(names = c(
   "extenstion",
   "rt_correction",
   "sample_id",
-  "variable_id"
+  "variable_id",
+  ".PROCSTEP.PEAK.DETECTION",
+  "rtrange"
 ))

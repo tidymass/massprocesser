@@ -1,6 +1,6 @@
 # ##-------------------------------------------------
 # #output EIC of specific peaks
-# sxtTools::setwd_project()
+# setwd(masstools::get_project_wd())
 # setwd("test_data/mzxml/")
 # load("Result/intermediate_data/xdata3")
 # targeted_table <- readxl::read_xlsx("is.xlsx")

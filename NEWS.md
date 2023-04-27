@@ -88,3 +88,7 @@
 # Version 1.0.8 (20230428)
 --------------
 * Fixed small bug in process_data function.
+
+# Version 1.0.9 (20230428)
+--------------
+* Add a new parameter to process_data function, detect_peak_algorithm.

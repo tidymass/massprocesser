@@ -22,17 +22,17 @@
 #' @param fill_peaks Fill peaks NA or not.
 #' @param group_for_figure Which group you want to use to output
 #' TIC and BPC and EIC. Default is QC.
+#' @param detect_peak_algorithm Use the algorithm from xcms or local from massprocesser
 #' @return Peak table.
 #' @export
 
 # #debug
-# sxtTools::setwd_project()
-# # setwd("vignettes/example/")
-# # rm(list = ls())
+# setwd(masstools::get_project_wd())
+# setwd("vignettes/massprocesser_demo_data/POS2/")
 # library(xcms)
 # library(MSnbase)
 # library(mzR)
-#
+# 
 # path = "."
 # polarity = "positive"
 # ppm = 15
@@ -54,8 +54,8 @@
 # output_peak_eic = TRUE
 # is.table = "is.xlsx"
 # group_for_figure = "QC"
-#
-# process_data(path = "vignettes/example/",
+# 
+# process_data(path = ".",
 #             polarity = "positive",
 #             ppm = 15,
 #             peakwidth = c(5, 30),
@@ -95,8 +95,11 @@ process_data <-
            output_rt_correction_plot = TRUE,
            min_fraction = 0.5,
            fill_peaks = FALSE,
-           group_for_figure = "QC") {
+           group_for_figure = "QC",
+           detect_peak_algorithm = c("xcms", "massprocesser")) {
     polarity <- match.arg(polarity)
+    detect_peak_algorithm <-
+      match.arg(detect_peak_algorithm)
     output_path <- file.path(path, "Result")
     dir.create(output_path, showWarnings = FALSE)
     intermediate_data_path <-
@@ -257,36 +260,63 @@ process_data <-
       if (masstools::get_os() == "windows") {
         bpparam <-
           BiocParallel::SnowParam(workers = threads,
-                                  progressbar = TRUE)
+                                  progressbar = FALSE)
       } else{
         bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                                progressbar = TRUE)
+                                                progressbar = FALSE)
       }
       
-      xdata <-
-        tryCatch(
-          xcms::findChromPeaks(raw_data,
-                               param = cwp,
-                               BPPARAM = bpparam),
-          error = function(e) {
-            NULL
-          }
-        )
+      if (detect_peak_algorithm == "xcms") {
+        xdata <-
+          tryCatch(
+            xcms::findChromPeaks(
+              object = raw_data,
+              param = cwp,
+              BPPARAM = bpparam
+            ),
+            error = function(e) {
+              NULL
+            }
+          )
+      } else{
+        xdata <-
+          tryCatch(
+            findChromPeaks_sxt(
+              object = raw_data,
+              param = cwp,
+              BPPARAM = bpparam
+            ),
+            error = function(e) {
+              NULL
+            }
+          )
+      }
       
       if (is.null(xdata)) {
         if (masstools::get_os() != "windows") {
           bpparam <-
             BiocParallel::SnowParam(workers = threads,
-                                    progressbar = TRUE)
+                                    progressbar = FALSE)
         } else{
           bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                                  progressbar = TRUE)
+                                                  progressbar = FALSE)
         }
-        xdata <-
-          try(xcms::findChromPeaks(raw_data,
+        
+        if (detect_peak_algorithm == "xcms") {
+          xdata <-
+            try(xcms::findChromPeaks(raw_data,
+                                     param = cwp,
+                                     BPPARAM = bpparam),
+                silent = FALSE)
+        } else{
+          xdata <-
+            try(findChromPeaks_sxt(raw_data,
                                    param = cwp,
                                    BPPARAM = bpparam),
-              silent = FALSE)
+                silent = FALSE)
+        }
+        
+        
       }
       
       if (is(xdata, class2 = "try-error")) {
@@ -298,6 +328,7 @@ process_data <-
     }
     
     rm(list = "raw_data")
+    gc()
     message(crayon::red("OK"))
     
     #-------------------------------------------------------
@@ -358,10 +389,18 @@ process_data <-
     if (output_tic) {
       message(crayon::green("Drawing TIC plot..."))
       
+      figure_sample_name <-
+        pd %>%
+        dplyr::filter(sample_group %in% group_for_figure) %>%
+        dplyr::pull(sample_name)
+      
+      idx <-
+        which(basename(xdata2@processingData@files) %in% figure_sample_name)
+      
       tic.plot <-
         tryCatch(
           xcms::chromatogram(
-            object = xdata2,
+            object = filterFile(object = xdata2, file = idx),
             aggregationFun = "sum",
             BPPARAM = bpparam
           ),
@@ -382,7 +421,7 @@ process_data <-
         tic.plot <-
           tryCatch(
             xcms::chromatogram(
-              object = xdata2,
+              object = filterFile(object = xdata2, file = idx),
               aggregationFun = "sum",
               BPPARAM = bpparam
             ),
@@ -428,10 +467,19 @@ process_data <-
                                                 progressbar = TRUE)
       }
       message(crayon::green("Drawing BPC plot..."))
+      
+      figure_sample_name <-
+        pd %>%
+        dplyr::filter(sample_group %in% group_for_figure) %>%
+        dplyr::pull(sample_name)
+      
+      idx <-
+        which(basename(xdata2@processingData@files) %in% figure_sample_name)
+      
       bpc.plot <-
         tryCatch(
           xcms::chromatogram(
-            object = xdata2,
+            object = filterFile(object = xdata2, file = idx),
             aggregationFun = "max",
             BPPARAM = bpparam
           ),
@@ -453,7 +501,7 @@ process_data <-
         bpc.plot <-
           tryCatch(
             xcms::chromatogram(
-              object = xdata2,
+              object = filterFile(object = xdata2, file = idx),
               aggregationFun = "max",
               BPPARAM = bpparam
             ),

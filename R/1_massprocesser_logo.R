@@ -4,24 +4,33 @@
 #' \email{shenxt1990@@outlook.com}
 #' @importFrom xcms CentWaveParam findChromPeaks adjustRtime ObiwarpParam chromatogram PeakDensityParam groupChromPeaks
 #' @importFrom xcms featureChromatograms groupnames featureDefinitions featureValues fillChromPeaks
+#' @importFrom xcms filterFile getEIC hasAdjustedRtime adjustedRtime
+#' @importFrom xcms chromPeaks chromPeakData
+#' @importClassesFrom xcms XCMSnExp XProcessHistory ProcessHistory
 #' @importFrom crayon yellow red green bold bgRed
 #' @import ggplot2
 #' @importFrom stringr str_split str_replace_all str_trim str_detect str_extract
 #' @importFrom dplyr filter select pull everything distinct one_of left_join mutate bind_cols arrange
 #' @importFrom cli rule col_cyan tree
-#' @importFrom utils packageVersion object.size write.csv tail
+#' @importFrom utils packageVersion object.size write.csv tail capture.output
 #' @importFrom purrr map map2
 #' @importFrom plyr dlply .
-#' @importFrom MSnbase readMSData
+#' @importFrom MSnbase readMSData centroided isCentroided rtime selectFeatureData
+#' @importFrom MSnbase chromatogram selectFeatureData msLevel fileNames fromFile
+#' @importClassesFrom MSnbase MIAPE
 #' @importFrom readr read_csv cols
 #' @importFrom masstools get_os mz_rt_match
-#' @importFrom BiocParallel MulticoreParam SnowParam bplapply
+#' @importFrom BiocParallel MulticoreParam SnowParam bplapply SerialParam bpparam
 #' @importFrom magrittr %>%
-#' @importFrom stats coefficients lm loess median predict
-#' @importFrom stats rgamma rt sd cor p.adjust prcomp t.test wilcox.test
+#' @importFrom stats coefficients lm loess median predict convolve na.omit nls
+#' @importFrom stats rgamma rt sd cor p.adjust prcomp t.test wilcox.test nextn
+#' @importFrom stats weighted.mean
 #' @importFrom methods is
+#' @importFrom S4Vectors extractROWS Rle
 #' @import mzR
 #' @importClassesFrom massdataset tidymass_parameter mass_dataset
+#' @importFrom grDevices terrain.colors
+#' @importFrom graphics abline image layout lines par title
 #' @export
 #' @return massprocesser_logo
 #' @examples

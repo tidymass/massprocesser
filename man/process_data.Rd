@@ -23,7 +23,8 @@ process_data(
   output_rt_correction_plot = TRUE,
   min_fraction = 0.5,
   fill_peaks = FALSE,
-  group_for_figure = "QC"
+  group_for_figure = "QC",
+  detect_peak_algorithm = c("xcms", "massprocesser")
 )
 }
 \arguments{
@@ -65,6 +66,8 @@ process_data(
 
 \item{group_for_figure}{Which group you want to use to output
 TIC and BPC and EIC. Default is QC.}
+
+\item{detect_peak_algorithm}{Use the algorithm from xcms or local from massprocesser}
 }
 \value{
 Peak table.

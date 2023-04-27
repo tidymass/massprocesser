@@ -1,5 +1,8 @@
 
 
+
+
+
 msg <- function(..., startup = FALSE) {
   if (startup) {
     if (!isTRUE(getOption("massprocesser.quiet"))) {
@@ -89,7 +92,7 @@ plot_chromatogram <- function(object,
                               interactive = FALSE,
                               group_for_figure = "QC",
                               sample_for_figure = NULL) {
-  if(is.null(object)){
+  if (is.null(object)) {
     return(NULL)
   }
   options(warn = -1)
@@ -168,10 +171,10 @@ plot_chromatogram <- function(object,
   data <- do.call(rbind, args = data)
   
   data$sample <-
-    data$sample %>% 
-    stringr::str_replace("\\.mzXML", "") %>% 
-    stringr::str_replace("\\.mzML", "") %>% 
-    stringr::str_replace("\\.mzxml", "") %>% 
+    data$sample %>%
+    stringr::str_replace("\\.mzXML", "") %>%
+    stringr::str_replace("\\.mzML", "") %>%
+    stringr::str_replace("\\.mzxml", "") %>%
     stringr::str_replace("\\.mzml", "")
   
   plot <-
@@ -202,10 +205,16 @@ plot_chromatogram <- function(object,
       )
     )
   
+  if (length(unique(data$sample)) > 10) {
+    plot <-
+      plot +
+      theme(legend.position = "none")
+  }
+  
   if (interactive) {
-    if(requireNamespace("plotly", quietly = TRUE)){
-      plot <- plotly::ggplotly(plot) 
-    }else{
+    if (requireNamespace("plotly", quietly = TRUE)) {
+      plot <- plotly::ggplotly(plot)
+    } else{
       message("Please install plotly package first.")
     }
   }
@@ -233,8 +242,7 @@ plot_adjusted_rt <- function(object,
                              axis.text.size = 12,
                              interactive = FALSE,
                              group_for_figure = "QC",
-                             sample_for_figure = NULL
-                             ) {
+                             sample_for_figure = NULL) {
   diffRt <- xcms::rtime(object, adjusted = TRUE) -
     xcms::rtime(object,
                 adjusted = FALSE)
@@ -246,12 +254,14 @@ plot_adjusted_rt <- function(object,
   sample_name <- object@phenoData@data$sample_name
   sample_group <- object@phenoData@data$sample_group
   
-  diffRt <- 
-    purrr::map(.x = seq_along(sample_name), function(idx){
-      data.frame(diff_rt = diffRt[[idx]],
-                 sample_name = sample_name[idx],
-                 sample_group = sample_group[idx])
-    }) %>% 
+  diffRt <-
+    purrr::map(.x = seq_along(sample_name), function(idx) {
+      data.frame(
+        diff_rt = diffRt[[idx]],
+        sample_name = sample_name[idx],
+        sample_group = sample_group[idx]
+      )
+    }) %>%
     dplyr::bind_rows()
   
   # diffRt <- mapply(
@@ -262,12 +272,12 @@ plot_adjusted_rt <- function(object,
   #   y = sample_name
   # )
   
-  xRt <- 
-    purrr::map(.x = seq_along(sample_name), function(idx){
+  xRt <-
+    purrr::map(.x = seq_along(sample_name), function(idx) {
       data.frame(rt = xRt[[idx]],
                  sample_name = sample_name[idx],
                  sample_group = sample_group[idx])
-    }) %>% 
+    }) %>%
     dplyr::bind_rows()
   
   # xRt <- mapply(
@@ -277,12 +287,12 @@ plot_adjusted_rt <- function(object,
   #   x = xRt,
   #   y = sample_name
   # )
-  # 
+  #
   # diffRt <- do.call(what = rbind, args = diffRt)
   # xRt <- do.call(rbind, xRt)
   
-  temp.data = 
-    cbind(xRt, diffRt[,1, drop = FALSE])
+  temp.data =
+    cbind(xRt, diffRt[, 1, drop = FALSE])
   
   # temp.data <-
   #   data.frame(xRt, diffRt, stringsAsFactors = FALSE)
@@ -307,14 +317,18 @@ plot_adjusted_rt <- function(object,
   
   if (!is.null(sample_for_figure)) {
     temp.data <-
-      temp.data %>% 
+      temp.data %>%
       dplyr::filter(sample.name %in% sample_for_figure)
   } else{
     temp.data <-
-      temp.data %>% 
+      temp.data %>%
       dplyr::filter(sample_group %in% group_for_figure)
   }
   
+  
+  temp.data$sample.name <-
+    temp.data$sample.name %>%
+    stringr::str_replace("\\.(mz[X|x]{0,1}[M|m][L|l]|cdf)", "")
   
   plot <-
     ggplot2::ggplot(data = temp.data, ggplot2::aes(x = rt, y = diffRT)) +
@@ -335,8 +349,19 @@ plot_adjusted_rt <- function(object,
       )
     )
   
+  if (length(unique(temp.data$sample.name)) > 10) {
+    plot <-
+      plot +
+      theme(legend.position = "none")
+  }
+  
   if (interactive) {
-    plot <- plotly::ggplotly(plot)
+    if (requireNamespace("plotly", quietly = TRUE)) {
+      plot <- plotly::ggplotly(plot)
+    } else{
+      message("Please install plotly package first.")
+    }
+    
   }
   
   plot
