@@ -1,5 +1,5 @@
 findChromPeaks_sxt <-
-  function(bject,
+  function(object,
            param,
            BPPARAM = bpparam(),
            return.type = "XCMSnExp",
