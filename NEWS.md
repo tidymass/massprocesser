@@ -92,3 +92,7 @@
 # Version 1.0.9 (20230428)
 --------------
 * Add a new parameter to process_data function, detect_peak_algorithm.
+
+# Version 1.0.10 (20230428)
+--------------
+* Improved code. If there are too many samples for figures, only 15 samples are randomly selected.

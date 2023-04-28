@@ -1,5 +1,5 @@
 # chromatogram <-
-#   function(bject,
+#   function(object,
 #            rt,
 #            mz,
 #            aggregationFun = "sum",

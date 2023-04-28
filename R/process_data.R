@@ -55,7 +55,7 @@
 # is.table = "is.xlsx"
 # group_for_figure = "QC"
 # 
-# process_data(path = ".",
+# massprocesser::process_data(path = ".",
 #             polarity = "positive",
 #             ppm = 15,
 #             peakwidth = c(5, 30),
@@ -397,6 +397,10 @@ process_data <-
       idx <-
         which(basename(xdata2@processingData@files) %in% figure_sample_name)
       
+      if(length(idx) > 15){
+        idx <- sort(sample(idx, 15, replace = FALSE))
+      }
+      
       tic.plot <-
         tryCatch(
           xcms::chromatogram(
@@ -475,6 +479,10 @@ process_data <-
       
       idx <-
         which(basename(xdata2@processingData@files) %in% figure_sample_name)
+      
+      if(length(idx) > 15){
+        idx <- sort(sample(idx, 15, replace = FALSE))
+      }
       
       bpc.plot <-
         tryCatch(

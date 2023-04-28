@@ -1,7 +1,7 @@
 Package: massprocesser
 Type: Package
 Title: Comprehensitive tools for raw metabolomics data processing
-Version: 1.0.9
+Version: 1.0.10
 Date: 2023-04-27
 Authors@R: c(
     person("Xiaotao", "Shen", , "shenxt1990@163.com", role = c("aut", "cre"), 
