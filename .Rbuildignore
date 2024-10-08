@@ -9,6 +9,7 @@ vignettes
 ^docs$
 ^pkgdown$
 test_data
+test_data/
 man/figures
 example
 Result

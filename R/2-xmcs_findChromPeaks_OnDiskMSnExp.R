@@ -240,6 +240,7 @@ findChromPeaks_Spectrum_list_sxt <-
                     ppm,
                     " ppm ... ",
                     file_name,
+                    " ",
                     appendLF = FALSE)
             ## flush.console();
             ## We're including the findmzROI code in this function to reduce

@@ -174,7 +174,7 @@ process_data <-
       message(
         crayon::yellow(
           group_for_figure,
-          "is not in you directory, so set is as ",
+          "is not in you directory, so set is as",
           group_for_figure2
         )
       )

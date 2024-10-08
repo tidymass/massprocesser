@@ -96,3 +96,7 @@
 # Version 1.0.10 (20230428)
 --------------
 * Improved code. If there are too many samples for figures, only 15 samples are randomly selected.
+
+# Version 1.0.11 (20241008)
+--------------
+* Fixed one bug.

@@ -144,7 +144,7 @@ extract_eic <-
     feature_eic <-
       tryCatch(
         xcms::featureChromatograms(
-          x = object,
+          object,
           features = index2,
           expandRt = 0,
           BPPARAM = bpparam
@@ -166,7 +166,7 @@ extract_eic <-
       feature_eic <-
         tryCatch(
           xcms::featureChromatograms(
-            x = object,
+            object,
             features = index2,
             expandRt = 0,
             BPPARAM = bpparam
