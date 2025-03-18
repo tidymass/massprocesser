@@ -105,7 +105,14 @@ process_data <-
     intermediate_data_path <-
       file.path(output_path, "intermediate_data")
     dir.create(intermediate_data_path, showWarnings = FALSE)
-    
+    if (masstools::get_os() == "windows") {
+      bpparam <-
+        BiocParallel::SnowParam(workers = threads,
+                                progressbar = FALSE)
+    } else{
+      bpparam <- BiocParallel::MulticoreParam(workers = threads,
+                                              progressbar = FALSE)
+    }    
     ##parameters
     massprocesser_parameters <- new(
       Class = "tidymass_parameter",
@@ -257,15 +264,6 @@ process_data <-
       xdata <-
         change_file_path(object = xdata, path = path)
     } else{
-      if (masstools::get_os() == "windows") {
-        bpparam <-
-          BiocParallel::SnowParam(workers = threads,
-                                  progressbar = FALSE)
-      } else{
-        bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                                progressbar = FALSE)
-      }
-      
       if (detect_peak_algorithm == "xcms") {
         xdata <-
           tryCatch(
@@ -292,16 +290,7 @@ process_data <-
           )
       }
       
-      if (is.null(xdata)) {
-        if (masstools::get_os() != "windows") {
-          bpparam <-
-            BiocParallel::SnowParam(workers = threads,
-                                    progressbar = FALSE)
-        } else{
-          bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                                  progressbar = FALSE)
-        }
-        
+      if (is.null(xdata)) {        
         if (detect_peak_algorithm == "xcms") {
           xdata <-
             try(xcms::findChromPeaks(raw_data,
@@ -412,16 +401,7 @@ process_data <-
             NULL
         )
       
-      if (is.null(tic.plot)) {
-        if (masstools::get_os() != "windows") {
-          bpparam <-
-            BiocParallel::SnowParam(workers = threads,
-                                    progressbar = TRUE)
-        } else{
-          bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                                  progressbar = TRUE)
-        }
-        
+      if (is.null(tic.plot)) {        
         tic.plot <-
           tryCatch(
             xcms::chromatogram(
@@ -432,7 +412,6 @@ process_data <-
             error = function(e)
               NULL
           )
-        
       }
       
       ## Plot all chromatograms.
@@ -462,14 +441,6 @@ process_data <-
     
     ###BPC
     if (output_bpc) {
-      if (masstools::get_os() == "windows") {
-        bpparam <-
-          BiocParallel::SnowParam(workers = threads,
-                                  progressbar = TRUE)
-      } else{
-        bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                                progressbar = TRUE)
-      }
       message(crayon::green("Drawing BPC plot..."))
       
       figure_sample_name <-
@@ -496,16 +467,7 @@ process_data <-
         )
       
       
-      if (is.null(bpc.plot)) {
-        if (masstools::get_os() != "windows") {
-          bpparam <-
-            BiocParallel::SnowParam(workers = threads,
-                                    progressbar = TRUE)
-        } else{
-          bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                                  progressbar = TRUE)
-        }
-        
+      if (is.null(bpc.plot)) {        
         bpc.plot <-
           tryCatch(
             xcms::chromatogram(
