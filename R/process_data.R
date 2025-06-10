@@ -232,7 +232,7 @@ process_data <-
     } else{
       raw_data <- MSnbase::readMSData(
         files = f.in,
-        pdata = new("NAnnotatedDataFrame", pd),
+        pdata = new("AnnotatedDataFrame", pd),
         mode = "onDisk",
         verbose = TRUE
       )
