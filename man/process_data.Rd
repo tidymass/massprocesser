@@ -24,7 +24,8 @@ process_data(
   min_fraction = 0.5,
   fill_peaks = FALSE,
   group_for_figure = "QC",
-  detect_peak_algorithm = c("xcms", "massprocesser")
+  detect_peak_algorithm = c("xcms", "massprocesser"),
+  use_cache = TRUE
 )
 }
 \arguments{
@@ -68,6 +69,8 @@ process_data(
 TIC and BPC and EIC. Default is QC.}
 
 \item{detect_peak_algorithm}{Use the algorithm from xcms or local from massprocesser}
+
+\item{use_cache}{Use local cache files from last run or not.}
 }
 \value{
 Peak table.

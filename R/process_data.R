@@ -23,6 +23,7 @@
 #' @param group_for_figure Which group you want to use to output
 #' TIC and BPC and EIC. Default is QC.
 #' @param detect_peak_algorithm Use the algorithm from xcms or local from massprocesser
+#' @param use_cache Use local cache files from last run or not.
 #' @return Peak table.
 #' @export
 
@@ -96,7 +97,8 @@ process_data <-
            min_fraction = 0.5,
            fill_peaks = FALSE,
            group_for_figure = "QC",
-           detect_peak_algorithm = c("xcms", "massprocesser")) {
+           detect_peak_algorithm = c("xcms", "massprocesser"),
+           use_cache = TRUE) {
     polarity <- match.arg(polarity)
     detect_peak_algorithm <-
       match.arg(detect_peak_algorithm)
@@ -223,7 +225,7 @@ process_data <-
     
     message(crayon::green("Reading raw data, it will take a while..."))
     
-    if (any(dir(intermediate_data_path) == "raw_data")) {
+    if (use_cache && any(dir(intermediate_data_path) == "raw_data")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "raw_data"))
       ###change the files if changed the path
@@ -258,7 +260,7 @@ process_data <-
         fitgauss = fitgauss,
       )
     
-    if (any(dir(intermediate_data_path) == "xdata")) {
+    if (use_cache && any(dir(intermediate_data_path) == "xdata")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata"))
       xdata <-
@@ -325,7 +327,7 @@ process_data <-
     #Alignment
     message(crayon::green("Correcting rentention time..."))
     
-    if (any(dir(intermediate_data_path) == "xdata2")) {
+    if (use_cache && any(dir(intermediate_data_path) == "xdata2")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata2"))
       xdata2 <-
@@ -507,7 +509,7 @@ process_data <-
     ## Perform the correspondence
     message(crayon::green("Grouping peaks across samples..."))
     
-    if (any(dir(intermediate_data_path) == "xdata3")) {
+    if (use_cache && any(dir(intermediate_data_path) == "xdata3")) {
       message(crayon::yellow("Use old saved data in Result."))
       load(file.path(intermediate_data_path, "xdata3"))
       xdata3 <-
